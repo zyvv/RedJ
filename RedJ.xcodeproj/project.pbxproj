@@ -1,0 +1,634 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3FF196FAFE56819383629ABD /* libPods-RedJ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C2DF36418C3AC23D9AF5939 /* libPods-RedJ.a */; };
+		97AC72082080D20600C98D4C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC72072080D20600C98D4C /* AppDelegate.m */; };
+		97AC720B2080D20600C98D4C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC720A2080D20600C98D4C /* ViewController.m */; };
+		97AC720E2080D20600C98D4C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97AC720C2080D20600C98D4C /* Main.storyboard */; };
+		97AC72102080D20600C98D4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97AC720F2080D20600C98D4C /* Assets.xcassets */; };
+		97AC72132080D20600C98D4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97AC72112080D20600C98D4C /* LaunchScreen.storyboard */; };
+		97AC72162080D20600C98D4C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC72152080D20600C98D4C /* main.m */; };
+		97AC72202080D20600C98D4C /* RedJTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC721F2080D20600C98D4C /* RedJTests.m */; };
+		97AC722B2080D20600C98D4C /* RedJUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC722A2080D20600C98D4C /* RedJUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		97AC721C2080D20600C98D4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97AC71FB2080D20600C98D4C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97AC72022080D20600C98D4C;
+			remoteInfo = RedJ;
+		};
+		97AC72272080D20600C98D4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97AC71FB2080D20600C98D4C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97AC72022080D20600C98D4C;
+			remoteInfo = RedJ;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1C2DF36418C3AC23D9AF5939 /* libPods-RedJ.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RedJ.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		97AC72032080D20600C98D4C /* RedJ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedJ.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		97AC72062080D20600C98D4C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		97AC72072080D20600C98D4C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		97AC72092080D20600C98D4C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		97AC720A2080D20600C98D4C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		97AC720D2080D20600C98D4C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		97AC720F2080D20600C98D4C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		97AC72122080D20600C98D4C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		97AC72142080D20600C98D4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97AC72152080D20600C98D4C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		97AC721B2080D20600C98D4C /* RedJTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RedJTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		97AC721F2080D20600C98D4C /* RedJTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RedJTests.m; sourceTree = "<group>"; };
+		97AC72212080D20600C98D4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97AC72262080D20600C98D4C /* RedJUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RedJUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		97AC722A2080D20600C98D4C /* RedJUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RedJUITests.m; sourceTree = "<group>"; };
+		97AC722C2080D20600C98D4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9B145C5FDCF1CDEF87713B0 /* Pods-RedJ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedJ.release.xcconfig"; path = "Pods/Target Support Files/Pods-RedJ/Pods-RedJ.release.xcconfig"; sourceTree = "<group>"; };
+		C72E137A4D3FAC076C098960 /* Pods-RedJ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedJ.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RedJ/Pods-RedJ.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		97AC72002080D20600C98D4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FF196FAFE56819383629ABD /* libPods-RedJ.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97AC72182080D20600C98D4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97AC72232080D20600C98D4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		158816BAB0CA7B1F0023209C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1C2DF36418C3AC23D9AF5939 /* libPods-RedJ.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		40F5D7E8AB8688AC96D818E6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C72E137A4D3FAC076C098960 /* Pods-RedJ.debug.xcconfig */,
+				A9B145C5FDCF1CDEF87713B0 /* Pods-RedJ.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		97AC71FA2080D20600C98D4C = {
+			isa = PBXGroup;
+			children = (
+				97AC72052080D20600C98D4C /* RedJ */,
+				97AC721E2080D20600C98D4C /* RedJTests */,
+				97AC72292080D20600C98D4C /* RedJUITests */,
+				97AC72042080D20600C98D4C /* Products */,
+				40F5D7E8AB8688AC96D818E6 /* Pods */,
+				158816BAB0CA7B1F0023209C /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		97AC72042080D20600C98D4C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				97AC72032080D20600C98D4C /* RedJ.app */,
+				97AC721B2080D20600C98D4C /* RedJTests.xctest */,
+				97AC72262080D20600C98D4C /* RedJUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		97AC72052080D20600C98D4C /* RedJ */ = {
+			isa = PBXGroup;
+			children = (
+				97AC72062080D20600C98D4C /* AppDelegate.h */,
+				97AC72072080D20600C98D4C /* AppDelegate.m */,
+				97AC72092080D20600C98D4C /* ViewController.h */,
+				97AC720A2080D20600C98D4C /* ViewController.m */,
+				97AC720C2080D20600C98D4C /* Main.storyboard */,
+				97AC720F2080D20600C98D4C /* Assets.xcassets */,
+				97AC72112080D20600C98D4C /* LaunchScreen.storyboard */,
+				97AC72142080D20600C98D4C /* Info.plist */,
+				97AC72152080D20600C98D4C /* main.m */,
+			);
+			path = RedJ;
+			sourceTree = "<group>";
+		};
+		97AC721E2080D20600C98D4C /* RedJTests */ = {
+			isa = PBXGroup;
+			children = (
+				97AC721F2080D20600C98D4C /* RedJTests.m */,
+				97AC72212080D20600C98D4C /* Info.plist */,
+			);
+			path = RedJTests;
+			sourceTree = "<group>";
+		};
+		97AC72292080D20600C98D4C /* RedJUITests */ = {
+			isa = PBXGroup;
+			children = (
+				97AC722A2080D20600C98D4C /* RedJUITests.m */,
+				97AC722C2080D20600C98D4C /* Info.plist */,
+			);
+			path = RedJUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		97AC72022080D20600C98D4C /* RedJ */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97AC722F2080D20600C98D4C /* Build configuration list for PBXNativeTarget "RedJ" */;
+			buildPhases = (
+				9BD34867A5AB589EDC1FC684 /* [CP] Check Pods Manifest.lock */,
+				97AC71FF2080D20600C98D4C /* Sources */,
+				97AC72002080D20600C98D4C /* Frameworks */,
+				97AC72012080D20600C98D4C /* Resources */,
+				5E37848F886B38FBEBBC5DBE /* [CP] Embed Pods Frameworks */,
+				F7DC7A106479728ECABDD369 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RedJ;
+			productName = RedJ;
+			productReference = 97AC72032080D20600C98D4C /* RedJ.app */;
+			productType = "com.apple.product-type.application";
+		};
+		97AC721A2080D20600C98D4C /* RedJTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97AC72322080D20600C98D4C /* Build configuration list for PBXNativeTarget "RedJTests" */;
+			buildPhases = (
+				97AC72172080D20600C98D4C /* Sources */,
+				97AC72182080D20600C98D4C /* Frameworks */,
+				97AC72192080D20600C98D4C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				97AC721D2080D20600C98D4C /* PBXTargetDependency */,
+			);
+			name = RedJTests;
+			productName = RedJTests;
+			productReference = 97AC721B2080D20600C98D4C /* RedJTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		97AC72252080D20600C98D4C /* RedJUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97AC72352080D20600C98D4C /* Build configuration list for PBXNativeTarget "RedJUITests" */;
+			buildPhases = (
+				97AC72222080D20600C98D4C /* Sources */,
+				97AC72232080D20600C98D4C /* Frameworks */,
+				97AC72242080D20600C98D4C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				97AC72282080D20600C98D4C /* PBXTargetDependency */,
+			);
+			name = RedJUITests;
+			productName = RedJUITests;
+			productReference = 97AC72262080D20600C98D4C /* RedJUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		97AC71FB2080D20600C98D4C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = zhangyangwei.com;
+				TargetAttributes = {
+					97AC72022080D20600C98D4C = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					97AC721A2080D20600C98D4C = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 97AC72022080D20600C98D4C;
+					};
+					97AC72252080D20600C98D4C = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 97AC72022080D20600C98D4C;
+					};
+				};
+			};
+			buildConfigurationList = 97AC71FE2080D20600C98D4C /* Build configuration list for PBXProject "RedJ" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 97AC71FA2080D20600C98D4C;
+			productRefGroup = 97AC72042080D20600C98D4C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				97AC72022080D20600C98D4C /* RedJ */,
+				97AC721A2080D20600C98D4C /* RedJTests */,
+				97AC72252080D20600C98D4C /* RedJUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		97AC72012080D20600C98D4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97AC72132080D20600C98D4C /* LaunchScreen.storyboard in Resources */,
+				97AC72102080D20600C98D4C /* Assets.xcassets in Resources */,
+				97AC720E2080D20600C98D4C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97AC72192080D20600C98D4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97AC72242080D20600C98D4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5E37848F886B38FBEBBC5DBE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RedJ/Pods-RedJ-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9BD34867A5AB589EDC1FC684 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RedJ-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F7DC7A106479728ECABDD369 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-RedJ/Pods-RedJ-resources.sh",
+				"${PODS_ROOT}/AVOSCloud/AVOS/AVOSCloud/AVOSCloud_Art.inc",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RedJ/Pods-RedJ-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		97AC71FF2080D20600C98D4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97AC720B2080D20600C98D4C /* ViewController.m in Sources */,
+				97AC72162080D20600C98D4C /* main.m in Sources */,
+				97AC72082080D20600C98D4C /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97AC72172080D20600C98D4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97AC72202080D20600C98D4C /* RedJTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97AC72222080D20600C98D4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97AC722B2080D20600C98D4C /* RedJUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		97AC721D2080D20600C98D4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 97AC72022080D20600C98D4C /* RedJ */;
+			targetProxy = 97AC721C2080D20600C98D4C /* PBXContainerItemProxy */;
+		};
+		97AC72282080D20600C98D4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 97AC72022080D20600C98D4C /* RedJ */;
+			targetProxy = 97AC72272080D20600C98D4C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		97AC720C2080D20600C98D4C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				97AC720D2080D20600C98D4C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		97AC72112080D20600C98D4C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				97AC72122080D20600C98D4C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		97AC722D2080D20600C98D4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		97AC722E2080D20600C98D4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		97AC72302080D20600C98D4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C72E137A4D3FAC076C098960 /* Pods-RedJ.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = RedJ/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zyvv.RedJ;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		97AC72312080D20600C98D4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9B145C5FDCF1CDEF87713B0 /* Pods-RedJ.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = RedJ/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zyvv.RedJ;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		97AC72332080D20600C98D4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = RedJTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zyvv.RedJTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RedJ.app/RedJ";
+			};
+			name = Debug;
+		};
+		97AC72342080D20600C98D4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = RedJTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zyvv.RedJTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RedJ.app/RedJ";
+			};
+			name = Release;
+		};
+		97AC72362080D20600C98D4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = RedJUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zyvv.RedJUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RedJ;
+			};
+			name = Debug;
+		};
+		97AC72372080D20600C98D4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = RedJUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zyvv.RedJUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RedJ;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		97AC71FE2080D20600C98D4C /* Build configuration list for PBXProject "RedJ" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97AC722D2080D20600C98D4C /* Debug */,
+				97AC722E2080D20600C98D4C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		97AC722F2080D20600C98D4C /* Build configuration list for PBXNativeTarget "RedJ" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97AC72302080D20600C98D4C /* Debug */,
+				97AC72312080D20600C98D4C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		97AC72322080D20600C98D4C /* Build configuration list for PBXNativeTarget "RedJTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97AC72332080D20600C98D4C /* Debug */,
+				97AC72342080D20600C98D4C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		97AC72352080D20600C98D4C /* Build configuration list for PBXNativeTarget "RedJUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97AC72362080D20600C98D4C /* Debug */,
+				97AC72372080D20600C98D4C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 97AC71FB2080D20600C98D4C /* Project object */;
+}
