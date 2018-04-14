@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+//#import "Account.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
@@ -47,6 +48,13 @@
                 hud.label.text = error.localizedDescription;
                 [hud hideAnimated:YES afterDelay:.25];
             } else {
+//                AVObject *account = [AVObject objectWithClassName:@"Account"];
+//                [account setObject:[AVUser currentUser].username forKey:@"username"];
+//                 AVObject *userOrderMapTom= [[AVObject alloc] initWithClassName:@"UserAccount"];
+//                [userOrderMapTom setObject:account forKey:@"account"];
+//                [userOrderMapTom setObject:[AVUser currentUser] forKey:@"user"];
+//                [userOrderMapTom saveInBackground];
+                
                 [hud hideAnimated:YES];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }

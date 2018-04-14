@@ -8,6 +8,14 @@
 
 #import "OrderViewController.h"
 #import "Order.h"
+#import "Account.h"
+
+typedef enum : NSUInteger {
+    OrderNone,
+    OrderAll,
+    OrderLet,
+    OrderSize,
+} OrderType;
 
 @interface OrderViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *guestLabel;
@@ -18,6 +26,9 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *sizeOrderSegment;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
 @property (nonatomic, strong) Order *order;
+@property (nonatomic, assign) OrderType orderType;
+@property (nonatomic, strong) Account *account;
+@property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
 
 @end
 
@@ -31,13 +42,17 @@
     self.sureButton.layer.masksToBounds = YES;
     self.sureButton.layer.cornerRadius = 5;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    AVQuery *query = [AVQuery queryWithClassName:@"Order"];
-    [query whereKey:@"matchId" equalTo:_match.thirdId];
-    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+
+    AVQuery *userQuery = [AVQuery queryWithClassName:@"Order"];
+    [userQuery whereKey:@"orderUserName" equalTo:[AVUser currentUser].username];
+    AVQuery *orderQuery = [AVQuery queryWithClassName:@"Order"];
+    [orderQuery whereKey:@"matchId" equalTo:_match.thirdId];
+    AVQuery *query = [AVQuery andQueryWithSubqueries:[NSArray arrayWithObjects:userQuery,orderQuery,nil]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-            if (objects.count > 0) {
-                AVObject *orderObj = objects.lastObject;
+            if (results.count > 0) {
+                AVObject *orderObj = results.lastObject;
                 NSMutableDictionary *orderDict = [orderObj dictionaryForObject];
                 Order *order = [Order yy_modelWithJSON:orderDict];
                 self.order = order;
@@ -47,7 +62,20 @@
             }
         });
     }];
-
+    
+    AVQuery *accountQuery = [AVQuery queryWithClassName:@"Account"];
+    [accountQuery whereKey:@"username" equalTo:[AVUser currentUser].username];
+    [accountQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (results.count > 0) {
+                AVObject *accountObj = results.lastObject;
+                NSMutableDictionary *accountDict = [accountObj dictionaryForObject];
+                Account *account = [Account yy_modelWithJSON:accountDict];
+                self.account = account;
+            }
+        });
+    }];
 
     _guestLabel.text = [NSString stringWithFormat:@"(客)%@",  _match.guestTeam];
     _homeLabel.text = [NSString stringWithFormat:@"(主)%@",  _match.homeTeam];
@@ -67,23 +95,35 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)layoutWithOrder:(Order *)order {
-    if (order.letBetAmount > 0 && order.sizeBetAmount > 0) {
-        self.sureButton.enabled = NO;
-        [self.sureButton setTitle:@"已投注" forState:UIControlStateNormal];
-    } else {
-        self.sureButton.enabled = YES;
+- (void)setAccount:(Account *)account {
+    if (_account != account) {
+        _account = account;
     }
+    self.balanceLabel.text = [NSString stringWithFormat:@"账户余额：%.2f", account.balance];
+}
+
+- (void)layoutWithOrder:(Order *)order {
+    
     if (order.letBetAmount > 0) {
         _letSegment.selectedSegmentIndex = order.betGuest ? 1 : 2;
         _letOrderSegment.selectedSegmentIndex = order.letBetAmount / 10;
         _letSegment.enabled = _letOrderSegment.enabled = NO;
-        
+        self.orderType = OrderLet;
+        self.sureButton.enabled = YES;
     }
     if (order.sizeBetAmount > 0) {
         _sizeSegment.selectedSegmentIndex = order.betBig ? 1 : 2;
         _sizeOrderSegment.selectedSegmentIndex = order.sizeBetAmount / 10;
         _sizeSegment.enabled = _sizeOrderSegment.enabled = NO;
+        self.orderType = OrderSize;
+        self.sureButton.enabled = YES;
+    }
+    
+    if (order.letBetAmount > 0 && order.sizeBetAmount > 0) {
+        self.sureButton.enabled = NO;
+        self.orderType = OrderAll;
+        [self.sureButton setTitle:@"已投注" forState:UIControlStateNormal];
+        
     }
 }
 
@@ -91,7 +131,7 @@
 
     AVObject *orderObj;
     if (self.order.objectId) {
-        orderObj =[AVObject objectWithClassName:@"Order" objectId:self.order.objectId];
+        orderObj = [AVObject objectWithClassName:@"Order" objectId:self.order.objectId];
     } else {
         orderObj = [[AVObject alloc] initWithClassName:@"Order"];
     }
@@ -125,13 +165,41 @@
         [orderObj setObject:[NSDate date] forKey:@"orderDate"]; // 下单日期
         [orderObj setObject:_match.date forKey:@"gameDate"]; // 比赛日期
         [orderObj setObject:nil forKey:@"settleDate"]; // 结算日期
+        [orderObj setObject:[AVUser currentUser].username forKey:@"orderUserName"]; // 下注者昵称
+        
+        float orderTotalAmount = 0;
+        if (self.orderType == OrderNone) {
+            orderTotalAmount = [[_letOrderSegment titleForSegmentAtIndex:_letOrderSegment.selectedSegmentIndex] floatValue] + [[_sizeOrderSegment titleForSegmentAtIndex:_sizeOrderSegment.selectedSegmentIndex] floatValue];
+        }
+        if (self.orderType == OrderLet) {
+            orderTotalAmount = _sizeOrderSegment.selectedSegmentIndex * 10;
+        }
+        if (self.orderType == OrderSize) {
+            orderTotalAmount = _letOrderSegment.selectedSegmentIndex * 10;
+        }
+        if (self.account.balance < orderTotalAmount) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = @"余额不足";
+            [hud hideAnimated:YES afterDelay:.5];
+            return;
+        }
+        
+        // 更新账户
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [userOrderMapTom saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-                [self.navigationController popViewControllerAnimated:YES];
-            });
+        AVObject *account = [AVObject objectWithClassName:@"Account" objectId:self.account.objectId];
+        [account setObject:@(self.account.balance - orderTotalAmount) forKey:@"balance"];
+        [account saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            
+            // 下注
+            [userOrderMapTom saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
+            }];
         }];
+
     }
     
 }

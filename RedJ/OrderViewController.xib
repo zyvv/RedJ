@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OrderViewController">
             <connections>
+                <outlet property="balanceLabel" destination="Kkk-th-T2v" id="cfy-p6-4id"/>
                 <outlet property="guestLabel" destination="4oG-eR-MJx" id="ZOk-jN-ITG"/>
                 <outlet property="homeLabel" destination="oDw-Rp-Ttp" id="cYe-kb-ir4"/>
                 <outlet property="letOrderSegment" destination="dbq-Th-acU" id="xCO-cF-hmu"/>
@@ -91,6 +92,12 @@
                         <action selector="sureButtonAction:" destination="-1" eventType="touchUpInside" id="Rhv-RZ-sky"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="账户余额：正在查询" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kkk-th-T2v">
+                    <rect key="frame" x="123.5" y="409" width="129" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -101,6 +108,7 @@
                 <constraint firstItem="4oG-eR-MJx" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="30" id="Kn6-Y1-bVp"/>
                 <constraint firstItem="4oG-eR-MJx" firstAttribute="width" secondItem="oDw-Rp-Ttp" secondAttribute="width" id="LPO-Os-vbE"/>
                 <constraint firstItem="4oG-eR-MJx" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="NXu-0K-QDz"/>
+                <constraint firstItem="Kkk-th-T2v" firstAttribute="top" secondItem="h5a-Bo-ral" secondAttribute="bottom" constant="10" id="SME-dl-K9P"/>
                 <constraint firstItem="4oG-eR-MJx" firstAttribute="height" secondItem="oDw-Rp-Ttp" secondAttribute="height" id="Sxq-uM-QLk"/>
                 <constraint firstItem="h5a-Bo-ral" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="VIa-Lw-b5d"/>
                 <constraint firstItem="2Yj-V5-BAA" firstAttribute="top" secondItem="dbq-Th-acU" secondAttribute="bottom" constant="50" id="Vs5-DH-QgK"/>
@@ -111,6 +119,7 @@
                 <constraint firstItem="dbq-Th-acU" firstAttribute="top" secondItem="pOo-WB-DH8" secondAttribute="bottom" constant="25" id="hzr-ht-Ybf"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="dbq-Th-acU" secondAttribute="trailing" constant="8" id="i2w-MT-HRo"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="oDw-Rp-Ttp" secondAttribute="trailing" id="lgS-vZ-jUS"/>
+                <constraint firstItem="Kkk-th-T2v" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="uIY-93-dWU"/>
                 <constraint firstItem="5mJ-Tn-Aeu" firstAttribute="leading" secondItem="dbq-Th-acU" secondAttribute="leading" id="yH3-jU-xQG"/>
                 <constraint firstItem="pOo-WB-DH8" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="8" id="yPI-Y6-0oy"/>
                 <constraint firstItem="5mJ-Tn-Aeu" firstAttribute="trailing" secondItem="dbq-Th-acU" secondAttribute="trailing" id="yQJ-E6-kql"/>
