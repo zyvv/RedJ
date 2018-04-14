@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OrderViewController">
+            <connections>
+                <outlet property="guestLabel" destination="4oG-eR-MJx" id="ZOk-jN-ITG"/>
+                <outlet property="homeLabel" destination="oDw-Rp-Ttp" id="cYe-kb-ir4"/>
+                <outlet property="letOrderSegment" destination="dbq-Th-acU" id="xCO-cF-hmu"/>
+                <outlet property="letSegment" destination="pOo-WB-DH8" id="nag-eJ-j1I"/>
+                <outlet property="sizeOrderSegment" destination="5mJ-Tn-Aeu" id="oTa-8U-bg4"/>
+                <outlet property="sizeSegment" destination="2Yj-V5-BAA" id="wjP-RZ-erR"/>
+                <outlet property="sureButton" destination="h5a-Bo-ral" id="LPw-PR-1U9"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="客队" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4oG-eR-MJx">
+                    <rect key="frame" x="0.0" y="50" width="187.5" height="18"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="主队" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDw-Rp-Ttp">
+                    <rect key="frame" x="187.5" y="50" width="187.5" height="18"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pOo-WB-DH8">
+                    <rect key="frame" x="8" y="93" width="359" height="29"/>
+                    <segments>
+                        <segment title="让分"/>
+                        <segment title="Second"/>
+                        <segment title=""/>
+                    </segments>
+                </segmentedControl>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dbq-Th-acU">
+                    <rect key="frame" x="8" y="146" width="359" height="29"/>
+                    <segments>
+                        <segment title="投注"/>
+                        <segment title="10"/>
+                        <segment title="20"/>
+                        <segment title="30"/>
+                        <segment title="40"/>
+                        <segment title="50"/>
+                    </segments>
+                </segmentedControl>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2Yj-V5-BAA">
+                    <rect key="frame" x="8" y="224" width="359" height="29"/>
+                    <segments>
+                        <segment title="大小分"/>
+                        <segment title="Second"/>
+                        <segment title=""/>
+                    </segments>
+                </segmentedControl>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="5mJ-Tn-Aeu">
+                    <rect key="frame" x="8" y="277" width="359" height="29"/>
+                    <segments>
+                        <segment title="投注"/>
+                        <segment title="10"/>
+                        <segment title="20"/>
+                        <segment title="30"/>
+                        <segment title="40"/>
+                        <segment title="50"/>
+                    </segments>
+                </segmentedControl>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h5a-Bo-ral">
+                    <rect key="frame" x="148" y="355" width="80" height="44"/>
+                    <color key="backgroundColor" red="0.082352941176470587" green="0.49411764705882355" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="Jwd-Qc-HDG"/>
+                        <constraint firstAttribute="width" constant="80" id="Ky7-EZ-ciw"/>
+                    </constraints>
+                    <state key="normal" title="下注">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="sureButtonAction:" destination="-1" eventType="touchUpInside" id="Rhv-RZ-sky"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="5mJ-Tn-Aeu" firstAttribute="leading" secondItem="2Yj-V5-BAA" secondAttribute="leading" id="1LM-8i-ed9"/>
+                <constraint firstItem="5mJ-Tn-Aeu" firstAttribute="top" secondItem="2Yj-V5-BAA" secondAttribute="bottom" constant="25" id="4am-j3-AMu"/>
+                <constraint firstItem="5mJ-Tn-Aeu" firstAttribute="trailing" secondItem="2Yj-V5-BAA" secondAttribute="trailing" id="Ec5-oM-RlG"/>
+                <constraint firstItem="pOo-WB-DH8" firstAttribute="top" secondItem="4oG-eR-MJx" secondAttribute="bottom" constant="25" id="IMM-Az-wmy"/>
+                <constraint firstItem="4oG-eR-MJx" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="30" id="Kn6-Y1-bVp"/>
+                <constraint firstItem="4oG-eR-MJx" firstAttribute="width" secondItem="oDw-Rp-Ttp" secondAttribute="width" id="LPO-Os-vbE"/>
+                <constraint firstItem="4oG-eR-MJx" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="NXu-0K-QDz"/>
+                <constraint firstItem="4oG-eR-MJx" firstAttribute="height" secondItem="oDw-Rp-Ttp" secondAttribute="height" id="Sxq-uM-QLk"/>
+                <constraint firstItem="h5a-Bo-ral" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="VIa-Lw-b5d"/>
+                <constraint firstItem="2Yj-V5-BAA" firstAttribute="top" secondItem="dbq-Th-acU" secondAttribute="bottom" constant="50" id="Vs5-DH-QgK"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="pOo-WB-DH8" secondAttribute="trailing" constant="8" id="b7x-Kn-YGs"/>
+                <constraint firstItem="oDw-Rp-Ttp" firstAttribute="baseline" secondItem="4oG-eR-MJx" secondAttribute="baseline" id="eHH-qg-v1M"/>
+                <constraint firstItem="dbq-Th-acU" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="8" id="edP-Ss-uKQ"/>
+                <constraint firstItem="h5a-Bo-ral" firstAttribute="top" secondItem="5mJ-Tn-Aeu" secondAttribute="bottom" constant="50" id="hnS-Dg-re6"/>
+                <constraint firstItem="dbq-Th-acU" firstAttribute="top" secondItem="pOo-WB-DH8" secondAttribute="bottom" constant="25" id="hzr-ht-Ybf"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="dbq-Th-acU" secondAttribute="trailing" constant="8" id="i2w-MT-HRo"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="oDw-Rp-Ttp" secondAttribute="trailing" id="lgS-vZ-jUS"/>
+                <constraint firstItem="5mJ-Tn-Aeu" firstAttribute="leading" secondItem="dbq-Th-acU" secondAttribute="leading" id="yH3-jU-xQG"/>
+                <constraint firstItem="pOo-WB-DH8" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="8" id="yPI-Y6-0oy"/>
+                <constraint firstItem="5mJ-Tn-Aeu" firstAttribute="trailing" secondItem="dbq-Th-acU" secondAttribute="trailing" id="yQJ-E6-kql"/>
+                <constraint firstItem="oDw-Rp-Ttp" firstAttribute="leading" secondItem="4oG-eR-MJx" secondAttribute="trailing" id="zjc-Os-8fc"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <point key="canvasLocation" x="33.5" y="104.5"/>
+        </view>
+    </objects>
+</document>

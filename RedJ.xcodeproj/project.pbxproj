@@ -8,14 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		3FF196FAFE56819383629ABD /* libPods-RedJ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C2DF36418C3AC23D9AF5939 /* libPods-RedJ.a */; };
+		97A66D7D20810579008DDC08 /* GameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A66D7B20810579008DDC08 /* GameCell.m */; };
+		97A66D7E20810579008DDC08 /* GameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A66D7C20810579008DDC08 /* GameCell.xib */; };
 		97AC72082080D20600C98D4C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC72072080D20600C98D4C /* AppDelegate.m */; };
-		97AC720B2080D20600C98D4C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC720A2080D20600C98D4C /* ViewController.m */; };
 		97AC720E2080D20600C98D4C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97AC720C2080D20600C98D4C /* Main.storyboard */; };
 		97AC72102080D20600C98D4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97AC720F2080D20600C98D4C /* Assets.xcassets */; };
 		97AC72132080D20600C98D4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97AC72112080D20600C98D4C /* LaunchScreen.storyboard */; };
 		97AC72162080D20600C98D4C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC72152080D20600C98D4C /* main.m */; };
 		97AC72202080D20600C98D4C /* RedJTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC721F2080D20600C98D4C /* RedJTests.m */; };
 		97AC722B2080D20600C98D4C /* RedJUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC722A2080D20600C98D4C /* RedJUITests.m */; };
+		97AC723A2080D9A400C98D4C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC72392080D9A400C98D4C /* LoginViewController.m */; };
+		97AC723D2080DA6800C98D4C /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC723C2080DA6800C98D4C /* GameViewController.m */; };
+		97DD96CF2081B61600839B28 /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96CE2081B61600839B28 /* Match.m */; };
+		97DD96D32082051C00839B28 /* OrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96D12082051C00839B28 /* OrderViewController.m */; };
+		97DD96D42082051C00839B28 /* OrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97DD96D22082051C00839B28 /* OrderViewController.xib */; };
+		97DD96D72082207D00839B28 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96D62082207D00839B28 /* Order.m */; };
+		97DD96DA208220B900839B28 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96D9208220B900839B28 /* User.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,11 +45,12 @@
 
 /* Begin PBXFileReference section */
 		1C2DF36418C3AC23D9AF5939 /* libPods-RedJ.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RedJ.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		97A66D7A20810579008DDC08 /* GameCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameCell.h; sourceTree = "<group>"; };
+		97A66D7B20810579008DDC08 /* GameCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameCell.m; sourceTree = "<group>"; };
+		97A66D7C20810579008DDC08 /* GameCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameCell.xib; sourceTree = "<group>"; };
 		97AC72032080D20600C98D4C /* RedJ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedJ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97AC72062080D20600C98D4C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		97AC72072080D20600C98D4C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		97AC72092080D20600C98D4C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		97AC720A2080D20600C98D4C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		97AC720D2080D20600C98D4C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		97AC720F2080D20600C98D4C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97AC72122080D20600C98D4C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -53,6 +62,20 @@
 		97AC72262080D20600C98D4C /* RedJUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RedJUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		97AC722A2080D20600C98D4C /* RedJUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RedJUITests.m; sourceTree = "<group>"; };
 		97AC722C2080D20600C98D4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97AC72382080D9A400C98D4C /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		97AC72392080D9A400C98D4C /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		97AC723B2080DA6800C98D4C /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		97AC723C2080DA6800C98D4C /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		97DD96CC2081B4C400839B28 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		97DD96CD2081B61600839B28 /* Match.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Match.h; sourceTree = "<group>"; };
+		97DD96CE2081B61600839B28 /* Match.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Match.m; sourceTree = "<group>"; };
+		97DD96D02082051C00839B28 /* OrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderViewController.h; sourceTree = "<group>"; };
+		97DD96D12082051C00839B28 /* OrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderViewController.m; sourceTree = "<group>"; };
+		97DD96D22082051C00839B28 /* OrderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderViewController.xib; sourceTree = "<group>"; };
+		97DD96D52082207D00839B28 /* Order.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
+		97DD96D62082207D00839B28 /* Order.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
+		97DD96D8208220B900839B28 /* User.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		97DD96D9208220B900839B28 /* User.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		A9B145C5FDCF1CDEF87713B0 /* Pods-RedJ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedJ.release.xcconfig"; path = "Pods/Target Support Files/Pods-RedJ/Pods-RedJ.release.xcconfig"; sourceTree = "<group>"; };
 		C72E137A4D3FAC076C098960 /* Pods-RedJ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedJ.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RedJ/Pods-RedJ.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -127,13 +150,28 @@
 			children = (
 				97AC72062080D20600C98D4C /* AppDelegate.h */,
 				97AC72072080D20600C98D4C /* AppDelegate.m */,
-				97AC72092080D20600C98D4C /* ViewController.h */,
-				97AC720A2080D20600C98D4C /* ViewController.m */,
 				97AC720C2080D20600C98D4C /* Main.storyboard */,
 				97AC720F2080D20600C98D4C /* Assets.xcassets */,
 				97AC72112080D20600C98D4C /* LaunchScreen.storyboard */,
 				97AC72142080D20600C98D4C /* Info.plist */,
 				97AC72152080D20600C98D4C /* main.m */,
+				97AC72382080D9A400C98D4C /* LoginViewController.h */,
+				97AC72392080D9A400C98D4C /* LoginViewController.m */,
+				97AC723B2080DA6800C98D4C /* GameViewController.h */,
+				97AC723C2080DA6800C98D4C /* GameViewController.m */,
+				97A66D7A20810579008DDC08 /* GameCell.h */,
+				97A66D7B20810579008DDC08 /* GameCell.m */,
+				97A66D7C20810579008DDC08 /* GameCell.xib */,
+				97DD96CD2081B61600839B28 /* Match.h */,
+				97DD96CE2081B61600839B28 /* Match.m */,
+				97DD96CC2081B4C400839B28 /* PrefixHeader.pch */,
+				97DD96D02082051C00839B28 /* OrderViewController.h */,
+				97DD96D12082051C00839B28 /* OrderViewController.m */,
+				97DD96D22082051C00839B28 /* OrderViewController.xib */,
+				97DD96D52082207D00839B28 /* Order.h */,
+				97DD96D62082207D00839B28 /* Order.m */,
+				97DD96D8208220B900839B28 /* User.h */,
+				97DD96D9208220B900839B28 /* User.m */,
 			);
 			path = RedJ;
 			sourceTree = "<group>";
@@ -267,7 +305,9 @@
 			files = (
 				97AC72132080D20600C98D4C /* LaunchScreen.storyboard in Resources */,
 				97AC72102080D20600C98D4C /* Assets.xcassets in Resources */,
+				97DD96D42082051C00839B28 /* OrderViewController.xib in Resources */,
 				97AC720E2080D20600C98D4C /* Main.storyboard in Resources */,
+				97A66D7E20810579008DDC08 /* GameCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,8 +386,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97AC720B2080D20600C98D4C /* ViewController.m in Sources */,
+				97AC723D2080DA6800C98D4C /* GameViewController.m in Sources */,
+				97A66D7D20810579008DDC08 /* GameCell.m in Sources */,
+				97DD96DA208220B900839B28 /* User.m in Sources */,
+				97AC723A2080D9A400C98D4C /* LoginViewController.m in Sources */,
+				97DD96CF2081B61600839B28 /* Match.m in Sources */,
+				97DD96D32082051C00839B28 /* OrderViewController.m in Sources */,
 				97AC72162080D20600C98D4C /* main.m in Sources */,
+				97DD96D72082207D00839B28 /* Order.m in Sources */,
 				97AC72082080D20600C98D4C /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -512,12 +558,18 @@
 			baseConfigurationReference = C72E137A4D3FAC076C098960 /* Pods-RedJ.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QXJB9XPNQ5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/RedJ/PrefixHeader.pch";
 				INFOPLIST_FILE = RedJ/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zyvv.RedJ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -526,12 +578,18 @@
 			baseConfigurationReference = A9B145C5FDCF1CDEF87713B0 /* Pods-RedJ.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QXJB9XPNQ5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/RedJ/PrefixHeader.pch";
 				INFOPLIST_FILE = RedJ/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zyvv.RedJ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

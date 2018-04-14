@@ -1,0 +1,19 @@
+//
+//  PrefixHeader.pch
+//  RedJ
+//
+//  Created by vi~ on 2018/4/14.
+//  Copyright © 2018年 zhangyangwei.com. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import <AVOSCloud/AVOSCloud.h>
+#import <MBProgressHUD/MBProgressHUD.h>
+#import <PPNetworkHelper/PPNetworkHelper.h>
+#import <YYCategories/YYCategories.h>
+#import <YYWebImage/YYWebImage.h>
+#import <YYModel/YYModel.h>
+
+#endif /* PrefixHeader_pch */
