@@ -164,9 +164,10 @@
                         }
                     }
                 }
-                totalEarning += bet.earnings;
+                
                 if (bet.earnings > 0) {
                     totalEarningWithoutBenJin += (bet.earnings - bet.betAmount);
+                    totalEarning += bet.earnings;
                 } else {
                     totalEarningWithoutBenJin += (bet.earnings);
                 }
@@ -178,8 +179,9 @@
     [User currentUserAccount:^(Account *ac, NSError *error) {
         if (ac) {
             AVObject *accObj = [AVObject objectWithClassName:@"Account" objectId:ac.objectId];
-            
-            [accObj setObject:@(ac.totalAccount + totalEarning) forKey:@"totalAccount"];
+            NSLog(@"-当前账户-- %.2f , %.2f", ac.balance, ac.totalAccount);
+            NSLog(@"-加上账户-- %.2f , %.2f", totalEarning, totalEarning);
+            [accObj setObject:@(ac.totalAccount + totalEarningWithoutBenJin) forKey:@"totalAccount"];
             [accObj setObject:@(ac.balance + totalEarning) forKey:@"balance"];
             [settledBetsArray addObject:accObj];
             NSError *error = nil;
