@@ -24,6 +24,10 @@
 
 @end
 
+@implementation MatchScore
+
+@end
+
 @implementation Match
 
 @end

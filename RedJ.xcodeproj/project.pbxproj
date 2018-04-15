@@ -25,6 +25,10 @@
 		97DD96D72082207D00839B28 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96D62082207D00839B28 /* Order.m */; };
 		97DD96DA208220B900839B28 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96D9208220B900839B28 /* User.m */; };
 		97DD96DD20823DC400839B28 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96DC20823DC400839B28 /* Account.m */; };
+		97DD96E020826A2E00839B28 /* RankingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96DF20826A2E00839B28 /* RankingViewController.m */; };
+		97DD96E420826A6300839B28 /* RankingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96E220826A6300839B28 /* RankingCell.m */; };
+		97DD96E520826A6300839B28 /* RankingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97DD96E320826A6300839B28 /* RankingCell.xib */; };
+		97DD96E82083855F00839B28 /* Ranking.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96E72083855F00839B28 /* Ranking.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +83,13 @@
 		97DD96D9208220B900839B28 /* User.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		97DD96DB20823DC400839B28 /* Account.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Account.h; sourceTree = "<group>"; };
 		97DD96DC20823DC400839B28 /* Account.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Account.m; sourceTree = "<group>"; };
+		97DD96DE20826A2E00839B28 /* RankingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RankingViewController.h; sourceTree = "<group>"; };
+		97DD96DF20826A2E00839B28 /* RankingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RankingViewController.m; sourceTree = "<group>"; };
+		97DD96E120826A6300839B28 /* RankingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RankingCell.h; sourceTree = "<group>"; };
+		97DD96E220826A6300839B28 /* RankingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RankingCell.m; sourceTree = "<group>"; };
+		97DD96E320826A6300839B28 /* RankingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RankingCell.xib; sourceTree = "<group>"; };
+		97DD96E62083855F00839B28 /* Ranking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ranking.h; sourceTree = "<group>"; };
+		97DD96E72083855F00839B28 /* Ranking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Ranking.m; sourceTree = "<group>"; };
 		A9B145C5FDCF1CDEF87713B0 /* Pods-RedJ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedJ.release.xcconfig"; path = "Pods/Target Support Files/Pods-RedJ/Pods-RedJ.release.xcconfig"; sourceTree = "<group>"; };
 		C72E137A4D3FAC076C098960 /* Pods-RedJ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedJ.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RedJ/Pods-RedJ.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +188,13 @@
 				97DD96D9208220B900839B28 /* User.m */,
 				97DD96DB20823DC400839B28 /* Account.h */,
 				97DD96DC20823DC400839B28 /* Account.m */,
+				97DD96DE20826A2E00839B28 /* RankingViewController.h */,
+				97DD96DF20826A2E00839B28 /* RankingViewController.m */,
+				97DD96E120826A6300839B28 /* RankingCell.h */,
+				97DD96E220826A6300839B28 /* RankingCell.m */,
+				97DD96E320826A6300839B28 /* RankingCell.xib */,
+				97DD96E62083855F00839B28 /* Ranking.h */,
+				97DD96E72083855F00839B28 /* Ranking.m */,
 			);
 			path = RedJ;
 			sourceTree = "<group>";
@@ -308,6 +326,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97DD96E520826A6300839B28 /* RankingCell.xib in Resources */,
 				97AC72132080D20600C98D4C /* LaunchScreen.storyboard in Resources */,
 				97AC72102080D20600C98D4C /* Assets.xcassets in Resources */,
 				97DD96D42082051C00839B28 /* OrderViewController.xib in Resources */,
@@ -392,6 +411,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97AC723D2080DA6800C98D4C /* GameViewController.m in Sources */,
+				97DD96E82083855F00839B28 /* Ranking.m in Sources */,
 				97A66D7D20810579008DDC08 /* GameCell.m in Sources */,
 				97DD96DA208220B900839B28 /* User.m in Sources */,
 				97DD96DD20823DC400839B28 /* Account.m in Sources */,
@@ -401,6 +421,8 @@
 				97AC72162080D20600C98D4C /* main.m in Sources */,
 				97DD96D72082207D00839B28 /* Order.m in Sources */,
 				97AC72082080D20600C98D4C /* AppDelegate.m in Sources */,
+				97DD96E420826A6300839B28 /* RankingCell.m in Sources */,
+				97DD96E020826A2E00839B28 /* RankingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,7 +594,7 @@
 				INFOPLIST_FILE = RedJ/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zyvv.RedJ;
+				PRODUCT_BUNDLE_IDENTIFIER = com.arbanban.armap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -592,7 +614,7 @@
 				INFOPLIST_FILE = RedJ/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zyvv.RedJ;
+				PRODUCT_BUNDLE_IDENTIFIER = com.arbanban.armap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;

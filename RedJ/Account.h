@@ -9,7 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface Account : NSObject
+
 @property (nonatomic, copy) NSString *objectId; // 存储id
+@property (nonatomic, copy) NSString *username; // 用户昵称
 @property (nonatomic, assign) float totalAccount; // 账户总额
 @property (nonatomic, assign) float balance; // 账户余额
+
 @end

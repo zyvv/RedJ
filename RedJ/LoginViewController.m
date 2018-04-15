@@ -7,7 +7,7 @@
 //
 
 #import "LoginViewController.h"
-//#import "Account.h"
+#import "Account.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
@@ -30,6 +30,8 @@
 
 - (IBAction)registAndLoginButtonAction:(UIButton *)sender {
 
+//    self.usernameTextField.text = @"LJYH";
+//    self.passwordTextField.text = @"1234567890";
     if (self.usernameTextField.text.length <= 0 || self.usernameTextField.text.length > 8) {
         return;
     }
@@ -48,17 +50,29 @@
                 hud.label.text = error.localizedDescription;
                 [hud hideAnimated:YES afterDelay:.25];
             } else {
+//                AVQuery *accountQuery = [AVQuery queryWithClassName:@"Account"];
+//                [accountQuery whereKey:@"username" equalTo:[AVUser currentUser].username];
+//                [accountQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+//                    if (objects.count > 0) {
+//                        AVObject *orderObj = objects.lastObject;
+//                        [orderObj setObject:[AVUser currentUser] forKey:@"dependent"];
+//                        [orderObj saveInBackground];
+////                        NSMutableDictionary *orderDict = [orderObj dictionaryForObject];
+//                    }
+//                }];
 //                AVObject *account = [AVObject objectWithClassName:@"Account"];
+//                [account setObject:@(1000) forKey:@"totalAccount"];
+//                [account setObject:@(1000) forKey:@"balance"];
 //                [account setObject:[AVUser currentUser].username forKey:@"username"];
 //                 AVObject *userOrderMapTom= [[AVObject alloc] initWithClassName:@"UserAccount"];
 //                [userOrderMapTom setObject:account forKey:@"account"];
 //                [userOrderMapTom setObject:[AVUser currentUser] forKey:@"user"];
 //                [userOrderMapTom saveInBackground];
-                
+
                 [hud hideAnimated:YES];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
-            
+
         });
     }];
 

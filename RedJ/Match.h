@@ -45,6 +45,11 @@
 @property (nonatomic, strong) AsiaSize *asiaSize; // 大小分
 @end
 
+@interface MatchScore : NSObject
+@property (nonatomic, assign) float homeScore; // 主队得分
+@property (nonatomic, assign) float guestScore; // 客队得分
+@end
+
 @interface Match : NSObject
 @property (nonatomic, copy) NSString *leagueId; // 联赛id
 @property (nonatomic, copy) NSString *thirdId; // 比赛id
@@ -58,6 +63,7 @@
 @property (nonatomic, strong) NSURL *homeLogoUrl; // 主队logo
 @property (nonatomic, strong) NSURL *guestLogoUrl; // 客队logo
 @property (nonatomic, strong) MatchOdds *matchOdds; // 比赛盘口
+@property (nonatomic, strong) MatchScore *matchScore; // 比赛得分
 @end
 
 @interface MatchData : NSObject

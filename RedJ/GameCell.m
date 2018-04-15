@@ -10,6 +10,7 @@
 
 @implementation GameCell
 {
+    __weak IBOutlet UIView *_statusView;
     __weak IBOutlet UIImageView *_guestLogoImageView;
     __weak IBOutlet UIImageView *_homeLogoImageView;
     
@@ -78,6 +79,14 @@
 
     _bigOdds.text = [NSString stringWithFormat:@"%.2f", _match.matchOdds.asiaSize.bet365.leftOdds];
     _smallOdds.text = [NSString stringWithFormat:@"%.2f", _match.matchOdds.asiaSize.bet365.rightOdds];
+    
+    if (_match.matchStatus == -1) {
+        _statusView.backgroundColor = [UIColor lightGrayColor];
+    } else if (_match.matchStatus == 0) {
+        _statusView.backgroundColor = [UIColor clearColor];
+    } else {
+        _statusView.backgroundColor = [UIColor redColor];
+    }
     
 }
 

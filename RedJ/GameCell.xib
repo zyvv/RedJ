@@ -118,6 +118,12 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="snc-0Z-HwT">
+                        <rect key="frame" x="0.0" y="0.0" width="5" height="99.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="5" id="TWU-x8-m71"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="qGw-GZ-jmW" firstAttribute="trailing" secondItem="QtH-ck-UoU" secondAttribute="trailing" id="27k-uU-t41"/>
@@ -127,6 +133,7 @@
                     <constraint firstItem="dFT-Ce-QBz" firstAttribute="width" secondItem="I43-ty-t29" secondAttribute="width" id="5Qm-9k-tff"/>
                     <constraint firstItem="jPe-bo-XbK" firstAttribute="centerY" secondItem="uf1-gr-J41" secondAttribute="centerY" id="5wE-8l-R4b"/>
                     <constraint firstItem="qGw-GZ-jmW" firstAttribute="centerY" secondItem="Wif-Op-cHd" secondAttribute="centerY" id="6km-zX-rab"/>
+                    <constraint firstItem="snc-0Z-HwT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="C8v-Zl-YxC"/>
                     <constraint firstItem="D74-Ir-O0m" firstAttribute="centerY" secondItem="uf1-gr-J41" secondAttribute="centerY" id="IPu-Bm-aAf"/>
                     <constraint firstItem="I43-ty-t29" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="KTP-T3-Tzh"/>
                     <constraint firstItem="dFT-Ce-QBz" firstAttribute="leading" secondItem="I43-ty-t29" secondAttribute="leading" id="LY3-zY-IqL"/>
@@ -134,6 +141,7 @@
                     <constraint firstItem="QtH-ck-UoU" firstAttribute="leading" secondItem="jPe-bo-XbK" secondAttribute="trailing" constant="3" id="NTo-fW-TJa"/>
                     <constraint firstItem="mse-va-78m" firstAttribute="centerY" secondItem="IaA-aa-bHI" secondAttribute="centerY" id="OY9-jR-Nm8"/>
                     <constraint firstItem="qGw-GZ-jmW" firstAttribute="leading" secondItem="1NX-fN-5J2" secondAttribute="trailing" constant="3" id="Siu-L3-3eq"/>
+                    <constraint firstItem="snc-0Z-HwT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Wzy-FW-rpB"/>
                     <constraint firstAttribute="trailing" secondItem="QtH-ck-UoU" secondAttribute="trailing" constant="8" id="Xvu-w8-z8m"/>
                     <constraint firstItem="Wif-Op-cHd" firstAttribute="leading" secondItem="uf1-gr-J41" secondAttribute="leading" id="Yz7-tp-Wm9"/>
                     <constraint firstItem="ZN8-PN-0Hf" firstAttribute="leading" secondItem="Ech-az-sZk" secondAttribute="trailing" constant="8.5" id="c0M-hX-Zk9"/>
@@ -145,6 +153,7 @@
                     <constraint firstItem="mse-va-78m" firstAttribute="leading" secondItem="IaA-aa-bHI" secondAttribute="trailing" constant="3" id="hIk-vO-NMk"/>
                     <constraint firstItem="uf1-gr-J41" firstAttribute="centerY" secondItem="I43-ty-t29" secondAttribute="centerY" id="jlu-J5-a6f"/>
                     <constraint firstItem="jPe-bo-XbK" firstAttribute="leading" secondItem="ZN8-PN-0Hf" secondAttribute="trailing" constant="8.5" id="m38-0B-2vM"/>
+                    <constraint firstAttribute="bottom" secondItem="snc-0Z-HwT" secondAttribute="bottom" id="nUM-Hy-W3w"/>
                     <constraint firstItem="QtH-ck-UoU" firstAttribute="centerY" secondItem="uf1-gr-J41" secondAttribute="centerY" id="pSa-4g-Fz5"/>
                     <constraint firstItem="1NX-fN-5J2" firstAttribute="centerY" secondItem="Wif-Op-cHd" secondAttribute="centerY" id="yuC-Kf-Zcn"/>
                 </constraints>
@@ -163,6 +172,7 @@
                 <outlet property="_homeTeamLabel" destination="Wif-Op-cHd" id="PVe-LL-jeu"/>
                 <outlet property="_smallOdds" destination="qGw-GZ-jmW" id="cGL-rY-PvT"/>
                 <outlet property="_smallSize" destination="1NX-fN-5J2" id="bJb-kA-Agw"/>
+                <outlet property="_statusView" destination="snc-0Z-HwT" id="ABN-3p-gSS"/>
             </connections>
             <point key="canvasLocation" x="-297.5" y="-173"/>
         </tableViewCell>
