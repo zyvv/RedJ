@@ -32,10 +32,7 @@
 }
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
-    _guestLogoImageView.layer.cornerRadius = _homeLogoImageView.layer.cornerRadius = 35/2.0;
-    _guestLogoImageView.layer.masksToBounds = _homeLogoImageView.layer.masksToBounds = YES;
-    
+    // Initialization code    
     
     _bigOdds.layer.masksToBounds = _smallOdds.layer.masksToBounds = _homeLetOdds.layer.masksToBounds = _guestLetOdds.layer.masksToBounds = YES;
     _bigOdds.layer.borderColor = _smallOdds.layer.borderColor = _homeLetOdds.layer.borderColor = _guestLetOdds.layer.borderColor = [UIColor blackColor].CGColor;

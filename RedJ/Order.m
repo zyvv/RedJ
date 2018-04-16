@@ -15,6 +15,17 @@
 
 @implementation Bet
 
+- (NSString *)betId {
+    NSDictionary *dict = @{@"orderUserName": self.orderUserName,
+                           @"matchId": self.matchId,
+                           @"betOdds": @(self.betOdds),
+                           @"leftOdds": @(self.leftOdds),
+                           @"betType": @(self.betType),
+                           @"handicapValue": @(self.handicapValue)
+                           };
+    return [[dict jsonStringEncoded] md2String];
+}
+
 - (AVObject *)betModelToAVObj {
     NSDictionary *jsonDict = [self yy_modelToJSONObject];
     return [AVObject objectWithDictionary:jsonDict];
@@ -27,15 +38,29 @@
             if (ac) {
                 [weakSelf bet:ac betBlock:betBlock];
             } else {
-                betBlock(NO, account, nil);
+                betBlock(NO, NO, account, nil);
             }
         }];
     }
+    
+    BOOL appendBet = NO;
+    AVQuery *query = [AVQuery queryWithClassName:@"Bet"];
+    [query whereKey:@"betId" equalTo:self.betId];
+    AVObject *obj = [query getFirstObject];
+    AVObject *betObj;
+    if (obj) {
+        appendBet = YES;
+        betObj = [AVObject objectWithClassName:@"Bet" objectId:obj.objectId];
+        [betObj incrementKey:@"betAmount" byAmount:@(self.betAmount)];
+    } else {
+        betObj = [AVObject objectWithClassName:@"Bet" dictionary:[self yy_modelToJSONObject]];
+    }
+    
     AVObject *accObj = [AVObject objectWithClassName:@"Account" objectId:account.objectId];
     accObj.fetchWhenSave = YES;
     [accObj setObject:@(account.balance - self.betAmount) forKey:@"balance"];
     
-    AVObject *betObj = [AVObject objectWithClassName:@"Bet" dictionary:[self yy_modelToJSONObject]];
+    
     AVObject *userBetMapTom = [[AVObject alloc] initWithClassName:@"UserBet"];// 用户投注
     [userBetMapTom setObject:[AVUser currentUser] forKey:@"user"];
     [userBetMapTom setObject:betObj forKey:@"bet"];
@@ -46,7 +71,7 @@
             if (succeeded) {
                 account.balance = account.balance - self.betAmount;
             }
-            betBlock(succeeded, account, error);
+            betBlock(succeeded, appendBet, account, error);
         }
     }];
 }

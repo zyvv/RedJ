@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yUP-Ic-j0F">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yUP-Ic-j0F">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -61,7 +61,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="WdB-FZ-Ual">
-                            <rect key="frame" x="0.0" y="358" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="358" width="375" height="49"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <viewLayoutGuide key="safeArea" id="d5X-Ng-RM4"/>
@@ -80,10 +80,11 @@
                                                 <segment title="让分"/>
                                                 <segment title="Second"/>
                                             </segments>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </segmentedControl>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ppf-vT-egW">
                                             <rect key="frame" x="138" y="168" width="100" height="35"/>
-                                            <color key="backgroundColor" red="0.08235294118" green="0.4941176471" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="0cE-Tc-5OQ"/>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="Svj-Uu-mJN"/>
@@ -125,7 +126,16 @@
                                                 <segment title="40"/>
                                                 <segment title="50"/>
                                             </segments>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </segmentedControl>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ftY-op-wbo">
+                                            <rect key="frame" x="9" y="26" width="4" height="4"/>
+                                            <color key="backgroundColor" red="1" green="0.0" blue="0.25490196079999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="4" id="INF-aP-cDf"/>
+                                                <constraint firstAttribute="width" secondItem="ftY-op-wbo" secondAttribute="height" multiplier="1:1" id="oka-m0-y2l"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="vwC-GM-gKY" firstAttribute="leading" secondItem="ovt-26-CWv" secondAttribute="leading" id="3Kh-tn-iwm"/>
@@ -133,8 +143,10 @@
                                         <constraint firstItem="VWN-IR-N48" firstAttribute="top" secondItem="ovt-26-CWv" secondAttribute="topMargin" constant="8" id="CAW-KJ-E5G"/>
                                         <constraint firstItem="aqs-6A-9xe" firstAttribute="top" secondItem="vwC-GM-gKY" secondAttribute="bottom" constant="3" id="JXe-AH-BOb"/>
                                         <constraint firstItem="FEO-08-8Bx" firstAttribute="leading" secondItem="VWN-IR-N48" secondAttribute="leading" id="KFD-r8-iSE"/>
+                                        <constraint firstItem="ftY-op-wbo" firstAttribute="centerY" secondItem="VWN-IR-N48" secondAttribute="centerY" id="Qa6-HM-cQT"/>
                                         <constraint firstItem="Ppf-vT-egW" firstAttribute="centerX" secondItem="ovt-26-CWv" secondAttribute="centerX" id="RLY-7P-Q8c"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="VWN-IR-N48" secondAttribute="trailing" constant="20" symbolic="YES" id="Svk-Ie-M4o"/>
+                                        <constraint firstItem="VWN-IR-N48" firstAttribute="leading" secondItem="ftY-op-wbo" secondAttribute="trailing" constant="3" id="Yr1-E0-OVi"/>
                                         <constraint firstItem="4xB-3m-c84" firstAttribute="width" secondItem="vwC-GM-gKY" secondAttribute="width" id="aD3-Ln-edq"/>
                                         <constraint firstItem="FEO-08-8Bx" firstAttribute="centerX" secondItem="aqs-6A-9xe" secondAttribute="centerX" id="cOZ-Wv-Jqe"/>
                                         <constraint firstItem="aqs-6A-9xe" firstAttribute="centerX" secondItem="ovt-26-CWv" secondAttribute="centerX" id="dCi-lK-PAZ"/>
@@ -154,6 +166,7 @@
                                     <outlet property="oddsSegment" destination="aqs-6A-9xe" id="StW-v4-Zyt"/>
                                     <outlet property="sureButton" destination="Ppf-vT-egW" id="tmh-yn-ASD"/>
                                     <outlet property="titleLabel" destination="VWN-IR-N48" id="cfS-Zw-Ags"/>
+                                    <outlet property="updateStausView" destination="ftY-op-wbo" id="uIM-2r-9Fz"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -164,6 +177,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="xEk-WJ-ArM"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="3fk-z3-pnG">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                 </tableViewController>
@@ -439,6 +453,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="MDR-Sh-XPi"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Wdv-gn-DKX">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <connections>
                             <action selector="refreshControlAction:" destination="RkJ-Xg-xHR" eventType="valueChanged" id="Wib-36-OHp"/>

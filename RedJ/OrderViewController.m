@@ -163,7 +163,7 @@ typedef enum : NSUInteger {
     
     letBet.orderUserName = [User currentUser].username;
     letBet.betType = 0;
-    letBet.betOdds = [[_letSegment titleForSegmentAtIndex:_sizeSegment.selectedSegmentIndex] floatValue];
+    letBet.betOdds = [[_letSegment titleForSegmentAtIndex:_letSegment.selectedSegmentIndex] floatValue];
     letBet.leftOdds = _letSegment.selectedSegmentIndex == 0 ? YES : NO;
     letBet.matchId = _match.thirdId;
     letBet.matchDate = _match.date;
@@ -176,7 +176,7 @@ typedef enum : NSUInteger {
     letBet.betDate = [NSDate date];
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [letBet bet:self.account betBlock:^(BOOL success, Account *account, NSError *error) {
+    [letBet bet:self.account betBlock:^(BOOL success, BOOL appendBet, Account *account, NSError *error) {
         if (success) {
             self.account = account;
             [sender setTitle:@"已投注" forState:UIControlStateNormal];
@@ -217,7 +217,7 @@ typedef enum : NSUInteger {
     sizeBet.matchDate = _match.date;
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [sizeBet bet:self.account betBlock:^(BOOL success, Account *account, NSError *error) {
+    [sizeBet bet:self.account betBlock:^(BOOL success, BOOL appendBet, Account *account, NSError *error) {
         if (success) {
             self.account = account;
             [sender setTitle:@"已投注" forState:UIControlStateNormal];

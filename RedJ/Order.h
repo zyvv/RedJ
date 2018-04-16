@@ -10,7 +10,7 @@
 #import "User.h"
 #import "Match.h"
 
-typedef void (^betBlock)(BOOL success, Account *account, NSError *error);
+typedef void (^betBlock)(BOOL success, BOOL appendBet, Account *account, NSError *error);
 
 @interface Order : NSObject
 
@@ -41,6 +41,7 @@ typedef void (^betBlock)(BOOL success, Account *account, NSError *error);
 @interface Bet : NSObject
 
 @property (nonatomic, copy) NSString *objectId; // 存储id
+@property (nonatomic, copy) NSString *betId; // bet标识
 
 @property (nonatomic, copy) NSString *orderUserName; // 投注用户昵称
 

@@ -9,6 +9,7 @@
 #import "BetCell.h"
 
 @interface BetCell ()
+@property (weak, nonatomic) IBOutlet UIView *updateStausView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *guestValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *homeValueLabel;
@@ -24,6 +25,8 @@
 
     self.sureButton.layer.masksToBounds = YES;
     self.sureButton.layer.cornerRadius = 5;
+    self.updateStausView.layer.masksToBounds = YES;
+    self.updateStausView.layer.cornerRadius = 2;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -63,6 +66,37 @@
 
 
 - (IBAction)sureButtonAction:(UIButton *)sender {
+    if (_amountSegment.selectedSegmentIndex == 0) {
+        return;
+    }
+    if (_willBetBlock) {
+        Bet *bet = [Bet new];
+        bet.betType = _betType;
+        bet.betAmount = _amountSegment.selectedSegmentIndex * 10;
+        if (self.account.balance < bet.betAmount) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.viewController.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = @"余额不足";
+            [hud hideAnimated:YES afterDelay:.5];
+            return;
+        }
+        
+        bet.orderUserName = [User currentUser].username;
+        bet.betType = 0;
+        bet.betOdds = [[_oddsSegment titleForSegmentAtIndex:_oddsSegment.selectedSegmentIndex] floatValue];
+        bet.leftOdds = _oddsSegment.selectedSegmentIndex == 0 ? YES : NO;
+        bet.matchId = _match.thirdId;
+        bet.matchDate = _match.date;
+        bet.handicapValue = _match.matchOdds.asiaLet.bet365.handicapValue;
+        
+        bet.settle = NO;
+        bet.earnings = 0;
+        bet.status = -1;
+        bet.match = _match;
+        bet.betDate = [NSDate date];
+        
+        _willBetBlock(self, bet);
+    }
 }
 
 @end
