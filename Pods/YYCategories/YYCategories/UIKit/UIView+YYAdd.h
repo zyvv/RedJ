@@ -112,6 +112,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CGPoint origin;      ///< Shortcut for frame.origin.
 @property (nonatomic) CGSize  size;        ///< Shortcut for frame.size.
 
+
+@property(nonatomic) IBInspectable UIColor * borderColor_vv;
+@property(nonatomic) IBInspectable CGFloat borderWidth_vv;
+@property(nonatomic) IBInspectable CGFloat borderCornerRadius_vv;
 @end
 
 NS_ASSUME_NONNULL_END
