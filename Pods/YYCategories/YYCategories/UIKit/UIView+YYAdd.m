@@ -12,7 +12,7 @@
 #import "UIView+YYAdd.h"
 #import <QuartzCore/QuartzCore.h>
 #import "YYCategoriesMacro.h"
-
+#import <objc/runtime.h>
 YYSYNTH_DUMMY_CLASS(UIView_YYAdd)
 
 
@@ -267,6 +267,30 @@ YYSYNTH_DUMMY_CLASS(UIView_YYAdd)
     CGRect frame = self.frame;
     frame.size = size;
     self.frame = frame;
+}
+
+-(CGFloat)borderCornerRadius_vv{
+    return self.layer.cornerRadius;
+}
+
+-(void)setBorderCornerRadius_vv:(CGFloat)borderCornerRadius_vv{
+    self.layer.cornerRadius = borderCornerRadius_vv;
+}
+
+-(UIColor *)borderColor_vv{
+    return [UIColor colorWithCGColor:self.layer.borderColor];
+}
+-(void)setBorderColor_vv:(UIColor *)borderColor_vv{
+    self.layer.borderColor = borderColor_vv.CGColor;
+}
+
+-(CGFloat)borderWidth_vv{
+    return [objc_getAssociatedObject(self, _cmd) floatValue];
+}
+
+-(void)setBorderWidth_vv:(CGFloat)borderWidth_vv{
+    objc_setAssociatedObject(self, @selector(borderWidth_vv), @(borderWidth_vv), OBJC_ASSOCIATION_RETAIN);
+    self.layer.borderWidth = borderWidth_vv;
 }
 
 @end

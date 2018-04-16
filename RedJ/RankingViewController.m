@@ -344,6 +344,23 @@
     return [dateFormat stringFromDate:now];
 }
 
+- (NSDictionary *)requestPrameters {
+    return @{
+             @"version": @"240",
+             @"userId": @"",
+             @"timeZone": @"8",
+             @"sign": @"48fb6a2abcba80554892266fc6398649fb",
+             @"loginToken": @"",
+             @"lang": @"zh",
+             @"deviceToken": @"",
+             @"deviceId": @"5BAD9C8825214AB782C7D0B7216F5454",
+             @"appno": @"11",
+             @"appType": @"1",
+             @"_": [NSString stringWithFormat:@"%f", [NSDate timeIntervalSinceReferenceDate]]
+             };
+}
+
+
 /*
 #pragma mark - Navigation
 
