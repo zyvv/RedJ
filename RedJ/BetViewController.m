@@ -18,12 +18,11 @@
 
 @end
 
-// 页面进来后请求注单信息，刷新UI。刷新比赛不用请求注单信息，只用比较与上一次的盘口信息。
-
 @implementation BetViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = [NSString stringWithFormat:@"%@ - %@", _match.guestTeam, _match.homeTeam];
     [User currentUserAccount:^(Account *account, NSError *error) {
         self.account = account;
     }];

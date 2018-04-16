@@ -125,6 +125,24 @@
     [PPNetworkHelper GET:@"http://m.13322.com/mlottery/core/basketballMatch.findScheduledMatch.do" parameters:[self requestPrameters] success:success failure:failure];
 }
 
+/*
+ // 查询比赛比分
+http://m.13322.com/mlottery/core/IOSBasketballDetail.findScore.do?_=1523890935.918744&appType=1&appno=11&deviceId=5BAD9C8825214AB782C7D0B7216F5454&deviceToken=&lang=zh&loginToken=&sign=ecdb94b8b7c4ff74841b282a9103c22f32&thirdId=7450487&timeZone=8&userId=&version=240
+ 
+ // 最新盘口
+ http://m.13322.com/mlottery/core/basketballDetail.findOdds.do?_=5&appType=1&appno=11&deviceId=5BAD9C8825214AB782C7D0B7216F5454&deviceToken=&lang=zh&loginToken=&oddsType=asiaSize&sign=5994bbb50634604239975a032dc0e3346a&thirdId=7447737&timeZone=8&userId=&version=240
+ 
+ // 新盘口和初盘(让分） 新的在前 初盘在后
+ // http://m.13322.com/mlottery/core/basketballDetail.findOdds.do?_=1523891423.113843&appType=1&appno=11&deviceId=5BAD9C8825214AB782C7D0B7216F5454&deviceToken=&lang=zh&loginToken=&oddsType=asiaLet&sign=b07139c8dd2bb957a97216d4e5e09dbee6&thirdId=7449997&timeZone=8&userId=&version=240
+ 
+ // 胜负
+ http://m.13322.com/mlottery/core/basketballDetail.findOdds.do?_=1523891597.283983&appType=1&appno=11&deviceId=5BAD9C8825214AB782C7D0B7216F5454&deviceToken=&lang=zh&loginToken=&oddsType=euro&sign=ee8ccb96441fe1a3efa56456354cf2d16e&thirdId=7449997&timeZone=8&userId=&version=240
+ 
+ // 大小分
+ http://m.13322.com/mlottery/core/basketballDetail.findOdds.do?_=1523891727.712246&appType=1&appno=11&deviceId=5BAD9C8825214AB782C7D0B7216F5454&deviceToken=&lang=zh&loginToken=&oddsType=asiaSize&sign=933e56edda3a93ed7129c305d3d5cd797c&thirdId=7449997&timeZone=8&userId=&version=240
+ 
+*/
+
 + (NSDictionary *)requestPrameters {
     return @{
              @"version": @"240",

@@ -27,6 +27,20 @@
     self.sureButton.layer.cornerRadius = 5;
     self.updateStausView.layer.masksToBounds = YES;
     self.updateStausView.layer.cornerRadius = 2;
+    
+    self.amountSegment.selectedSegmentIndex = 0;
+    self.oddsSegment.selectedSegmentIndex = 0;
+    
+    self.betEable = NO;
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    
+    self.amountSegment.selectedSegmentIndex = 0;
+    self.oddsSegment.selectedSegmentIndex = 0;
+    
+    self.betEable = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -34,7 +48,6 @@
 
     // Configure the view for the selected state
 }
-
 
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -55,6 +68,36 @@
     }
     [self.oddsSegment setTitle:[NSString stringWithFormat:@"%.2f", _pankou.leftOdds] forSegmentAtIndex:0];
     [self.oddsSegment setTitle:[NSString stringWithFormat:@"%.2f", _pankou.rightOdds] forSegmentAtIndex:1];
+    if (!_pankou || _match.matchStatus == -1 || (_match.matchStatus != 0 && _match.matchStatus != -1) ) {
+        self.betEable = NO;
+    } else {
+        self.betEable = YES;
+    }
+}
+
+- (void)setPankou:(Pankou *)pankou {
+    if (_pankou != pankou) {
+        _pankou = pankou;
+    }
+    [self setNeedsLayout];
+}
+
+- (void)setMatch:(Match *)match {
+    if (_match != match) {
+        _match = match;
+    }
+    [self setNeedsLayout];
+}
+
+
+- (void)setBetEable:(BOOL)betEable {
+    _betEable = betEable;
+     _oddsSegment.enabled = _amountSegment.enabled = _sureButton.enabled = betEable;
+    if (_betEable) {
+       _sureButton.backgroundColor = [UIColor blackColor];
+    } else {
+        _sureButton.backgroundColor = [UIColor blackColor];
+    }
 }
 
 - (NSString *)fuhao:(float)num {

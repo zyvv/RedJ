@@ -84,3 +84,14 @@
 @property (nonatomic, copy) NSArray *matchs;
 @end
 
+@interface CompanyOddsData : NSObject
+@property (nonatomic, copy) NSString *company;
+@property (nonatomic, copy) NSArray *oddsData;
+@end
+
+@interface CompanyOdds : NSObject
+@property (nonatomic, copy) NSString *thirdId; // 比赛id
+@property (nonatomic, copy) NSArray *companyOdds; // 公司盘口
+@property (nonatomic, strong) Pankou *bet365;
+@end
+

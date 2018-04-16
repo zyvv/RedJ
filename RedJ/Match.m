@@ -47,3 +47,28 @@
 @implementation Game
 
 @end
+
+@implementation CompanyOddsData
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    return @{@"oddsData" : [Pankou class]};
+}
+@end
+
+@implementation CompanyOdds
+
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    return @{@"companyOdds" : [CompanyOddsData class]};
+}
+
+- (Pankou *)bet365 {
+    for (CompanyOddsData *companyOddsData in self.companyOdds) {
+        if ([companyOddsData.company.uppercaseString isEqualToString:@"BET365"]) {
+            if (companyOddsData.oddsData) {
+                return companyOddsData.oddsData.firstObject;
+            }
+            return nil;
+        }
+    }
+    return nil;
+}
+@end

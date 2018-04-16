@@ -20,4 +20,7 @@ typedef void(^willBetBlock)(BetCell *cell, Bet *bet);
 @property (nonatomic, assign) int betType;
 @property (nonatomic, copy) willBetBlock willBetBlock;
 
+
+@property (nonatomic, assign) BOOL betEable;
+
 @end

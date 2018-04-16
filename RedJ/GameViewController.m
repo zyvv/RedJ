@@ -84,12 +84,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     Game *game = self.matchDataArray[indexPath.section];
-//    [self performSegueWithIdentifier:@"PushBetVC" sender:game.matchs[indexPath.row]];
-    OrderViewController *orderVC = [[OrderViewController alloc] init];
-    orderVC.match = game.matchs[indexPath.row];
-    orderVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:orderVC
-                                         animated:YES];
+    [self performSegueWithIdentifier:@"PushBetVC" sender:game.matchs[indexPath.row]];
+//    OrderViewController *orderVC = [[OrderViewController alloc] init];
+//    orderVC.match = game.matchs[indexPath.row];
+//    orderVC.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:orderVC
+//                                         animated:YES];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
