@@ -10,8 +10,12 @@
 #import "RankingCell.h"
 #import "User.h"
 #import "Ranking.h"
+#import "Order.h"
+#import "RequestList.h"
+#import "UserSettle.h"
 
 @interface RankingViewController ()<UITableViewDelegate, UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshItem;
 @property (nonatomic, copy) NSArray *userRankingArray;
 @end
 
@@ -21,7 +25,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"统计";
-    self.tableView.tableFooterView = [UIView new];
+    
+    UIView *footerView = [UIView new];
+    footerView.frame = CGRectMake(0, 0, 320, 100);
+    self.tableView.tableFooterView = footerView;
     UILabel *label = [UILabel new];
     label.frame = CGRectMake(0, 0, 300, 50);
     label.textColor = [UIColor darkGrayColor];
@@ -33,19 +40,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if ([self isRankingTime]) {
-        [self fecthRankData];
-    }
 }
 
-- (void)fecthRankData {
-    AVQuery *query2 = [AVQuery queryWithClassName:@"BetRanked"];
-    NSDate *now = [NSDate date];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"yyyy-MM-dd"];
-    NSString *nowStr = [dateFormat stringFromDate:now];
-    [query2 whereKey:@"rankedDay" equalTo:nowStr];
-    AVQuery *query = [AVQuery andQueryWithSubqueries:@[query2]];
+- (void)fecthRankData:(void (^)(void))completion {
+    AVQuery *query = [AVQuery queryWithClassName:@"BetRanked"];
+    [query whereKey:@"rankedDay" equalTo:[UserSettle formatToday]];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -77,9 +76,24 @@
                 }
                 
                 self.userRankingArray = [userRankArray copy];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (completion) { completion(); }
+                });
             });
+        } else {
+            if (completion) { completion(); }
         }
     }];
+}
+
+- (IBAction)refreshControlAction:(UIRefreshControl *)sender {
+    if ([UserSettle isRankingDuration]) {
+        [self fecthRankData:^{
+            [sender endRefreshing];
+        }];
+    } else {
+        [sender endRefreshing];
+    }
 }
 
 - (void)setUserRankingArray:(NSArray *)userRankingArray {
@@ -114,22 +128,7 @@
     return 100;
 }
 
-- (BOOL)isRankingTime {
-    
-    NSDate *now = [NSDate date];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"HH:mm"];
-    
-    NSString *nowStr = [dateFormat stringFromDate:now];
-    now = [dateFormat dateFromString:nowStr];
-    
-    NSDate *rankingTime = [dateFormat dateFromString:@"15:00"];
-    
-    if ([now compare:rankingTime] == NSOrderedDescending) {
-        return YES;
-    }
-    return NO;
-}
+
 
 /*
 #pragma mark - Navigation

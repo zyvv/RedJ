@@ -48,7 +48,8 @@ typedef void (^betBlock)(BOOL success, Account *account, NSError *error);
 @property (nonatomic, assign) float betOdds; // 下注赔率
 @property (nonatomic, assign) float betAmount; // 下注金额
 @property (nonatomic, assign) BOOL leftOdds; // 投注的是否是大分(客队让分)
-@property (nonatomic, assign) BOOL isSize; //  投注的是否是大小分类型
+@property (nonatomic, assign) BOOL betType; //  投注类型 0让分 1大小分 2胜负
+@property (nonatomic, assign) float handicapValue; // 主队让分 / 大小分盘口
 
 @property (nonatomic, assign) BOOL settle; // 是否结算
 @property (nonatomic, assign) float earnings; // 此单收益
