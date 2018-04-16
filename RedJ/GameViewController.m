@@ -13,6 +13,8 @@
 #import "OrderViewController.h"
 #import "User.h"
 #import "Order.h"
+#import "RequestList.h"
+#import "BetViewController.h"
 
 @interface GameViewController ()<UITableViewDelegate, UITableViewDataSource>
 //@property (nonatomic, strong) UITableView *tableView;
@@ -32,7 +34,13 @@
     } else {
     }
     
-    self.tableView.tableFooterView = [UIView new];
+    UILabel *label = [UILabel new];
+    label.frame = CGRectMake(0, 0, 300, 30);
+    label.textColor = [UIColor darkGrayColor];
+    label.font = [UIFont systemFontOfSize:12];
+    label.textAlignment = NSTextAlignmentCenter;
+//    label.text = @"佳哥最红";
+    self.tableView.tableFooterView = label;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -74,12 +82,14 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     Game *game = self.matchDataArray[indexPath.section];
-    OrderViewController *orderVC = [[OrderViewController alloc] init];
-    orderVC.match = game.matchs[indexPath.row];
-    orderVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:orderVC
-                                         animated:YES];
+    [self performSegueWithIdentifier:@"PushBetVC" sender:game.matchs[indexPath.row]];
+//    OrderViewController *orderVC = [[OrderViewController alloc] init];
+//    orderVC.match = game.matchs[indexPath.row];
+//    orderVC.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:orderVC
+//                                         animated:YES];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -93,7 +103,7 @@
 }
 
 - (IBAction)refreshControlAction:(UIRefreshControl *)sender {
-    [self requestMatchSuccess:^(id responseObject) {
+    [RequestList requestMatchSuccess:^(id responseObject) {
         self.matchDataArray = (NSArray *)responseObject;
         dispatch_async(dispatch_get_main_queue(), ^{
             [sender endRefreshing];
@@ -110,131 +120,18 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)requestLiveMatchSuccess:(PPHttpRequestSuccess)success
-                        failure:(PPHttpRequestFailed)failure {
-    [PPNetworkHelper GET:@"http://m.13322.com/mlottery/core/basketballMatch.findLiveMatch.do" parameters:[self requestPrameters] success:success failure:failure];
-}
 
-- (void)requestScheduledMatchSuccess:(PPHttpRequestSuccess)success
-                             failure:(PPHttpRequestFailed)failure {
-    [PPNetworkHelper GET:@"http://m.13322.com/mlottery/core/basketballMatch.findScheduledMatch.do" parameters:[self requestPrameters] success:success failure:failure];
-}
-
-- (void)requestMatchSuccess:(PPHttpRequestSuccess)success
-                    failure:(PPHttpRequestFailed)failure {
-    [self requestLiveMatchSuccess:^(id responseObject) {
-        ResponseModel *liveModel = [ResponseModel yy_modelWithJSON:responseObject];
-        if (liveModel.result == 200) {
-            [self requestScheduledMatchSuccess:^(id responseObject) {
-                ResponseModel *scheduledModel = [ResponseModel yy_modelWithJSON:responseObject];
-                if (scheduledModel.result == 200) {
-                    NSMutableArray *responseArray = [NSMutableArray arrayWithCapacity:0];
-                    
-                    for (MatchData *matchData in liveModel.matchData) {
-                        if (matchData.diffDays == 0) { // 正在进行的比赛
-                            Game *game = [Game new];
-                            game.date = matchData.date;
-                            NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
-                            for (Match *match in matchData.match) {
-                                if ([match.leagueId isEqualToString:@"1"]) {
-                                    [matchs addObject:match];
-                                }
-                            }
-                            game.matchs = matchs;
-                            if (matchs.count > 0) {
-                                [responseArray addObject:game];
-                            }
-                        }
-                        
-                        if (matchData.diffDays == 1) { // 明日比赛
-                            Game *game = [Game new];
-                            game.date = matchData.date;
-                            NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
-                            for (Match *match in matchData.match) {
-                                if ([match.leagueId isEqualToString:@"1"]) {
-                                    [matchs addObject:match];
-                                }
-                            }
-                            game.matchs = matchs;
-                            if (matchs.count > 0) {
-                                [responseArray addObject:game];
-                            }
-                        }
-                    }
-                    
-                    for (MatchData *matchData in scheduledModel.matchData) {
-                        if (matchData.diffDays == 1) { // 计划表中明天的比赛
-                            Game *game = [Game new];
-                            game.date = matchData.date;
-                            NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
-                            for (Match *match in matchData.match) {
-                                if ([match.leagueId isEqualToString:@"1"]) {
-                                    [matchs addObject:match];
-                                }
-                            }
-                            game.matchs = matchs;
-                            if (matchs.count > 0) {
-                                [responseArray addObject:game];
-                            }
-                        }
-                    }
-                    
-                    success(responseArray);
-                    
-                } else {
-                    NSError *error = [[NSError alloc] initWithDomain:@"com.zyvv.error" code:scheduledModel.result userInfo:@{NSLocalizedDescriptionKey: @"返回数据错误"}];
-                    failure(error);
-                }
-            } failure:failure];
-        } else {
-            NSError *error = [[NSError alloc] initWithDomain:@"com.zyvv.error" code:liveModel.result userInfo:@{NSLocalizedDescriptionKey: @"返回数据错误"}];
-            failure(error);
-        }
-
-    } failure:failure];
-}
-
-- (NSDictionary *)requestPrameters {
-    return @{
-             @"version": @"240",
-             @"userId": @"",
-             @"timeZone": @"8",
-             @"sign": @"48fb6a2abcba80554892266fc6398649fb",
-             @"loginToken": @"",
-             @"lang": @"zh",
-             @"deviceToken": @"",
-             @"deviceId": @"5BAD9C8825214AB782C7D0B7216F5454",
-             @"appno": @"11",
-             @"appType": @"1",
-             @"_": [NSString stringWithFormat:@"%f", [NSDate timeIntervalSinceReferenceDate]]
-             };
-}
-
-- (BOOL)isRankingTime {
-
-    NSDate *now = [NSDate date];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"HH:mm"];
-
-    NSString *nowStr = [dateFormat stringFromDate:now];
-    now = [dateFormat dateFromString:nowStr];
-    
-    NSDate *rankingTime = [dateFormat dateFromString:@"15:00"];
-    
-    if ([now compare:rankingTime] == NSOrderedDescending) {
-        return YES;
-    }
-    return NO;
-}
-
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"PushBetVC"]) {
+        BetViewController *betVC = (BetViewController *)segue.destinationViewController;
+        betVC.match = (Match *)sender;
+    }
 }
-*/
+
 
 @end

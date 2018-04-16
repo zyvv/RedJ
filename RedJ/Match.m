@@ -12,11 +12,11 @@
 
 @end
 
-@implementation AsiaLet
+@implementation Euro
 
 @end
 
-@implementation AsiaSize
+@implementation Asia
 
 @end
 

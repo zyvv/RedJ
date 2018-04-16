@@ -34,6 +34,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) Account *account;
 @property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *matchScoreLabel;
 
 @end
 
@@ -68,9 +69,9 @@ typedef enum : NSUInteger {
                 for (AVObject *obj in results) {
                     NSMutableDictionary *betDict = [obj dictionaryForObject];
                     Bet *bet = [Bet yy_modelWithJSON:betDict];
-                    if (bet.isSize) {
+                    if (bet.betType == 1) {
                         [self layoutSize:bet];
-                    } else {
+                    } else if(bet.betType == 0) {
                         [self layoutLet:bet];
                     }
                 }
@@ -102,15 +103,16 @@ typedef enum : NSUInteger {
     
     [_sizeSegment setTitle:[NSString stringWithFormat:@"%.2f", _match.matchOdds.asiaSize.bet365.leftOdds] forSegmentAtIndex:0];
     [_sizeSegment setTitle:[NSString stringWithFormat:@"%.2f", _match.matchOdds.asiaSize.bet365.rightOdds] forSegmentAtIndex:1];
+    _matchScoreLabel.text = [NSString stringWithFormat:@"%.0f : %.0f", _match.matchScore.guestScore, _match.matchScore.homeScore];
     
     if (_match.matchStatus == -1) {
         _letSegment.enabled = _letOrderSegment.enabled = _sizeSegment.enabled = _sizeOrderSegment.enabled = NO;
-        _statusLabel.text = @"比赛已结束";
+        _statusLabel.text = @"已结束";
     } else if (_match.matchStatus != 0) {
         _letSegment.enabled = _letOrderSegment.enabled = _sizeSegment.enabled = _sizeOrderSegment.enabled = NO;
-        _statusLabel.text = @"比赛正在进行中";
+        _statusLabel.text = @"正在进行中";
     } else {
-        _statusLabel.text = @"";
+        _statusLabel.text = @"未开始";
     }
 }
 
@@ -160,11 +162,12 @@ typedef enum : NSUInteger {
     }
     
     letBet.orderUserName = [User currentUser].username;
-    letBet.isSize = NO;
+    letBet.betType = 0;
     letBet.betOdds = [[_letSegment titleForSegmentAtIndex:_sizeSegment.selectedSegmentIndex] floatValue];
     letBet.leftOdds = _letSegment.selectedSegmentIndex == 0 ? YES : NO;
     letBet.matchId = _match.thirdId;
     letBet.matchDate = _match.date;
+    letBet.handicapValue = _match.matchOdds.asiaLet.bet365.handicapValue;
     
     letBet.settle = NO;
     letBet.earnings = 0;
@@ -200,10 +203,11 @@ typedef enum : NSUInteger {
     }
     
     sizeBet.orderUserName = [User currentUser].username;
-    sizeBet.isSize = YES;
+    sizeBet.betType = 1;
     sizeBet.betOdds = [[_sizeSegment titleForSegmentAtIndex:_sizeSegment.selectedSegmentIndex] floatValue];
     sizeBet.leftOdds = _sizeSegment.selectedSegmentIndex == 0 ? YES : NO;
     sizeBet.matchId = _match.thirdId;
+    sizeBet.handicapValue = _match.matchOdds.asiaSize.bet365.handicapValue;
     
     sizeBet.settle = NO;
     sizeBet.earnings = 0;

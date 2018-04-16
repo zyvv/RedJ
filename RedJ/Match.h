@@ -32,17 +32,18 @@
 @end
 
 
-@interface AsiaLet : NSObject
-@property (nonatomic, strong) Pankou *bet365;
+@interface Euro : NSObject
+@property (nonatomic, strong) Pankou *euro;
 @end
 
-@interface AsiaSize : NSObject
+@interface Asia : NSObject
 @property (nonatomic, strong) Pankou *bet365;
 @end
 
 @interface MatchOdds : NSObject
-@property (nonatomic, strong) AsiaLet *asiaLet; // 让分
-@property (nonatomic, strong) AsiaSize *asiaSize; // 大小分
+@property (nonatomic, strong) Asia *asiaLet; // 让分
+@property (nonatomic, strong) Asia *asiaSize; // 大小分
+@property (nonatomic, strong) Euro *euro; // 胜负
 @end
 
 @interface MatchScore : NSObject
