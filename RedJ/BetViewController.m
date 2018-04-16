@@ -24,7 +24,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    [User currentUserAccount:^(Account *account, NSError *error) {
+        self.account = account;
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -41,6 +43,13 @@
         _match = match;
     }
     _lastMatch = _match;
+    [self.tableView reloadData];
+}
+
+- (void)setAccount:(Account *)account {
+    if (_account != account) {
+        _account = account;
+    }
     [self.tableView reloadData];
 }
 
@@ -63,16 +72,47 @@
     if (indexPath.item == 2) {
         cell.pankou = _match.matchOdds.euro.euro;
     }
+    
+    __weak BetViewController *weakSelf = self;
+    cell.willBetBlock = ^(BetCell *betCell, Bet *bet) {
+        [weakSelf uploadBet:bet];
+    };
+    
     return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     BetHeaderView *headerView = [[[NSBundle mainBundle] loadNibNamed:@"BetHeaderView" owner:self options:nil] lastObject];
     headerView.match = _match;
+    headerView.account = _account;
     return headerView;
 }
 
-
+- (void)uploadBet:(Bet *)bet {
+    if (self.account.balance < bet.betAmount) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = @"余额不足";
+        [hud hideAnimated:YES afterDelay:.5];
+        return;
+    }
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    [bet bet:self.account betBlock:^(BOOL success, BOOL appendBet, Account *account, NSError *error) {
+        if (success) {
+            if (appendBet) {
+                hud.label.text = @"追加成功";
+            } else {
+                hud.label.text = @"下注成功";
+            }
+            self.account = account;
+        } else {
+            hud.label.text = @"下注失败";
+        }
+        [hud hideAnimated:YES afterDelay:.25];
+    }];
+}
 
 /*
 // Override to support conditional editing of the table view.

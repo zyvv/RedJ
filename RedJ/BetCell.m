@@ -73,14 +73,6 @@
         Bet *bet = [Bet new];
         bet.betType = _betType;
         bet.betAmount = _amountSegment.selectedSegmentIndex * 10;
-        if (self.account.balance < bet.betAmount) {
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.viewController.view animated:YES];
-            hud.mode = MBProgressHUDModeText;
-            hud.label.text = @"余额不足";
-            [hud hideAnimated:YES afterDelay:.5];
-            return;
-        }
-        
         bet.orderUserName = [User currentUser].username;
         bet.betType = 0;
         bet.betOdds = [[_oddsSegment titleForSegmentAtIndex:_oddsSegment.selectedSegmentIndex] floatValue];
