@@ -10,6 +10,8 @@ def pods
     pod 'YYModel'
     pod 'MBProgressHUD'
     pod 'PPNetworkHelper'
+    pod 'Pgyer'
+    pod 'PgyUpdate'
 end
 
 target :'RedJ' do

@@ -20,7 +20,8 @@
 @interface GameViewController ()<UITableViewDelegate, UITableViewDataSource>
 //@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, copy) NSArray *matchDataArray;
-
+@property (nonatomic) NSDateFormatter *dateFormatter;
+@property (nonatomic) NSDateFormatter *dateFormatter2;
 @end
 
 @implementation GameViewController
@@ -29,12 +30,12 @@
     [super viewDidLoad];
     self.title = @"比赛";
 
-    if (![AVUser currentUser]) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        [self.navigationController presentViewController:loginVC animated:NO completion:nil];
-    } else {
-    }
+//    if (![AVUser currentUser]) {
+//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+//        [self.navigationController presentViewController:loginVC animated:NO completion:nil];
+//    } else {
+//    }
     
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
@@ -103,14 +104,26 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UILabel *header = [[UILabel alloc] init];
+    UIView *bgView = [[UIView alloc] init];
+    bgView.backgroundColor = [UIColor blackColor];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,8, 375, 34)];
+    headerView.backgroundColor = [UIColor whiteColor];
+    [bgView addSubview:headerView];
+    UILabel *header = [[UILabel alloc] initWithFrame:CGRectMake(16,5, 375, 24)];
     header.textColor = [UIColor darkTextColor];
-    header.font = [UIFont systemFontOfSize:17];
-    header.backgroundColor = [UIColor colorWithWhite:1 alpha:0.75];
+    header.font = [UIFont systemFontOfSize:16];
     Game *game = self.matchDataArray[section];
-    header.text = game.date;
-    return header;
+    NSDate *date = [self.dateFormatter dateFromString:game.date];
+    NSString *dateString = [self.dateFormatter2 stringFromDate:date] ;
+    header.text = dateString;
+    [headerView addSubview:header];
+    return bgView;
 }
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 50;
+}
+
 
 - (IBAction)refreshControlAction:(UIRefreshControl *)sender {
     [RequestList requestMatchSuccess:^(id responseObject) {
@@ -142,6 +155,19 @@
         betVC.match = (Match *)sender;
     }
 }
-
+- (NSDateFormatter*)dateFormatter{
+    if (!_dateFormatter){
+        _dateFormatter = [NSDateFormatter new];
+        _dateFormatter.dateFormat = @"yyyy-MM-dd";
+    }
+    return  _dateFormatter;
+}
+- (NSDateFormatter*)dateFormatter2{
+    if (!_dateFormatter2){
+        _dateFormatter2 = [NSDateFormatter new];
+        _dateFormatter2.dateFormat = @"MM月dd日 EEEE";
+    }
+    return  _dateFormatter2;
+}
 
 @end
