@@ -30,12 +30,12 @@
     [super viewDidLoad];
     self.title = @"比赛";
 
-//    if (![AVUser currentUser]) {
-//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-//        [self.navigationController presentViewController:loginVC animated:NO completion:nil];
-//    } else {
-//    }
+    if (![AVUser currentUser]) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController presentViewController:loginVC animated:NO completion:nil];
+    } else {
+    }
     
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
