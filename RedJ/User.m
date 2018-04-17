@@ -37,6 +37,7 @@
         if (userAccountBlock) {
             userAccountBlock(account, error);
         }
+
     }];
 }
 

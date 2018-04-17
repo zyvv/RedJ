@@ -11,6 +11,7 @@
 #import <UserNotifications/UserNotifications.h>
 #import <PgySDK/PgyManager.h>
 #import <PgyUpdate/PgyUpdateManager.h>
+
 @interface AppDelegate ()<UNUserNotificationCenterDelegate>
 
 @end
@@ -46,10 +47,10 @@
     components.minute = 8;
     UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components repeats:YES];
 
-    UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:@"RankingNoti"
-                                                                              content:content trigger:trigger];
+    UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:@"RankingNoti" content:content trigger:trigger];
     
     [center addNotificationRequest:request withCompletionHandler:nil];
+    
     return YES;
 }
 

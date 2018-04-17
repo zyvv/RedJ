@@ -48,13 +48,19 @@
         
         AVQuery *query1 = [AVQuery queryWithClassName:@"Bet"];
         [query1 whereKey:@"orderUserName" equalTo:[User currentUser].username];
-        AVQuery *query2 = [AVQuery queryWithClassName:@"Bet"];
-        NSDate *now = [NSDate date];
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"yyyy-MM-dd"];
-        NSString *nowStr = [dateFormat stringFromDate:now];
-        [query2 whereKey:@"matchDate" equalTo:nowStr];
-        AVQuery *query = [AVQuery andQueryWithSubqueries:@[query1, query2]];
+//        AVQuery *query2 = [AVQuery queryWithClassName:@"Bet"];
+//        NSDate *now = [NSDate date];
+//        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+//        [dateFormat setDateFormat:@"yyyy-MM-dd"];
+//        NSString *nowStr = [dateFormat stringFromDate:now];
+//        [query2 whereKey:@"matchDate" equalTo:nowStr];
+        
+        AVQuery *startDateQuery = [AVQuery queryWithClassName:@"Bet"];
+        [startDateQuery whereKey:@"createdAt" greaterThanOrEqualTo:[UserSettle settleDuration].firstObject];
+        
+        AVQuery *endDateQuery = [AVQuery queryWithClassName:@"Bet"];
+        [endDateQuery whereKey:@"createdAt" lessThan:[UserSettle settleDuration].lastObject];
+        AVQuery *query = [AVQuery andQueryWithSubqueries:@[query1, startDateQuery,endDateQuery]];
         [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
             if (results) {
                 NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:0];
@@ -82,6 +88,9 @@
     int hei = 0;
     int totalEarningWithoutBenJin = 0;
     for (Bet *bet in betsArray) {
+        if (bet.settle) {
+            continue;
+        }
         for (Match *match in matchsArray) {
             if ([bet.matchId isEqualToString:match.thirdId]) {
                 AVObject *obj = [AVObject objectWithClassName:@"Bet" objectId:bet.objectId];
@@ -258,6 +267,36 @@
     return formatToday;
 }
 
++ (NSString *)formatYesterday {
+    static NSString *formatYesterday = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSDate *yesterDay = [NSDate dateWithTimeIntervalSinceNow:-60 * 60 * 24];
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"yyyy-MM-dd"];
+        formatYesterday = [dateFormat stringFromDate:yesterDay];
+    });
+    return formatYesterday;
+}
+
++ (NSArray *)settleDuration {
+    
+    NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
+    [calendar setTimeZone:gmt];
+    
+    NSDateComponents *components = [calendar components:NSUIntegerMax fromDate:[NSDate date]];
+    components.day-=1;
+    [components setHour:15];
+    [components setMinute:5];
+    [components setSecond: 0];
+    
+    NSDate *startDate = [calendar dateFromComponents:components];
+    NSDate *endDate = [calendar dateByAddingUnit:NSCalendarUnitDay value:1 toDate:startDate options:0];
+    
+    return @[startDate, endDate];
+}
+
 + (BOOL)isSettleTime {
     NSDate *now = [NSDate date];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
@@ -268,6 +307,23 @@
     
     NSDate *rankingTime = [dateFormat dateFromString:@"15:00"];
     NSDate *rankingStopTime = [dateFormat dateFromString:@"23:50"];
+    
+    if ([now compare:rankingTime] == NSOrderedDescending && [now compare:rankingStopTime] == NSOrderedAscending) {
+        return YES;
+    }
+    return NO;
+}
+
++ (BOOL)beingSettled {
+    NSDate *now = [NSDate date];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"HH:mm"];
+    
+    NSString *nowStr = [dateFormat stringFromDate:now];
+    now = [dateFormat dateFromString:nowStr];
+    
+    NSDate *rankingTime = [dateFormat dateFromString:@"14:55"];
+    NSDate *rankingStopTime = [dateFormat dateFromString:@"15:10"];
     
     if ([now compare:rankingTime] == NSOrderedDescending && [now compare:rankingStopTime] == NSOrderedAscending) {
         return YES;

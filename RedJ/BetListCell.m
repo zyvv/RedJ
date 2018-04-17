@@ -50,7 +50,7 @@
         if (_bet.earnings == _bet.betAmount) {
             _earningLabel.text = @"水单";
         } else {
-            _earningLabel.text = _bet.earnings > _bet.betAmount ? [NSString stringWithFormat:@"盈 +%.2f", (_bet.earnings - _bet.betAmount)] : [NSString stringWithFormat:@"亏 %.2f", (_bet.earnings - _bet.betAmount)];
+            _earningLabel.text = _bet.earnings > _bet.betAmount ? [NSString stringWithFormat:@"盈 +%.2f", (_bet.earnings - _bet.betAmount)] : [NSString stringWithFormat:@"亏 %.2f", -_bet.betAmount];
         }
     } else {
         _earningLabel.text = @"未结算";
@@ -67,11 +67,7 @@
     }
 
     if (_bet.leftOddsValue == 0 || _bet.rightOddsValue == 0) {
-        if (_bet.settle && _bet.earnings > _bet.betAmount) {
-            _betOddsLabel.text = [NSString stringWithFormat:@"%.2f", round(((int)_bet.earnings % (int)_bet.betAmount) * 100) / 100];
-        } else {
-            _betOddsLabel.text = @"未知赔率";
-        }
+        _betOddsLabel.text = @"未知赔率";
     } else {
         _betOddsLabel.text = _bet.leftOdds ? [NSString stringWithFormat:@"%.2f", _bet.leftOddsValue] : [NSString stringWithFormat:@"%.2f", _bet.rightOddsValue];
     }
@@ -83,7 +79,7 @@
 }
 
 - (NSString *)fuhao:(float)num {
-    if (num >= 0) {
+    if (num > 0) {
         return [NSString stringWithFormat:@"+%.1f", num];
     }
     return [NSString stringWithFormat:@"%.1f", num];

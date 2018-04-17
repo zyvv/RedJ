@@ -16,6 +16,10 @@
 
 + (NSString *)formatToday;
 
++ (NSString *)formatYesterday;
+
 + (void)settleAndUploadTodayEarning;
+
++ (BOOL)beingSettled;
 
 @end

@@ -139,18 +139,17 @@
     [RequestList requestFinishedMatchSuccess:^(id responseObject) {
         ResponseModel *finishedModel = [ResponseModel yy_modelWithJSON:responseObject];
         if (finishedModel.result == 200) {
+            NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
             for (MatchData *matchData in finishedModel.matchData) {
-                if (matchData.diffDays == 0) { // 今天的比赛
-                    NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
+                if (matchData.diffDays == 0 || matchData.diffDays == -1) { // 今天和昨天的比赛
                     for (Match *match in matchData.match) {
                         if ([match.leagueId isEqualToString:@"1"] || [match.leagueId isEqualToString:@"5"]) {
                             [matchs addObject:match];
                         }
                     }
-                    success(matchs);
                 }
             }
-            
+            success(matchs);
         } else {
             NSError *error = [[NSError alloc] initWithDomain:@"com.zyvv.error" code:finishedModel.result userInfo:@{NSLocalizedDescriptionKey: @"返回数据错误"}];
             failure(error);

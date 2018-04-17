@@ -7,6 +7,7 @@
 //
 
 #import "RankingCell.h"
+#import "UserSettle.h"
 
 @implementation RankingCell
 {
@@ -16,6 +17,7 @@
     __weak IBOutlet UILabel *_rankingLabel;
     __weak IBOutlet UILabel *_todayPayLabel;
     __weak IBOutlet UILabel *_recordLabel;
+    __weak IBOutlet UILabel *_earningDayLabel;
     
 }
 - (void)awakeFromNib {
@@ -32,12 +34,19 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    if ([_userRanking.rankedDay isEqualToString:[UserSettle formatToday]]) {
+        _earningDayLabel.text = @"今日收益";
+    } else if ([_userRanking.rankedDay isEqualToString:[UserSettle formatYesterday]]) {
+        _earningDayLabel.text = @"昨日收益";
+    } else {
+        _earningDayLabel.text = @"收益";
+    }
     _usernameLabel.text = _userRanking.userName;
 //    _totalAmountLabel.text =
     _rankingLabel.text = [NSString stringWithFormat:@"# %d", _ranking];
     _yesterdayEarningLabel.text = [NSString stringWithFormat:@"%.2f", _userRanking.todayEarning];
     _recordLabel.text = [NSString stringWithFormat:@"%d红%d黑", _userRanking.hong, _userRanking.hei];
-    _todayPayLabel.text = [NSString stringWithFormat:@"今日投注额：%.2f", _userRanking.todayPay];
+    _todayPayLabel.text = [NSString stringWithFormat:@"冻结额：%.2f", _userRanking.todayPay];
     _totalAmountLabel.text = [NSString stringWithFormat:@"账户总额：%.2f", _userRanking.totalAccount];
 }
 

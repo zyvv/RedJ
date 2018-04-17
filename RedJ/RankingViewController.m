@@ -47,7 +47,11 @@
 
 - (void)fecthRankData:(void (^)(void))completion {
     AVQuery *query = [AVQuery queryWithClassName:@"BetRanked"];
-    [query whereKey:@"rankedDay" equalTo:[UserSettle formatToday]];
+    if ([UserSettle isRankingDuration]) {
+        [query whereKey:@"rankedDay" equalTo:[UserSettle formatToday]];
+    } else {
+        [query whereKey:@"rankedDay" equalTo:[UserSettle formatYesterday]];
+    }
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -75,6 +79,7 @@
                             userRanking.todayEarning = ranking.totalEarning;
                             userRanking.totalAccount = ranking.totalAccount;
                             userRanking.todayPay = ranking.todayPay;
+                            userRanking.rankedDay = ranking.rankedDay;
                         }
                     }
                     [userRankArray addObject:userRanking];
@@ -104,13 +109,9 @@
 }
 
 - (IBAction)refreshControlAction:(UIRefreshControl *)sender {
-    if ([UserSettle isRankingDuration]) {
-        [self fecthRankData:^{
-            [sender endRefreshing];
-        }];
-    } else {
+    [self fecthRankData:^{
         [sender endRefreshing];
-    }
+    }];
 }
 
 - (void)setUserRankingArray:(NSArray *)userRankingArray {

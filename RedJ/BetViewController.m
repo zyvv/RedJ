@@ -12,6 +12,7 @@
 #import "Account.h"
 #import "BetListViewController.h"
 #import "RequestList.h"
+#import "UserSettle.h"
 
 typedef void(^RequestOddsBlock)(BOOL success, Pankou *pankou, NSError *error);
 typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
@@ -278,6 +279,13 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
                     [hud hideAnimated:YES afterDelay:.25];
                     return;
                 } else {
+                    
+                    if ([UserSettle beingSettled]) {
+                        hud.label.text = @"系统正在结算，请在15:10之后下注";
+                        [hud hideAnimated:YES afterDelay:.25];
+                        return;
+                    }
+                    
                     [bet bet:self.account betBlock:^(BOOL success, BOOL appendBet, Account *account, NSError *error) {
                         if (success) {
                             if (appendBet) {
@@ -286,6 +294,16 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
                                 hud.label.text = @"下注成功";
                             }
                             self.account = account;
+                            if ([UserSettle isRankingDuration]) {
+                                AVQuery *query = [AVQuery queryWithClassName:@"BetRanked"];
+                                [query whereKey:@"rankedDay" equalTo:[UserSettle formatToday]];
+                                [query getFirstObjectInBackgroundWithBlock:^(AVObject * _Nullable object, NSError * _Nullable error) {
+                                    if (object) {
+                                        [object setObject:@(account.totalAccount - account.balance) forKey:@"todayPay"];
+                                        [object saveInBackground];
+                                    }
+                                }];
+                            }
                         } else {
                             hud.label.text = @"下注失败";
                         }

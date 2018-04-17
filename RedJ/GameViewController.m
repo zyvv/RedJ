@@ -18,10 +18,7 @@
 #import "UserSettle.h"
 
 @interface GameViewController ()<UITableViewDelegate, UITableViewDataSource>
-//@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, copy) NSArray *matchDataArray;
-@property (nonatomic) NSDateFormatter *dateFormatter;
-@property (nonatomic) NSDateFormatter *dateFormatter2;
 @end
 
 @implementation GameViewController
@@ -113,14 +110,12 @@
     header.textColor = [UIColor darkTextColor];
     header.font = [UIFont systemFontOfSize:16];
     Game *game = self.matchDataArray[section];
-    NSDate *date = [self.dateFormatter dateFromString:game.date];
-    NSString *dateString = [self.dateFormatter2 stringFromDate:date] ;
-    header.text = dateString;
+    header.text = [self formatMatchDateString:game.date];;
     [headerView addSubview:header];
     return bgView;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 50;
 }
 
@@ -155,19 +150,20 @@
         betVC.match = (Match *)sender;
     }
 }
-- (NSDateFormatter*)dateFormatter{
-    if (!_dateFormatter){
-        _dateFormatter = [NSDateFormatter new];
-        _dateFormatter.dateFormat = @"yyyy-MM-dd";
-    }
-    return  _dateFormatter;
-}
-- (NSDateFormatter*)dateFormatter2{
-    if (!_dateFormatter2){
-        _dateFormatter2 = [NSDateFormatter new];
-        _dateFormatter2.dateFormat = @"MM月dd日 EEEE";
-    }
-    return  _dateFormatter2;
+
+- (NSString *)formatMatchDateString:(NSString *)matchDateString {
+    static NSDateFormatter *dateFormatter = nil;
+    static NSDateFormatter *dateStrFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateStyle:NSDateFormatterFullStyle];
+        dateFormatter.doesRelativeDateFormatting = YES;
+        
+        dateStrFormatter = [[NSDateFormatter alloc] init];
+        dateStrFormatter.dateFormat = @"yyyy-MM-dd";
+    });
+    return [dateFormatter stringFromDate:[dateStrFormatter dateFromString:matchDateString]];
 }
 
 @end
