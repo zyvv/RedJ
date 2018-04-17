@@ -597,8 +597,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="game" width="24" height="24"/>
+        <image name="game" width="28" height="29"/>
         <image name="logo" width="295" height="319"/>
-        <image name="statistics" width="24" height="24"/>
+        <image name="statistics" width="28" height="29"/>
     </resources>
 </document>
