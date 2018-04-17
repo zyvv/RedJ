@@ -8,8 +8,9 @@
 
 #import "AppDelegate.h"
 #import <AVOSCloud/AVOSCloud.h>
+#import <UserNotifications/UserNotifications.h>
 
-@interface AppDelegate ()
+@interface AppDelegate ()<UNUserNotificationCenterDelegate>
 
 @end
 
@@ -20,7 +21,27 @@
     // Override point for customization after application launch.
     [AVOSCloud setApplicationId:@"w2jtKPHTNphHaupsMnTjAuHh-gzGzoHsz" clientKey:@"2U4geIChGWyKrknegJBuYzU8"];
     [AVOSCloud setAllLogsEnabled:YES];
+    
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    center.delegate = self;
+    [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert + UNAuthorizationOptionSound) completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        
+    }];
+    
+    UNMutableNotificationContent* content = [[UNMutableNotificationContent alloc] init];
+    content.title = [NSString localizedUserNotificationStringForKey:@"已经可以结算今日注单了" arguments:nil];
+    content.body = [NSString localizedUserNotificationStringForKey:@"快去看看谁今天要发最大的红包吧~" arguments:nil];
+    content.sound = [UNNotificationSound defaultSound];
+    
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    components.hour = 17;
+    components.minute = 8;
+    UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components repeats:YES];
 
+    UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:@"RankingNoti"
+                                                                              content:content trigger:trigger];
+    
+    [center addNotificationRequest:request withCompletionHandler:nil];
     return YES;
 }
 
@@ -50,6 +71,23 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+#pragma mark - UNUserNotificationCenterDelegate
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
+    completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert); // 需要执行
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)(void))completionHandler {
+    
+    if ([self.window.rootViewController isKindOfClass:[UITabBarController class]] && [AVUser currentUser]) {
+        UITabBarController *tabBarVC = (UITabBarController *)self.window.rootViewController;
+        if (tabBarVC.childViewControllers.count > 1) {
+            tabBarVC.selectedIndex = 1;
+        }
+    }
+    completionHandler();
+}
+
 
 
 @end

@@ -35,6 +35,8 @@
 		C1613BDF20848B71005D5696 /* BetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1613BDD20848B71005D5696 /* BetCell.m */; };
 		C1613BE320849463005D5696 /* BetHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1613BE220849463005D5696 /* BetHeaderView.m */; };
 		C1613BE72084A1C4005D5696 /* BetHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1613BE62084A1C4005D5696 /* BetHeaderView.xib */; };
+		C1996D2B20859EED00DFB96A /* BetListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1996D2A20859EED00DFB96A /* BetListViewController.m */; };
+		C1996D2E2085CB1000DFB96A /* BetListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1996D2D2085CB1000DFB96A /* BetListCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +110,10 @@
 		C1613BE120849463005D5696 /* BetHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BetHeaderView.h; sourceTree = "<group>"; };
 		C1613BE220849463005D5696 /* BetHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BetHeaderView.m; sourceTree = "<group>"; };
 		C1613BE62084A1C4005D5696 /* BetHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BetHeaderView.xib; sourceTree = "<group>"; };
+		C1996D2920859EED00DFB96A /* BetListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BetListViewController.h; sourceTree = "<group>"; };
+		C1996D2A20859EED00DFB96A /* BetListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BetListViewController.m; sourceTree = "<group>"; };
+		C1996D2C2085CB1000DFB96A /* BetListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BetListCell.h; sourceTree = "<group>"; };
+		C1996D2D2085CB1000DFB96A /* BetListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BetListCell.m; sourceTree = "<group>"; };
 		C72E137A4D3FAC076C098960 /* Pods-RedJ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedJ.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RedJ/Pods-RedJ.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -194,6 +200,10 @@
 				C1613BDA208487FE005D5696 /* BetViewController.m */,
 				C1613BDC20848B71005D5696 /* BetCell.h */,
 				C1613BDD20848B71005D5696 /* BetCell.m */,
+				C1996D2920859EED00DFB96A /* BetListViewController.h */,
+				C1996D2A20859EED00DFB96A /* BetListViewController.m */,
+				C1996D2C2085CB1000DFB96A /* BetListCell.h */,
+				C1996D2D2085CB1000DFB96A /* BetListCell.m */,
 				97A66D7A20810579008DDC08 /* GameCell.h */,
 				97A66D7B20810579008DDC08 /* GameCell.m */,
 				97A66D7C20810579008DDC08 /* GameCell.xib */,
@@ -454,7 +464,9 @@
 				97AC72162080D20600C98D4C /* main.m in Sources */,
 				97DD96D72082207D00839B28 /* Order.m in Sources */,
 				97AC72082080D20600C98D4C /* AppDelegate.m in Sources */,
+				C1996D2E2085CB1000DFB96A /* BetListCell.m in Sources */,
 				97DD96E420826A6300839B28 /* RankingCell.m in Sources */,
+				C1996D2B20859EED00DFB96A /* BetListViewController.m in Sources */,
 				97DD96E020826A2E00839B28 /* RankingViewController.m in Sources */,
 				C1613BDF20848B71005D5696 /* BetCell.m in Sources */,
 			);

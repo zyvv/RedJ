@@ -12,5 +12,6 @@
 @interface RankingCell : UITableViewCell
 
 @property (nonatomic, strong) UserRanking *userRanking;
+@property (nonatomic, assign) int ranking;
 
 @end

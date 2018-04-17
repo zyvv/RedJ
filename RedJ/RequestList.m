@@ -9,86 +9,129 @@
 #import "RequestList.h"
 #import "Match.h"
 
+#define kRequestPath(path) [NSString stringWithFormat:@"http://m.13322.com/mlottery/core/%@", path]
 
 @implementation RequestList
 
 + (void)requestMatchSuccess:(PPHttpRequestSuccess)success
                     failure:(PPHttpRequestFailed)failure {
-    [RequestList requestLiveMatchSuccess:^(id responseObject) {
-        ResponseModel *liveModel = [ResponseModel yy_modelWithJSON:responseObject];
-        if (liveModel.result == 200) {
-            [self requestScheduledMatchSuccess:^(id responseObject) {
-                ResponseModel *scheduledModel = [ResponseModel yy_modelWithJSON:responseObject];
-                if (scheduledModel.result == 200) {
-                    NSMutableArray *responseArray = [NSMutableArray arrayWithCapacity:0];
-                    
-                    for (MatchData *matchData in liveModel.matchData) {
-                        if (matchData.diffDays == 0) { // 正在进行的比赛
-                            Game *game = [Game new];
-                            game.date = matchData.date;
-                            NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
-                            for (Match *match in matchData.match) {
-                                if ([match.leagueId isEqualToString:@"1"]) {
-                                    [matchs addObject:match];
+    [RequestList requestFinishedMatchSuccess:^(id responseObject) {
+        ResponseModel *finishedModel = [ResponseModel yy_modelWithJSON:responseObject];
+        if (finishedModel.result == 200) {
+            [RequestList requestLiveMatchSuccess:^(id responseObject) {
+                ResponseModel *liveModel = [ResponseModel yy_modelWithJSON:responseObject];
+                if (liveModel.result == 200) {
+                    [self requestScheduledMatchSuccess:^(id responseObject) {
+                        ResponseModel *scheduledModel = [ResponseModel yy_modelWithJSON:responseObject];
+                        if (scheduledModel.result == 200) {
+                            
+                            NSMutableArray *responseArray = [NSMutableArray arrayWithCapacity:0];
+                            
+                            for (MatchData *matchData in finishedModel.matchData) {
+                                if (matchData.diffDays == -1) { // 已经结束的昨天的比赛
+                                    Game *game = [Game new];
+                                    game.date = matchData.date;
+                                    NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
+                                    for (Match *match in matchData.match) {
+                                        if ([match.leagueId isEqualToString:@"1"] || [match.leagueId isEqualToString:@"5"]) {
+                                            [matchs addObject:match];
+                                        }
+                                    }
+                                    game.matchs = matchs;
+                                    if (matchs.count > 0) {
+                                        [responseArray addObject:game];
+                                    }
                                 }
                             }
-                            game.matchs = matchs;
-                            if (matchs.count > 0) {
-                                [responseArray addObject:game];
-                            }
-                        }
                         
-                        if (matchData.diffDays == 1) { // 明日比赛
-                            Game *game = [Game new];
-                            game.date = matchData.date;
-                            NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
-                            for (Match *match in matchData.match) {
-                                if ([match.leagueId isEqualToString:@"1"]) {
-                                    [matchs addObject:match];
+                            for (MatchData *matchData in finishedModel.matchData) {
+                                if (matchData.diffDays == 0) { // 已经结束的今天的比赛
+                                    Game *game = [Game new];
+                                    game.date = matchData.date;
+                                    NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
+                                    for (Match *match in matchData.match) {
+                                        if ([match.leagueId isEqualToString:@"1"] || [match.leagueId isEqualToString:@"5"]) {
+                                            [matchs addObject:match];
+                                        }
+                                    }
+                                    game.matchs = matchs;
+                                    if (matchs.count > 0) {
+                                        [responseArray addObject:game];
+                                    }
                                 }
                             }
-                            game.matchs = matchs;
-                            if (matchs.count > 0) {
-                                [responseArray addObject:game];
-                            }
-                        }
-                    }
-                    
-                    for (MatchData *matchData in scheduledModel.matchData) {
-                        if (matchData.diffDays == 1) { // 计划表中明天的比赛
-                            Game *game = [Game new];
-                            game.date = matchData.date;
-                            NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
-                            for (Match *match in matchData.match) {
-                                if ([match.leagueId isEqualToString:@"1"]) {
-                                    [matchs addObject:match];
+                        
+                            
+                            for (MatchData *matchData in liveModel.matchData) {
+                                if (matchData.diffDays == 0) { // 正在进行的比赛
+                                    Game *game = [Game new];
+                                    game.date = matchData.date;
+                                    NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
+                                    for (Match *match in matchData.match) {
+                                        if ([match.leagueId isEqualToString:@"1"] || [match.leagueId isEqualToString:@"5"]) {
+                                            [matchs addObject:match];
+                                        }
+                                    }
+                                    game.matchs = matchs;
+                                    if (matchs.count > 0) {
+                                        [responseArray addObject:game];
+                                    }
+                                }
+                                
+                                if (matchData.diffDays == 1) { // 明日即将进行的比赛
+                                    Game *game = [Game new];
+                                    game.date = matchData.date;
+                                    NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
+                                    for (Match *match in matchData.match) {
+                                        if ([match.leagueId isEqualToString:@"1"] || [match.leagueId isEqualToString:@"5"]) {
+                                            [matchs addObject:match];
+                                        }
+                                    }
+                                    game.matchs = matchs;
+                                    if (matchs.count > 0) {
+                                        [responseArray addObject:game];
+                                    }
                                 }
                             }
-                            game.matchs = matchs;
-                            if (matchs.count > 0) {
-                                [responseArray addObject:game];
+                            
+                            for (MatchData *matchData in scheduledModel.matchData) {
+                                if (matchData.diffDays == 1) { // 计划表中明天的比赛
+                                    Game *game = [Game new];
+                                    game.date = matchData.date;
+                                    NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
+                                    for (Match *match in matchData.match) {
+                                        if ([match.leagueId isEqualToString:@"1"] || [match.leagueId isEqualToString:@"5"]) {
+                                            [matchs addObject:match];
+                                        }
+                                    }
+                                    game.matchs = matchs;
+                                    if (matchs.count > 0) {
+                                        [responseArray addObject:game];
+                                    }
+                                }
                             }
+                            
+                            success(responseArray);
+                            
+                        } else {
+                            NSError *error = [[NSError alloc] initWithDomain:@"com.zyvv.error" code:scheduledModel.result userInfo:@{NSLocalizedDescriptionKey: @"返回数据错误"}];
+                            failure(error);
                         }
-                    }
-                    
-                    success(responseArray);
-                    
+                    } failure:failure];
                 } else {
-                    NSError *error = [[NSError alloc] initWithDomain:@"com.zyvv.error" code:scheduledModel.result userInfo:@{NSLocalizedDescriptionKey: @"返回数据错误"}];
+                    NSError *error = [[NSError alloc] initWithDomain:@"com.zyvv.error" code:liveModel.result userInfo:@{NSLocalizedDescriptionKey: @"返回数据错误"}];
                     failure(error);
                 }
+                
             } failure:failure];
-        } else {
-            NSError *error = [[NSError alloc] initWithDomain:@"com.zyvv.error" code:liveModel.result userInfo:@{NSLocalizedDescriptionKey: @"返回数据错误"}];
-            failure(error);
         }
-        
     } failure:failure];
+
 }
 
 + (void)requestFinishedMatchSuccess:(PPHttpRequestSuccess)success
                             failure:(PPHttpRequestFailed)failure {
-    [PPNetworkHelper GET:@"http://m.13322.com/mlottery/core/basketballMatch.findFinishedMatch.do" parameters:[self requestPrameters] success:success failure:failure];
+    [PPNetworkHelper GET:kRequestPath(@"basketballMatch.findFinishedMatch.do") parameters:[self requestPrameters] success:success failure:failure];
 }
 
 + (void)requestRankingMatch:(PPHttpRequestSuccess)success
@@ -100,7 +143,7 @@
                 if (matchData.diffDays == 0) { // 今天的比赛
                     NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
                     for (Match *match in matchData.match) {
-                        if ([match.leagueId isEqualToString:@"1"]) {
+                        if ([match.leagueId isEqualToString:@"1"] || [match.leagueId isEqualToString:@"5"]) {
                             [matchs addObject:match];
                         }
                     }
@@ -117,13 +160,58 @@
 
 + (void)requestLiveMatchSuccess:(PPHttpRequestSuccess)success
                         failure:(PPHttpRequestFailed)failure {
-    [PPNetworkHelper GET:@"http://m.13322.com/mlottery/core/basketballMatch.findLiveMatch.do" parameters:[self requestPrameters] success:success failure:failure];
+    [PPNetworkHelper GET:kRequestPath(@"basketballMatch.findLiveMatch.do") parameters:[self requestPrameters] success:success failure:failure];
 }
 
 + (void)requestScheduledMatchSuccess:(PPHttpRequestSuccess)success
                              failure:(PPHttpRequestFailed)failure {
-    [PPNetworkHelper GET:@"http://m.13322.com/mlottery/core/basketballMatch.findScheduledMatch.do" parameters:[self requestPrameters] success:success failure:failure];
+    [PPNetworkHelper GET:kRequestPath(@"basketballMatch.findScheduledMatch.do") parameters:[self requestPrameters] success:success failure:failure];
 }
+
+
+/**
+ 查询实时比分
+
+ @param matchId 比赛id
+ @param success 成功回调
+ @param failure 失败回调
+ */
++ (void)requestMatchScore:(NSString *)matchId
+                  success:(PPHttpRequestSuccess)success
+                  failure:(PPHttpRequestFailed)failure {
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:[self requestPrameters]];
+    [params setObject:matchId forKey:@"thirdId"];
+    [PPNetworkHelper GET:kRequestPath(@"IOSBasketballDetail.findScore.do") parameters:params success:success failure:failure];
+}
+
+
+/**
+ 查询实时盘口
+
+ @param matchId 比赛id
+ @param oddsType 盘口类型
+ @param success 成功回调
+ @param failure 失败回调
+ */
++ (void)requestMatchOdds:(NSString *)matchId
+                oddsType:(int)oddsType
+                  success:(PPHttpRequestSuccess)success
+                  failure:(PPHttpRequestFailed)failure {
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:[self requestPrameters]];
+    
+    NSString *oddsTypeStr = @"asiaLet";
+    if (oddsType == 1) {
+        oddsTypeStr = @"asiaSize";
+    }
+    if(oddsType == 2) {
+        oddsTypeStr = @"euro";
+    }
+    [params setObject:oddsTypeStr forKey:@"oddsType"];
+    [params setObject:matchId forKey:@"thirdId"];
+    
+    [PPNetworkHelper GET:kRequestPath(@"basketballDetail.findOdds.do") parameters:params success:success failure:failure];
+}
+
 
 /*
  // 查询比赛比分
@@ -144,18 +232,19 @@ http://m.13322.com/mlottery/core/IOSBasketballDetail.findScore.do?_=1523890935.9
 */
 
 + (NSDictionary *)requestPrameters {
+    NSString *dateString = [NSString stringWithFormat:@"%f", [NSDate timeIntervalSinceReferenceDate]];
     return @{
              @"version": @"240",
              @"userId": @"",
              @"timeZone": @"8",
-             @"sign": @"48fb6a2abcba80554892266fc6398649fb",
+             @"sign": [dateString md2String].lowercaseString,
              @"loginToken": @"",
              @"lang": @"zh",
              @"deviceToken": @"",
-             @"deviceId": @"5BAD9C8825214AB782C7D0B7216F5454",
+             @"deviceId": [dateString md5String].uppercaseString,
              @"appno": @"11",
              @"appType": @"1",
-             @"_": [NSString stringWithFormat:@"%f", [NSDate timeIntervalSinceReferenceDate]]
+             @"_": dateString
              };
 }
 

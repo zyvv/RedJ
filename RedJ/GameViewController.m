@@ -15,10 +15,12 @@
 #import "Order.h"
 #import "RequestList.h"
 #import "BetViewController.h"
+#import "UserSettle.h"
 
 @interface GameViewController ()<UITableViewDelegate, UITableViewDataSource>
 //@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, copy) NSArray *matchDataArray;
+
 @end
 
 @implementation GameViewController
@@ -34,13 +36,21 @@
     } else {
     }
     
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
+    
     UILabel *label = [UILabel new];
-    label.frame = CGRectMake(0, 0, 300, 30);
-    label.textColor = [UIColor darkGrayColor];
-    label.font = [UIFont systemFontOfSize:12];
+    label.frame = CGRectMake(0, 0, 300, 49);
+    label.textColor = [UIColor lightGrayColor];
+    label.font = [UIFont systemFontOfSize:10];
     label.textAlignment = NSTextAlignmentCenter;
-//    label.text = @"佳哥最红";
+    label.contentMode = UIViewContentModeBottom;
+    label.text = [NSString stringWithFormat:@"%@ %@(%@)", app_Name, app_Version, app_build];
     self.tableView.tableFooterView = label;
+    
+    [UserSettle settleAndUploadTodayEarning];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

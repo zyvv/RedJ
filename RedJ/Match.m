@@ -10,6 +10,13 @@
 
 @implementation Pankou
 
+- (BOOL)isEqualTo:(Pankou *)pankou {
+    if (pankou.handicapValue == self.handicapValue && pankou.leftOdds == self.leftOdds && pankou.rightOdds == self.rightOdds) {
+        return YES;
+    }
+    return NO;
+}
+
 @end
 
 @implementation Euro
@@ -72,3 +79,8 @@
     return nil;
 }
 @end
+
+@implementation MatchScoreModel
+
+@end
+//

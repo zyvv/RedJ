@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *oddsSegment;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *amountSegment;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
+
+@property (assign, nonatomic) BOOL hasUpdate;
 @end
 
 @implementation BetCell
@@ -51,6 +53,13 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    
+    if (self.hasUpdate) {
+        self.updateStausView.backgroundColor = [UIColor greenColor];
+    } else {
+        self.updateStausView.backgroundColor = [UIColor clearColor];
+    }
+    
     if (self.betType == 0) {
         self.titleLabel.text = @"让分";
         self.guestValueLabel.text = [NSString stringWithFormat:@"%@ %@", _match.guestTeam, [self fuhao:_pankou.handicapValue]];
@@ -76,6 +85,11 @@
 }
 
 - (void)setPankou:(Pankou *)pankou {
+    if (_pankou && pankou && ![_pankou isEqualTo:pankou]) {
+        self.hasUpdate = YES;
+    } else {
+        self.hasUpdate = NO;
+    }
     if (_pankou != pankou) {
         _pankou = pankou;
     }
@@ -96,7 +110,7 @@
     if (_betEable) {
        _sureButton.backgroundColor = [UIColor blackColor];
     } else {
-        _sureButton.backgroundColor = [UIColor blackColor];
+        _sureButton.backgroundColor = [UIColor colorWithHexString:@"#6C6C6C"];
     }
 }
 
@@ -114,21 +128,24 @@
     }
     if (_willBetBlock) {
         Bet *bet = [Bet new];
-        bet.betType = _betType;
-        bet.betAmount = _amountSegment.selectedSegmentIndex * 10;
+
         bet.orderUserName = [User currentUser].username;
-        bet.betType = 0;
-        bet.betOdds = [[_oddsSegment titleForSegmentAtIndex:_oddsSegment.selectedSegmentIndex] floatValue];
-        bet.leftOdds = _oddsSegment.selectedSegmentIndex == 0 ? YES : NO;
         bet.matchId = _match.thirdId;
-        bet.matchDate = _match.date;
-        bet.handicapValue = _match.matchOdds.asiaLet.bet365.handicapValue;
+        bet.betOdds = [[_oddsSegment titleForSegmentAtIndex:_oddsSegment.selectedSegmentIndex] floatValue];
+        bet.betAmount = _amountSegment.selectedSegmentIndex * 10;
+        bet.leftOdds = _oddsSegment.selectedSegmentIndex == 0 ? YES : NO;
+        bet.betType = _betType;
+        
+        bet.handicapValue = _pankou.handicapValue;
+        bet.leftOddsValue = _pankou.leftOdds;
+        bet.rightOddsValue = _pankou.rightOdds;
         
         bet.settle = NO;
         bet.earnings = 0;
         bet.status = -1;
-        bet.match = _match;
         bet.betDate = [NSDate date];
+        bet.matchDate = _match.date;
+        bet.match = _match;
         
         _willBetBlock(self, bet);
     }

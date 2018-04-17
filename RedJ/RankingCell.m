@@ -34,8 +34,11 @@
     [super layoutSubviews];
     _usernameLabel.text = _userRanking.userName;
 //    _totalAmountLabel.text =
+    _rankingLabel.text = [NSString stringWithFormat:@"# %d", _ranking];
     _yesterdayEarningLabel.text = [NSString stringWithFormat:@"%.2f", _userRanking.todayEarning];
     _recordLabel.text = [NSString stringWithFormat:@"%d红%d黑", _userRanking.hong, _userRanking.hei];
+    _todayPayLabel.text = [NSString stringWithFormat:@"今日投注额：%.2f", _userRanking.todayPay];
+    _totalAmountLabel.text = [NSString stringWithFormat:@"账户总额：%.2f", _userRanking.totalAccount];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -21,10 +21,33 @@
                            @"betOdds": @(self.betOdds),
                            @"leftOdds": @(self.leftOdds),
                            @"betType": @(self.betType),
-                           @"handicapValue": @(self.handicapValue)
+                           @"handicapValue": @(self.handicapValue),
+                           @"leftOddsValue": @(self.leftOddsValue),
+                           @"rightOddsValue": @(self.rightOddsValue)
                            };
     return [[dict jsonStringEncoded] md2String];
 }
+
+- (NSDate *)getCLupdatedAt {
+    if (self.updatedAt) {
+        if (self.updatedAt[@"iso"]) {
+            return [self dateFromISO8601String:self.updatedAt[@"iso"]];
+        }
+    }
+    return nil;
+}
+
+- (NSDate *)dateFromISO8601String:(NSString *)string {
+    if (!string) return nil;
+    struct tm tm;
+    time_t t;
+    strptime([string cStringUsingEncoding:NSUTF8StringEncoding], "%Y-%m-%dT%H:%M:%S%z", &tm);
+    tm.tm_isdst = -1;
+    t = mktime(&tm);
+    return [NSDate dateWithTimeIntervalSince1970:t + [[NSTimeZone localTimeZone] secondsFromGMT]];//东八区
+}
+
+
 
 - (AVObject *)betModelToAVObj {
     NSDictionary *jsonDict = [self yy_modelToJSONObject];
@@ -52,6 +75,7 @@
         appendBet = YES;
         betObj = [AVObject objectWithClassName:@"Bet" objectId:obj.objectId];
         [betObj incrementKey:@"betAmount" byAmount:@(self.betAmount)];
+        [betObj incrementKey:@"appendCount"];
     } else {
         betObj = [AVObject objectWithClassName:@"Bet" dictionary:[self yy_modelToJSONObject]];
     }

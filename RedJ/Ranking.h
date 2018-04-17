@@ -17,6 +17,9 @@
 @property (nonatomic, assign) int hong; // 红
 @property (nonatomic, assign) int hei; // 黑
 
+@property (nonatomic, assign) float todayPay; // 今日投注(账户冻结额)
+@property (nonatomic, assign) float totalAccount; // 总金额
+
 @end
 
 @interface UserRanking : NSObject

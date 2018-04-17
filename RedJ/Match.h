@@ -29,6 +29,8 @@
  */
 @property (nonatomic, assign) float rightOdds;
 
+- (BOOL)isEqualTo:(Pankou *)pankou;
+
 @end
 
 
@@ -94,4 +96,10 @@
 @property (nonatomic, copy) NSArray *companyOdds; // 公司盘口
 @property (nonatomic, strong) Pankou *bet365;
 @end
+
+@interface MatchScoreModel : NSObject
+@property (nonatomic, assign) int result;
+@property (nonatomic, strong) Match *data;
+@end
+
 

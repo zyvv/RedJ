@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -43,7 +43,7 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="比赛状态" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ond-WK-lFJ">
-                    <rect key="frame" x="212.5" y="59.5" width="45" height="13.5"/>
+                    <rect key="frame" x="145.5" y="59.5" width="179" height="13.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
@@ -55,7 +55,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="账户余额：" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbT-aQ-uNh">
-                    <rect key="frame" x="399" y="100" width="62" height="15"/>
+                    <rect key="frame" x="8" y="100" width="453" height="15"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
@@ -72,6 +72,8 @@
             <constraints>
                 <constraint firstItem="vqf-po-6Yg" firstAttribute="top" secondItem="drC-vb-g7U" secondAttribute="bottom" constant="8" id="75j-5A-Ur3"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="cbT-aQ-uNh" secondAttribute="bottom" constant="8" id="AAa-hv-pEE"/>
+                <constraint firstItem="cbT-aQ-uNh" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="8" id="DI7-rL-xbf"/>
+                <constraint firstItem="yQ7-Y2-gTc" firstAttribute="leading" secondItem="ond-WK-lFJ" secondAttribute="trailing" constant="3" id="Eom-5t-uh6"/>
                 <constraint firstItem="yQ7-Y2-gTc" firstAttribute="centerX" secondItem="hjE-2v-KxI" secondAttribute="centerX" id="Fqv-8g-Nsv"/>
                 <constraint firstAttribute="trailing" secondItem="wwZ-1M-Ejv" secondAttribute="trailing" id="Gi9-0z-3Sw"/>
                 <constraint firstItem="vqf-po-6Yg" firstAttribute="height" secondItem="hjE-2v-KxI" secondAttribute="height" id="JhY-PV-JXb"/>
@@ -91,6 +93,7 @@
                 <constraint firstItem="hjE-2v-KxI" firstAttribute="baseline" secondItem="vqf-po-6Yg" secondAttribute="baseline" id="hQn-tq-jdL"/>
                 <constraint firstItem="yQ7-Y2-gTc" firstAttribute="width" secondItem="yQ7-Y2-gTc" secondAttribute="height" multiplier="1:1" id="jd7-O4-CJn"/>
                 <constraint firstItem="drC-vb-g7U" firstAttribute="centerX" secondItem="vqf-po-6Yg" secondAttribute="centerX" id="lNd-nj-uBD"/>
+                <constraint firstItem="ond-WK-lFJ" firstAttribute="leading" secondItem="drC-vb-g7U" secondAttribute="trailing" constant="3" id="lUz-Nx-REp"/>
                 <constraint firstItem="1Ko-51-Yxo" firstAttribute="leading" secondItem="drC-vb-g7U" secondAttribute="trailing" constant="2" id="z5W-H5-X8u"/>
                 <constraint firstItem="drC-vb-g7U" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="20" id="zhe-Tp-mFM"/>
             </constraints>

@@ -14,6 +14,7 @@
 #import "RequestList.h"
 #import "UserSettle.h"
 
+
 @interface RankingViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshItem;
 @property (nonatomic, copy) NSArray *userRankingArray;
@@ -36,6 +37,8 @@
     label.textAlignment = NSTextAlignmentCenter;
     label.text = @"统计数据在每个比赛日的下午3:05开始更新。";
     self.tableView.tableHeaderView = label;
+    [self refreshControlAction:nil];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -70,12 +73,26 @@
                             userRanking.hong += ranking.hong;
                             userRanking.hei += ranking.hei;
                             userRanking.todayEarning = ranking.totalEarning;
+                            userRanking.totalAccount = ranking.totalAccount;
+                            userRanking.todayPay = ranking.todayPay;
                         }
                     }
                     [userRankArray addObject:userRanking];
                 }
                 
-                self.userRankingArray = [userRankArray copy];
+                NSArray *sortUserRankArray = [userRankArray sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                    UserRanking *rank1 = obj1;
+                    UserRanking *rank2 = obj2;
+                    if (rank1.todayEarning < rank2.todayEarning) {
+                        return NSOrderedDescending;
+                    } else if (rank1.todayEarning > rank2.todayEarning) {
+                        return NSOrderedAscending;
+                    } else {
+                        return NSOrderedSame;
+                    }
+                }];
+                
+                self.userRankingArray = sortUserRankArray;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (completion) { completion(); }
                 });
@@ -116,6 +133,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"RankingCell" owner:self options:nil] lastObject];
     }
     cell.userRanking = self.userRankingArray[indexPath.row];
+    cell.ranking = (int)indexPath.row + 1;
     return cell;
 }
 

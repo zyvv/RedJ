@@ -72,7 +72,7 @@
     }];
 }
 
-- (void)pandian:(NSArray *)matchsArray betsArray:(NSArray *)betsArray {
++ (void)pandian:(NSArray *)matchsArray betsArray:(NSArray *)betsArray {
     if (!matchsArray || !betsArray) {
         return;
     }
@@ -189,12 +189,18 @@
     }
     [User currentUserAccount:^(Account *ac, NSError *error) {
         if (ac) {
+            
+            CGFloat totalAccount = ac.totalAccount + totalEarningWithoutBenJin;
+            CGFloat balance = ac.balance + totalEarning;
+            
             AVObject *accObj = [AVObject objectWithClassName:@"Account" objectId:ac.objectId];
-            [accObj setObject:@(ac.totalAccount + totalEarningWithoutBenJin) forKey:@"totalAccount"];
-            [accObj setObject:@(ac.balance + totalEarning) forKey:@"balance"];
+            [accObj setObject:@(totalAccount) forKey:@"totalAccount"];
+            [accObj setObject:@(balance) forKey:@"balance"];
             [settledBetsArray addObject:accObj];
+            
             NSError *error = nil;
             [AVObject saveAll:settledBetsArray error:&error];
+            
             if (!error) {
                 AVObject *obj = [AVObject objectWithClassName:@"BetRanked"];
                 [obj setObject:[User currentUser].username forKey:@"userName"];
@@ -206,13 +212,17 @@
                 [obj setObject:@(hong) forKey:@"hong"];
                 [obj setObject:@(hei) forKey:@"hei"];
                 [obj setObject:@(totalEarningWithoutBenJin) forKey:@"totalEarning"];
+                [obj setObject:@(totalAccount) forKey:@"totalAccount"];
+                [obj setObject:@(totalAccount - balance) forKey:@"todayPay"];
                 
                 AVObject *userBetMapTom = [[AVObject alloc] initWithClassName:@"UserRanked"];// 用户投注
                 [userBetMapTom setObject:[AVUser currentUser] forKey:@"user"];
                 [userBetMapTom setObject:obj forKey:@"ranked"];
                 userBetMapTom.fetchWhenSave = YES;
                 [userBetMapTom saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                    [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked_%@",[User currentUser].username]];
+                    if (succeeded) {
+                        [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked_%@",[User currentUser].username]];
+                    }
                 }];
             }
         }
