@@ -44,8 +44,9 @@
     content.sound = [UNNotificationSound defaultSound];
     
     NSDateComponents *components = [[NSDateComponents alloc] init];
-    components.hour = 17;
-    components.minute = 8;
+    components.hour = 15;
+    components.minute = 5;
+    components.second = 0;
     UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components repeats:YES];
 
     UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:@"RankingNoti" content:content trigger:trigger];

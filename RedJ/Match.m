@@ -17,6 +17,20 @@
     return NO;
 }
 
+- (float)leftOdds {
+    if (_leftOdds >= 1 && (_handicapValue == 0 || !_handicapValue)) {
+        return _leftOdds - 1;
+    }
+    return _leftOdds;
+}
+
+- (float)rightOdds {
+    if (_rightOdds >= 1 && (_handicapValue == 0 || !_handicapValue)) {
+        return _rightOdds - 1;
+    }
+    return _rightOdds;
+}
+
 @end
 
 @implementation Euro
