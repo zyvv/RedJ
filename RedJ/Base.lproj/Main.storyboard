@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yUP-Ic-j0F">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yUP-Ic-j0F">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -178,7 +178,7 @@
                     <navigationItem key="navigationItem" id="xEk-WJ-ArM">
                         <barButtonItem key="rightBarButtonItem" title="记录" id="M7a-H4-CXz">
                             <connections>
-                                <segue destination="pWk-Hc-pYB" kind="show" identifier="ShowBetList" id="L7C-1C-Mc9"/>
+                                <segue destination="pWk-Hc-pYB" kind="show" identifier="ShowBetList" id="aMj-T9-9KU"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -520,7 +520,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JPC-p6-43r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1186.4000000000001" y="1557.5712143928038"/>
+            <point key="canvasLocation" x="-1338" y="1858"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="fQR-iY-lZo">
@@ -531,6 +531,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="selectedImageTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
@@ -540,7 +541,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="daa-p8-qKR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1361" y="12"/>
+            <point key="canvasLocation" x="-1337" y="470"/>
         </scene>
         <!--统计-->
         <scene sceneID="E96-Pj-0TC">
