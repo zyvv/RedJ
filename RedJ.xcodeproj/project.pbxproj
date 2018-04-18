@@ -26,8 +26,6 @@
 		97AC723A2080D9A400C98D4C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC72392080D9A400C98D4C /* LoginViewController.m */; };
 		97AC723D2080DA6800C98D4C /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC723C2080DA6800C98D4C /* GameViewController.m */; };
 		97DD96CF2081B61600839B28 /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96CE2081B61600839B28 /* Match.m */; };
-		97DD96D32082051C00839B28 /* OrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96D12082051C00839B28 /* OrderViewController.m */; };
-		97DD96D42082051C00839B28 /* OrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97DD96D22082051C00839B28 /* OrderViewController.xib */; };
 		97DD96D72082207D00839B28 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96D62082207D00839B28 /* Order.m */; };
 		97DD96DA208220B900839B28 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96D9208220B900839B28 /* User.m */; };
 		97DD96DD20823DC400839B28 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96DC20823DC400839B28 /* Account.m */; };
@@ -94,9 +92,6 @@
 		97DD96CC2081B4C400839B28 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		97DD96CD2081B61600839B28 /* Match.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Match.h; sourceTree = "<group>"; };
 		97DD96CE2081B61600839B28 /* Match.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Match.m; sourceTree = "<group>"; };
-		97DD96D02082051C00839B28 /* OrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderViewController.h; sourceTree = "<group>"; };
-		97DD96D12082051C00839B28 /* OrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderViewController.m; sourceTree = "<group>"; };
-		97DD96D22082051C00839B28 /* OrderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderViewController.xib; sourceTree = "<group>"; };
 		97DD96D52082207D00839B28 /* Order.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
 		97DD96D62082207D00839B28 /* Order.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
 		97DD96D8208220B900839B28 /* User.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -234,9 +229,6 @@
 				97DD96CD2081B61600839B28 /* Match.h */,
 				97DD96CE2081B61600839B28 /* Match.m */,
 				97DD96CC2081B4C400839B28 /* PrefixHeader.pch */,
-				97DD96D02082051C00839B28 /* OrderViewController.h */,
-				97DD96D12082051C00839B28 /* OrderViewController.m */,
-				97DD96D22082051C00839B28 /* OrderViewController.xib */,
 				97DD96D52082207D00839B28 /* Order.h */,
 				97DD96D62082207D00839B28 /* Order.m */,
 				97DD96D8208220B900839B28 /* User.h */,
@@ -291,6 +283,7 @@
 				97AC72002080D20600C98D4C /* Frameworks */,
 				97AC72012080D20600C98D4C /* Resources */,
 				F7DC7A106479728ECABDD369 /* [CP] Copy Pods Resources */,
+				39FC848DF741781DA2281904 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -391,7 +384,6 @@
 				97AC72132080D20600C98D4C /* LaunchScreen.storyboard in Resources */,
 				97AC72102080D20600C98D4C /* Assets.xcassets in Resources */,
 				C1613BE72084A1C4005D5696 /* BetHeaderView.xib in Resources */,
-				97DD96D42082051C00839B28 /* OrderViewController.xib in Resources */,
 				97AC720E2080D20600C98D4C /* Main.storyboard in Resources */,
 				97A66D7E20810579008DDC08 /* GameCell.xib in Resources */,
 			);
@@ -414,6 +406,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		39FC848DF741781DA2281904 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RedJ/Pods-RedJ-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9BD34867A5AB589EDC1FC684 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -429,7 +436,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		F7DC7A106479728ECABDD369 /* [CP] Copy Pods Resources */ = {
@@ -468,7 +475,6 @@
 				97DD96CF2081B61600839B28 /* Match.m in Sources */,
 				C1613BDB208487FE005D5696 /* BetViewController.m in Sources */,
 				C1613BD52084715B005D5696 /* RequestList.m in Sources */,
-				97DD96D32082051C00839B28 /* OrderViewController.m in Sources */,
 				97AC72162080D20600C98D4C /* main.m in Sources */,
 				97DD96D72082207D00839B28 /* Order.m in Sources */,
 				97AC72082080D20600C98D4C /* AppDelegate.m in Sources */,

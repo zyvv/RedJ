@@ -10,7 +10,8 @@
 #define PrefixHeader_pch
 
 #import <AVOSCloud/AVOSCloud.h>
-#import <MBProgressHUD/MBProgressHUD.h>
+#import <SVProgressHUD/SVProgressHUD.h>
+//#import <MBProgressHUD/MBProgressHUD.h>
 #import <PPNetworkHelper/PPNetworkHelper.h>
 #import <YYCategories/YYCategories.h>
 #import <YYWebImage/YYWebImage.h>

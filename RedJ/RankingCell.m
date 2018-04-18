@@ -42,12 +42,11 @@
         _earningDayLabel.text = @"收益";
     }
     _usernameLabel.text = _userRanking.userName;
-//    _totalAmountLabel.text =
     _rankingLabel.text = [NSString stringWithFormat:@"# %d", _ranking];
     _yesterdayEarningLabel.text = [NSString stringWithFormat:@"%.2f", _userRanking.todayEarning];
     _recordLabel.text = [NSString stringWithFormat:@"%d红%d黑", _userRanking.hong, _userRanking.hei];
-    _todayPayLabel.text = [NSString stringWithFormat:@"冻结额：%.2f", _userRanking.todayPay];
-    _totalAmountLabel.text = [NSString stringWithFormat:@"账户总额：%.2f", _userRanking.totalAccount];
+    _todayPayLabel.text = [NSString stringWithFormat:@" (未结算:%.2f)", _userRanking.todayPay];
+    _totalAmountLabel.text = [NSString stringWithFormat:@"%.2f", _userRanking.totalAccount - _userRanking.todayPay];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

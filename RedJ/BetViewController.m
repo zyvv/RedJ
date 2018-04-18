@@ -19,7 +19,6 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
 
 @interface BetViewController ()
 
-@property (nonatomic, strong) Match *lastMatch;
 @property (nonatomic, strong) Account *account;
 
 @property (nonatomic, strong) Pankou *letOdds;
@@ -47,13 +46,13 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-//    [self.tableView addObserver:self forKeyPath:@"contentInset" options:NSKeyValueObservingOptionOld context:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-//    [self.tableView removeObserver:self forKeyPath:@"contentInset"];
+    [self.tableView.refreshControl endRefreshing];
 }
+
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     
@@ -76,7 +75,7 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
 }
 
 - (IBAction)refreshControlAction:(UIRefreshControl *)sender {
-    if (_match.matchStatus == -1 || (_match.matchStatus != 0 && _match.matchStatus != -1)) {
+    if (_match.matchStatus == -1) {
         [sender endRefreshing];
         return;
     }
@@ -163,7 +162,6 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
     if (_match != match) {
         _match = match;
     }
-    _lastMatch = _match;
     if (self.tableView) {
         [self.tableView reloadData];
     }
@@ -173,24 +171,24 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
     if (_letOdds != letOdds) {
         _letOdds = letOdds;
     }
-    [self.tableView reloadData];
-//    [self.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] withRowAnimation:UITableViewRowAnimationNone];
+//    [self.tableView reloadData];
+    [self.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)setSizeOdds:(Pankou *)sizeOdds {
     if (_sizeOdds != sizeOdds) {
         _sizeOdds = sizeOdds;
     }
-    [self.tableView reloadData];
-//    [self.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] withRowAnimation:UITableViewRowAnimationNone];
+//    [self.tableView reloadData];
+    [self.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)setEuroOdds:(Pankou *)euroOdds {
     if (_euroOdds != euroOdds) {
         _euroOdds = euroOdds;
     }
-    [self.tableView reloadData];
-//    [self.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] withRowAnimation:UITableViewRowAnimationNone];
+//    [self.tableView reloadData];
+    [self.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)setRefreshedCount:(int)refreshedCount {
@@ -224,7 +222,7 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
         cell.pankou = _sizeOdds;
     }
     if (indexPath.item == 2) {
-        cell.pankou = _euroOdds;
+        cell.pankou = ((_match.matchStatus != 0 && _match.matchStatus != -1)) ? nil : _euroOdds;
     }
     
     __weak BetViewController *weakSelf = self;
@@ -244,55 +242,51 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
 
 - (void)uploadBet:(Bet *)bet {
     if (self.account.balance < bet.betAmount) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"余额不足";
-        [hud hideAnimated:YES afterDelay:.5];
+        [SVProgressHUD showWithStatus:@"余额不足"];
+        [SVProgressHUD dismissWithDelay:.5];
         return;
     }
     
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    
     [self requestMatchScore:^(BOOL success, Match *match, NSError *error) {
         if (!success) {
-            hud.label.text = @"更新比赛信息失败";
-            [hud hideAnimated:YES afterDelay:.25];
+            [SVProgressHUD showWithStatus:@"更新比赛信息失败"];
+            [SVProgressHUD dismissWithDelay:.5];
             return;
         } else if (_match.matchStatus == -1) {
-            hud.label.text = @"比赛已结束";
-            [hud hideAnimated:YES afterDelay:.25];
+            [SVProgressHUD showWithStatus:@"比赛已结束"];
+            [SVProgressHUD dismissWithDelay:.5];
             return;
         } else if (_match.matchStatus != 0) {
-            hud.label.text = @"比赛已开始";
-            [hud hideAnimated:YES afterDelay:.25];
-            return;
+//            hud.label.text = @"比赛已开始";
+//            [hud hideAnimated:YES afterDelay:.25];
+//            return;
         } else {
             RequestOddsBlock oddsBlock = ^(BOOL success, Pankou *pankou, NSError *error) {
                 if (!success) {
-                    hud.label.text = @"更新盘口信息失败";
-                    [hud hideAnimated:YES afterDelay:.25];
+                    [SVProgressHUD showWithStatus:@"更新盘口信息失败"];
+                    [SVProgressHUD dismissWithDelay:.5];
                     return;
                 }
                 if (pankou.leftOdds != bet.leftOddsValue || pankou.rightOdds != bet.rightOddsValue || pankou.handicapValue != bet.handicapValue) {
-                    hud.label.text = @"盘口已更新，请重新下注";
-                    [hud hideAnimated:YES afterDelay:.25];
+                    [SVProgressHUD showWithStatus:@"盘口已更新，请重新下注"];
+                    [SVProgressHUD dismissWithDelay:.5];
                     return;
                 } else {
                     
                     if ([UserSettle beingSettled]) {
-                        hud.label.text = @"系统正在结算，请在15:10之后下注";
-                        [hud hideAnimated:YES afterDelay:.25];
+                        [SVProgressHUD showWithStatus:@"系统正在结算，请在15:10之后下注"];
+                        [SVProgressHUD dismissWithDelay:.5];
                         return;
                     }
                     
                     [bet bet:self.account betBlock:^(BOOL success, BOOL appendBet, Account *account, NSError *error) {
                         if (success) {
                             if (appendBet) {
-                                hud.label.text = @"追加成功";
+                                [SVProgressHUD showWithStatus:@"追加成功"];
                             } else {
-                                hud.label.text = @"下注成功";
+                                [SVProgressHUD showWithStatus:@"下注成功"];
                             }
+                            
                             self.account = account;
                             if ([UserSettle isRankingDuration]) {
                                 AVQuery *query = [AVQuery queryWithClassName:@"BetRanked"];
@@ -305,9 +299,9 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
                                 }];
                             }
                         } else {
-                            hud.label.text = @"下注失败";
+                            [SVProgressHUD showWithStatus:@"下注失败"];
                         }
-                        [hud hideAnimated:YES afterDelay:.25];
+                        [SVProgressHUD dismissWithDelay:.5];
                     }];
                 }
             };

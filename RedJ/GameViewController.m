@@ -10,7 +10,6 @@
 #import "LoginViewController.h"
 #import "GameCell.h"
 #import "Match.h"
-#import "OrderViewController.h"
 #import "User.h"
 #import "Order.h"
 #import "RequestList.h"
@@ -32,6 +31,7 @@
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         [self.navigationController presentViewController:loginVC animated:NO completion:nil];
     } else {
+        
     }
     
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
@@ -47,13 +47,19 @@
     label.contentMode = UIViewContentModeBottom;
     label.text = [NSString stringWithFormat:@"%@ %@(%@)", appName, appVersion, appBuild];
     self.tableView.tableFooterView = label;
-    
-    [UserSettle settleAndUploadTodayEarning];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self refreshControlAction:nil];
+    
+    [UserSettle settleAndUploadTodayEarning];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self.tableView.refreshControl endRefreshing];
 }
 
 

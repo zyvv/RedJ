@@ -39,16 +39,12 @@
         return;
     }
     
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.label.text = @"正在登录...";
+    [SVProgressHUD showWithStatus:@"正在登录"];
     [AVUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(AVUser * _Nullable user, NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
             if (error) {
-                hud.mode = MBProgressHUDModeText;
-                hud.label.text = error.localizedDescription;
-                [hud hideAnimated:YES afterDelay:.25];
+                [SVProgressHUD showWithStatus:error.localizedDescription];
+                [SVProgressHUD dismissWithDelay:.5];
             } else {
 //                AVQuery *accountQuery = [AVQuery queryWithClassName:@"Account"];
 //                [accountQuery whereKey:@"username" equalTo:[AVUser currentUser].username];
@@ -69,8 +65,10 @@
 //                [userOrderMapTom setObject:[AVUser currentUser] forKey:@"user"];
 //                [userOrderMapTom saveInBackground];
 
-                [hud hideAnimated:YES];
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [SVProgressHUD dismissWithCompletion:^{
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }];
+                
             }
 
         });

@@ -11,6 +11,7 @@
 #import <UserNotifications/UserNotifications.h>
 #import <PgySDK/PgyManager.h>
 #import <PgyUpdate/PgyUpdateManager.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface AppDelegate ()<UNUserNotificationCenterDelegate>
 
@@ -50,6 +51,11 @@
     UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:@"RankingNoti" content:content trigger:trigger];
     
     [center addNotificationRequest:request withCompletionHandler:nil];
+    
+    [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
+    [SVProgressHUD setMinimumDismissTimeInterval:1.5];
+    [SVProgressHUD setFadeInAnimationDuration:0];
+    [SVProgressHUD setFadeOutAnimationDuration:0];
     
     return YES;
 }

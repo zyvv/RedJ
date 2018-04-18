@@ -45,6 +45,12 @@
     [super viewWillAppear:animated];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self.tableView.refreshControl endRefreshing];
+}
+
+
 - (void)fecthRankData:(void (^)(void))completion {
     AVQuery *query = [AVQuery queryWithClassName:@"BetRanked"];
     if ([UserSettle isRankingDuration]) {
