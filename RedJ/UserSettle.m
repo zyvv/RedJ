@@ -21,7 +21,7 @@
     if (![[self class] isSettleTime]) {
         return;
     }
-    NSString *rankedFlag = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"Ranked_%@",[User currentUser].username]];
+    NSString *rankedFlag = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"Ranked_%@_",[User currentUser].username]];
     if (rankedFlag && [rankedFlag isEqualToString:[[self class] formatToday]]) {
         return;
     }
@@ -38,7 +38,7 @@
         if (!object) {
             [[self class] needPanDian];
         } else {
-//            [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked_%@",[User currentUser].username]];
+            [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked_%@_",[User currentUser].username]];
         }
     }];
 }
@@ -230,7 +230,7 @@
                 userBetMapTom.fetchWhenSave = YES;
                 [userBetMapTom saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                     if (succeeded) {
-//                        [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked_%@",[User currentUser].username]];
+                        [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked_%@_",[User currentUser].username]];
                     }
                 }];
             }
