@@ -63,7 +63,7 @@
                         
                             
                             for (MatchData *matchData in liveModel.matchData) {
-                                if (matchData.diffDays == 0) { // 正在进行的比赛
+                                if (matchData.diffDays == 0 || matchData.diffDays == -1) { // 正在进行的比赛
                                     Game *game = [Game new];
                                     game.date = matchData.date;
                                     NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
@@ -111,7 +111,27 @@
                                 }
                             }
                             
-                            success(responseArray);
+                            NSMutableSet *gameDates = [NSMutableSet set];
+                            NSMutableArray *gamesArray = [NSMutableArray array];
+                            for (Game *game in responseArray) {
+                                [gameDates addObject:game.date];
+                            }
+
+                            NSArray *sortGameDates = [gameDates sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:nil ascending:YES]]];
+                            for (NSString *gameDate in sortGameDates) {
+                                Game *game = [Game new];
+                                game.date = gameDate;
+                                NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
+                                for (Game *element in responseArray) {
+                                    if ([element.date isEqualToString:gameDate]) {
+                                        [matchs addObjectsFromArray:element.matchs];
+                                    }
+                                }
+                                game.matchs = [matchs copy];
+                                [gamesArray addObject:game];
+                            }
+                            
+                            success(gamesArray);
                             
                         } else {
                             NSError *error = [[NSError alloc] initWithDomain:@"com.zyvv.error" code:scheduledModel.result userInfo:@{NSLocalizedDescriptionKey: @"返回数据错误"}];
@@ -141,7 +161,13 @@
         if (finishedModel.result == 200) {
             NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
             for (MatchData *matchData in finishedModel.matchData) {
-                if (matchData.diffDays == 0 || matchData.diffDays == -1) { // 今天和昨天的比赛
+                if (matchData.diffDays == 0) { // 今天和昨天的比赛
+                    for (Match *match in matchData.match) {
+                        if ([match.leagueId isEqualToString:@"1"] || [match.leagueId isEqualToString:@"5"]) {
+                            [matchs addObject:match];
+                        }
+                    }
+                } else if (matchData.diffDays == -1) {
                     for (Match *match in matchData.match) {
                         if ([match.leagueId isEqualToString:@"1"] || [match.leagueId isEqualToString:@"5"]) {
                             [matchs addObject:match];
@@ -149,7 +175,7 @@
                     }
                 }
             }
-            success(matchs);
+            success([matchs copy]);
         } else {
             NSError *error = [[NSError alloc] initWithDomain:@"com.zyvv.error" code:finishedModel.result userInfo:@{NSLocalizedDescriptionKey: @"返回数据错误"}];
             failure(error);

@@ -79,6 +79,9 @@
 }
 
 - (NSString *)fuhao:(float)num {
+    if (num == 0) {
+        num = 0;
+    }
     if (num > 0) {
         return [NSString stringWithFormat:@"+%.1f", num];
     }

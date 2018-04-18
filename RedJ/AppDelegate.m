@@ -11,6 +11,7 @@
 #import <UserNotifications/UserNotifications.h>
 #import <PgySDK/PgyManager.h>
 #import <PgyUpdate/PgyUpdateManager.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface AppDelegate ()<UNUserNotificationCenterDelegate>
 
@@ -45,12 +46,17 @@
     NSDateComponents *components = [[NSDateComponents alloc] init];
     components.hour = 15;
     components.minute = 5;
-    components.minute = 0;
+    components.second = 0;
     UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components repeats:YES];
 
     UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:@"RankingNoti" content:content trigger:trigger];
     
     [center addNotificationRequest:request withCompletionHandler:nil];
+    
+    [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
+    [SVProgressHUD setMinimumDismissTimeInterval:1.5];
+    [SVProgressHUD setFadeInAnimationDuration:0];
+    [SVProgressHUD setFadeOutAnimationDuration:0];
     
     return YES;
 }

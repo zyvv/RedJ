@@ -10,7 +10,6 @@
 #import "LoginViewController.h"
 #import "GameCell.h"
 #import "Match.h"
-#import "OrderViewController.h"
 #import "User.h"
 #import "Order.h"
 #import "RequestList.h"
@@ -32,12 +31,13 @@
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         [self.navigationController presentViewController:loginVC animated:NO completion:nil];
     } else {
+        
     }
     
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
-    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
+    NSString *appName = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+    NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    NSString *appBuild = [infoDictionary objectForKey:@"CFBundleVersion"];
     
     UILabel *label = [UILabel new];
     label.frame = CGRectMake(0, 0, 300, 49);
@@ -45,15 +45,21 @@
     label.font = [UIFont systemFontOfSize:10];
     label.textAlignment = NSTextAlignmentCenter;
     label.contentMode = UIViewContentModeBottom;
-    label.text = [NSString stringWithFormat:@"%@ %@(%@)", app_Name, app_Version, app_build];
+    label.text = [NSString stringWithFormat:@"%@ %@(%@)", appName, appVersion, appBuild];
     self.tableView.tableFooterView = label;
-    
-    [UserSettle settleAndUploadTodayEarning];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self refreshControlAction:nil];
+    
+    [UserSettle settleAndUploadTodayEarning];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self.tableView.refreshControl endRefreshing];
 }
 
 
@@ -101,22 +107,23 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *bgView = [[UIView alloc] init];
-    bgView.backgroundColor = [UIColor blackColor];
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,8, 375, 34)];
-    headerView.backgroundColor = [UIColor whiteColor];
-    [bgView addSubview:headerView];
-    UILabel *header = [[UILabel alloc] initWithFrame:CGRectMake(16,5, 375, 24)];
+//    UIView *bgView = [[UIView alloc] init];
+//    bgView.backgroundColor = [UIColor blackColor];
+//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 8, 375, 34)];
+//    headerView.backgroundColor = [UIColor whiteColor];
+//    [bgView addSubview:headerView];
+    UILabel *header = [UILabel new];
     header.textColor = [UIColor darkTextColor];
-    header.font = [UIFont systemFontOfSize:16];
+    header.font = [UIFont boldSystemFontOfSize:16];
     Game *game = self.matchDataArray[section];
-    header.text = [self formatMatchDateString:game.date];;
-    [headerView addSubview:header];
-    return bgView;
+    header.text = [NSString stringWithFormat:@"  %@", [self formatMatchDateString:game.date]];
+    header.backgroundColor = [UIColor whiteColor];
+//    [headerView addSubview:header];
+    return header;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 50;
+    return 40;
 }
 
 

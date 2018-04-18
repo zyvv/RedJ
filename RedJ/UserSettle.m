@@ -21,7 +21,7 @@
     if (![[self class] isSettleTime]) {
         return;
     }
-    NSString *rankedFlag = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"Ranked_%@",[User currentUser].username]];
+    NSString *rankedFlag = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"Ranked_%@_",[User currentUser].username]];
     if (rankedFlag && [rankedFlag isEqualToString:[[self class] formatToday]]) {
         return;
     }
@@ -38,7 +38,7 @@
         if (!object) {
             [[self class] needPanDian];
         } else {
-            [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked_%@",[User currentUser].username]];
+            [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked_%@_",[User currentUser].username]];
         }
     }];
 }
@@ -230,7 +230,7 @@
                 userBetMapTom.fetchWhenSave = YES;
                 [userBetMapTom saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                     if (succeeded) {
-                        [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked_%@",[User currentUser].username]];
+                        [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked_%@_",[User currentUser].username]];
                     }
                 }];
             }
@@ -286,13 +286,13 @@
     [calendar setTimeZone:gmt];
     
     NSDateComponents *components = [calendar components:NSUIntegerMax fromDate:[NSDate date]];
-    components.day-=1;
+    components.day-=2;
     [components setHour:15];
     [components setMinute:5];
     [components setSecond: 0];
     
     NSDate *startDate = [calendar dateFromComponents:components];
-    NSDate *endDate = [calendar dateByAddingUnit:NSCalendarUnitDay value:1 toDate:startDate options:0];
+    NSDate *endDate = [calendar dateByAddingUnit:NSCalendarUnitDay value:2 toDate:startDate options:0];
     
     return @[startDate, endDate];
 }
