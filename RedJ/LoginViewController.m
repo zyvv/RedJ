@@ -30,8 +30,6 @@
 
 - (IBAction)registAndLoginButtonAction:(UIButton *)sender {
 
-    self.usernameTextField.text = @"LJYH";
-    self.passwordTextField.text = @"1234567890";
     if (self.usernameTextField.text.length <= 0 || self.usernameTextField.text.length > 8) {
         return;
     }
