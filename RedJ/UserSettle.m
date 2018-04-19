@@ -12,7 +12,24 @@
 #import "Order.h"
 #import "Match.h"
 
+@interface UserSettle ()
+@property (nonatomic, assign) BOOL settleing;
+@end
+
 @implementation UserSettle
+
++ (instancetype)shareUserSettle {
+    static UserSettle *userSettle = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        userSettle = [[UserSettle alloc] init];
+    });
+    return userSettle;
+}
+
++ (BOOL)isSettleing {
+    return [UserSettle shareUserSettle].settleing;
+}
 
 + (void)settleAndUploadTodayEarning {
     if (![AVUser currentUser]) {
@@ -21,7 +38,7 @@
     if (![[self class] isSettleTime]) {
         return;
     }
-    NSString *rankedFlag = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"Ranked_%@_",[User currentUser].username]];
+    NSString *rankedFlag = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"Ranked!!_%@_",[User currentUser].username]];
     if (rankedFlag && [rankedFlag isEqualToString:[[self class] formatToday]]) {
         return;
     }
@@ -38,12 +55,13 @@
         if (!object) {
             [[self class] needPanDian];
         } else {
-            [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked_%@_",[User currentUser].username]];
+            [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked!!_%@_",[User currentUser].username]];
         }
     }];
 }
 
 + (void)needPanDian {
+    [UserSettle shareUserSettle].settleing = YES;
     [RequestList requestRankingMatch:^(id responseObject) {
         
         AVQuery *query1 = [AVQuery queryWithClassName:@"Bet"];
@@ -80,6 +98,7 @@
 
 + (void)pandian:(NSArray *)matchsArray betsArray:(NSArray *)betsArray {
     if (!matchsArray || !betsArray) {
+        [UserSettle shareUserSettle].settleing = NO;
         return;
     }
     NSMutableArray *settledBetsArray = [NSMutableArray arrayWithCapacity:0];
@@ -97,9 +116,7 @@
                 [obj setObject:@(YES) forKey:@"settle"];
                 [obj setObject:[NSDate date] forKey:@"settleDate"];
                 [obj setObject:[match yy_modelToJSONObject] forKey:@"match"];
-                //                bet.match = match;
-                //                bet.settle = YES;
-                //                bet.settleDate = [NSDate date];
+
                 CGFloat betOdds = round(bet.betOdds * 100) / 100;
                 if (bet.betType == 1) { // 大小分
                     CGFloat size = match.matchScore.guestScore + match.matchScore.homeScore;
@@ -118,13 +135,11 @@
                             sizeLeft = NO;
                         }
                         bet.earnings = (1 + betOdds) * bet.betAmount;
-                        //                        bet.status = 1;
                         [obj setObject:@((1 + betOdds) * bet.betAmount) forKey:@"earnings"];
                         [obj setObject:@(1) forKey:@"status"];
                         if (bet.leftOdds != sizeLeft) {
                             // 黑
                             bet.earnings = -(bet.betAmount);
-                            //                            bet.status = -1;
                             [obj setObject:@(-bet.betAmount) forKey:@"earnings"];
                             [obj setObject:@(-1) forKey:@"status"];
                             hei++;
@@ -149,13 +164,11 @@
                             letLeft = YES;
                         }
                         bet.earnings = (1 + betOdds) * bet.betAmount;
-                        //                        bet.status = 1;
                         [obj setObject:@((1 + betOdds) * bet.betAmount) forKey:@"earnings"];
                         [obj setObject:@(1) forKey:@"status"];
                         if (bet.leftOdds != letLeft) {
                             // 黑
                             bet.earnings = -(bet.betAmount);
-                            //                            bet.status = -1;
                             [obj setObject:@(-bet.betAmount) forKey:@"earnings"];
                             [obj setObject:@(-1) forKey:@"status"];
                             hei++;
@@ -170,13 +183,11 @@
                     }
                     BOOL guestWin = match.matchScore.guestScore > match.matchScore.homeScore;
                     bet.earnings = (1 + betOdds) * bet.betAmount;
-                    //                        bet.status = 1;
                     [obj setObject:@((1 + betOdds) * bet.betAmount) forKey:@"earnings"];
                     [obj setObject:@(1) forKey:@"status"];
                     if (bet.leftOdds != guestWin) {
                         // 黑
                         bet.earnings = -(bet.betAmount);
-                        //                            bet.status = -1;
                         [obj setObject:@(-bet.betAmount) forKey:@"earnings"];
                         [obj setObject:@(-1) forKey:@"status"];
                         hei++;
@@ -198,7 +209,6 @@
     }
     [User currentUserAccount:^(Account *ac, NSError *error) {
         if (ac) {
-            
             CGFloat totalAccount = ac.totalAccount + totalEarningWithoutBenJin;
             CGFloat balance = ac.balance + totalEarning;
             
@@ -230,10 +240,16 @@
                 userBetMapTom.fetchWhenSave = YES;
                 [userBetMapTom saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                     if (succeeded) {
-                        [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked_%@_",[User currentUser].username]];
+                        [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked!!_%@_",[User currentUser].username]];
+                        
                     }
+                    [UserSettle shareUserSettle].settleing = NO;
                 }];
+            } else {
+                [UserSettle shareUserSettle].settleing = NO;
             }
+        } else {
+            [UserSettle shareUserSettle].settleing = NO;
         }
     }];
 }

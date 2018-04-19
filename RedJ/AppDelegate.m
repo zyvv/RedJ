@@ -25,13 +25,13 @@
     [AVOSCloud setApplicationId:@"w2jtKPHTNphHaupsMnTjAuHh-gzGzoHsz" clientKey:@"2U4geIChGWyKrknegJBuYzU8"];
     [AVOSCloud setAllLogsEnabled:YES];
     
-    //启动基本SDK
-    [[PgyManager sharedPgyManager] startManagerWithAppId:@"d1e93ed372aa6aad95a839658b2bccd9"];
-    //启动更新检查SDK
-    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"d1e93ed372aa6aad95a839658b2bccd9"];
-
-    [[PgyUpdateManager sharedPgyManager] checkUpdate];
-    
+//    //启动基本SDK
+//    [[PgyManager sharedPgyManager] startManagerWithAppId:@"d1e93ed372aa6aad95a839658b2bccd9"];
+//    //启动更新检查SDK
+//    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"d1e93ed372aa6aad95a839658b2bccd9"];
+//
+//    [[PgyUpdateManager sharedPgyManager] checkUpdate];
+//    
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
     center.delegate = self;
     [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert + UNAuthorizationOptionSound) completionHandler:^(BOOL granted, NSError * _Nullable error) {

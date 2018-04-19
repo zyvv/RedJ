@@ -47,8 +47,6 @@
     return [NSDate dateWithTimeIntervalSince1970:t + [[NSTimeZone localTimeZone] secondsFromGMT]];//东八区
 }
 
-
-
 - (AVObject *)betModelToAVObj {
     NSDictionary *jsonDict = [self yy_modelToJSONObject];
     return [AVObject objectWithDictionary:jsonDict];

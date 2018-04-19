@@ -52,6 +52,9 @@
 
 
 - (void)fecthRankData:(void (^)(void))completion {
+    if ([UserSettle isSettleing]) {
+        return;
+    }
     AVQuery *query = [AVQuery queryWithClassName:@"BetRanked"];
     if ([UserSettle isRankingDuration]) {
         [query whereKey:@"rankedDay" equalTo:[UserSettle formatToday]];

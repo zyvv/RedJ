@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *betOddsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *creatDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *updateDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cloudEaringLabel;
 
 @end
 
@@ -47,12 +48,15 @@
     }
     _betAmountLabel.text = [NSString stringWithFormat:@"%.2f", _bet.betAmount];
     if (_bet.settle) {
+        _cloudEaringLabel.hidden = YES;
         if (_bet.earnings == _bet.betAmount) {
             _earningLabel.text = @"水单";
         } else {
             _earningLabel.text = _bet.earnings > _bet.betAmount ? [NSString stringWithFormat:@"盈 +%.2f", (_bet.earnings - _bet.betAmount)] : [NSString stringWithFormat:@"亏 %.2f", -_bet.betAmount];
         }
     } else {
+        _cloudEaringLabel.hidden = NO;
+        _cloudEaringLabel.text = [NSString stringWithFormat:@"可赢+%.2f", (_bet.betOdds * _bet.betAmount)];
         _earningLabel.text = @"未结算";
     }
     

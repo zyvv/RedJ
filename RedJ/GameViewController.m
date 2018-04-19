@@ -73,10 +73,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    GameCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GameCell"];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"GameCell" owner:self options:nil] lastObject];
-    }
+    GameCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GameCell" forIndexPath:indexPath];
     Game *game = self.matchDataArray[indexPath.section];
     cell.match = game.matchs[indexPath.row];
     return cell;
@@ -91,41 +88,19 @@
     return game.matchs.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    Game *game = self.matchDataArray[indexPath.section];
-    [self performSegueWithIdentifier:@"PushBetVC" sender:game.matchs[indexPath.row]];
-//    OrderViewController *orderVC = [[OrderViewController alloc] init];
-//    orderVC.match = game.matchs[indexPath.row];
-//    orderVC.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:orderVC
-//                                         animated:YES];
-}
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    UIView *bgView = [[UIView alloc] init];
-//    bgView.backgroundColor = [UIColor blackColor];
-//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 8, 375, 34)];
-//    headerView.backgroundColor = [UIColor whiteColor];
-//    [bgView addSubview:headerView];
     UILabel *header = [UILabel new];
     header.textColor = [UIColor darkTextColor];
+    header.backgroundColor = [UIColor groupTableViewBackgroundColor];
     header.font = [UIFont boldSystemFontOfSize:16];
     Game *game = self.matchDataArray[section];
-    header.text = [NSString stringWithFormat:@"  %@", [self formatMatchDateString:game.date]];
-    header.backgroundColor = [UIColor whiteColor];
-//    [headerView addSubview:header];
+    header.text = [NSString stringWithFormat:@"   %@", [self formatMatchDateString:game.date]];
     return header;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40;
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return [UIView new];
 }
-
 
 - (IBAction)refreshControlAction:(UIRefreshControl *)sender {
     [RequestList requestMatchSuccess:^(id responseObject) {
@@ -154,7 +129,9 @@
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"PushBetVC"]) {
         BetViewController *betVC = (BetViewController *)segue.destinationViewController;
-        betVC.match = (Match *)sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+        Game *game = self.matchDataArray[indexPath.section];
+        betVC.match = game.matchs[indexPath.row];
     }
 }
 

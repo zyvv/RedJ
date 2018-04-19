@@ -51,16 +51,20 @@
 @interface MatchScore : NSObject
 @property (nonatomic, assign) float homeScore; // 主队得分
 @property (nonatomic, assign) float guestScore; // 客队得分
+@property (nonatomic, copy) NSString *remainTime; // 客队得分
 @end
 
 @interface Match : NSObject
 @property (nonatomic, copy) NSString *leagueId; // 联赛id
 @property (nonatomic, copy) NSString *thirdId; // 比赛id
+@property (nonatomic, copy) NSString *leagueName; // 比赛id
 @property (nonatomic, copy) NSString *homeTeam; // 主队名字
 @property (nonatomic, copy) NSString *guestTeam; // 客队名字
 @property (nonatomic, copy) NSString *date; // 比赛日期
 @property (nonatomic, copy) NSString *time; // 比赛时间
 @property (nonatomic, assign) int matchStatus; // 比赛状态 -1(已经结束) ... 0(未开始) ... xx
+
+@property (nonatomic, assign) int section;
 @property (nonatomic, copy) NSString *homeTeamId; // 主队id
 @property (nonatomic, copy) NSString *guestTeamId; // 客队id
 @property (nonatomic, strong) NSURL *homeLogoUrl; // 主队logo

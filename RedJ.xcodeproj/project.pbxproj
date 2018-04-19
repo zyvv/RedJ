@@ -15,7 +15,6 @@
 		1454166820860A730013D3C1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1454166720860A730013D3C1 /* SystemConfiguration.framework */; };
 		3FF196FAFE56819383629ABD /* libPods-RedJ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C2DF36418C3AC23D9AF5939 /* libPods-RedJ.a */; };
 		97A66D7D20810579008DDC08 /* GameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A66D7B20810579008DDC08 /* GameCell.m */; };
-		97A66D7E20810579008DDC08 /* GameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A66D7C20810579008DDC08 /* GameCell.xib */; };
 		97AC72082080D20600C98D4C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC72072080D20600C98D4C /* AppDelegate.m */; };
 		97AC720E2080D20600C98D4C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97AC720C2080D20600C98D4C /* Main.storyboard */; };
 		97AC72102080D20600C98D4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97AC720F2080D20600C98D4C /* Assets.xcassets */; };
@@ -70,7 +69,6 @@
 		1C2DF36418C3AC23D9AF5939 /* libPods-RedJ.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RedJ.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		97A66D7A20810579008DDC08 /* GameCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameCell.h; sourceTree = "<group>"; };
 		97A66D7B20810579008DDC08 /* GameCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameCell.m; sourceTree = "<group>"; };
-		97A66D7C20810579008DDC08 /* GameCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameCell.xib; sourceTree = "<group>"; };
 		97AC72032080D20600C98D4C /* RedJ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedJ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97AC72062080D20600C98D4C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		97AC72072080D20600C98D4C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -225,7 +223,6 @@
 				C1996D2D2085CB1000DFB96A /* BetListCell.m */,
 				97A66D7A20810579008DDC08 /* GameCell.h */,
 				97A66D7B20810579008DDC08 /* GameCell.m */,
-				97A66D7C20810579008DDC08 /* GameCell.xib */,
 				97DD96CD2081B61600839B28 /* Match.h */,
 				97DD96CE2081B61600839B28 /* Match.m */,
 				97DD96CC2081B4C400839B28 /* PrefixHeader.pch */,
@@ -385,7 +382,6 @@
 				97AC72102080D20600C98D4C /* Assets.xcassets in Resources */,
 				C1613BE72084A1C4005D5696 /* BetHeaderView.xib in Resources */,
 				97AC720E2080D20600C98D4C /* Main.storyboard in Resources */,
-				97A66D7E20810579008DDC08 /* GameCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

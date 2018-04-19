@@ -22,4 +22,7 @@
 
 + (BOOL)beingSettled;
 
++ (BOOL)isSettleing;
+
+
 @end

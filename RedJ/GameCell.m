@@ -28,16 +28,23 @@
     
     __weak IBOutlet UILabel *_bigOdds;
     __weak IBOutlet UILabel *_smallOdds;
-
+    
+    __weak IBOutlet UILabel *_leagueLabel;
+    
+    __weak IBOutlet UILabel *_matchTimeLabel;
+    __weak IBOutlet UILabel *_statusLabel;
+    __weak IBOutlet UILabel *_guestScoreLabel;
+    __weak IBOutlet UILabel *_homeScoreLabel;
+    
 }
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code    
+    // Initialization code
     
-    _bigOdds.layer.masksToBounds = _smallOdds.layer.masksToBounds = _homeLetOdds.layer.masksToBounds = _guestLetOdds.layer.masksToBounds = YES;
-    _bigOdds.layer.borderColor = _smallOdds.layer.borderColor = _homeLetOdds.layer.borderColor = _guestLetOdds.layer.borderColor = [UIColor blackColor].CGColor;
-    _bigOdds.layer.borderWidth = _smallOdds.layer.borderWidth = _homeLetOdds.layer.borderWidth = _guestLetOdds.layer.borderWidth = 2;
-    _bigOdds.layer.cornerRadius = _smallOdds.layer.cornerRadius = _homeLetOdds.layer.cornerRadius = _guestLetOdds.layer.cornerRadius = 2.0;
+//    _bigOdds.layer.masksToBounds = _smallOdds.layer.masksToBounds = _homeLetOdds.layer.masksToBounds = _guestLetOdds.layer.masksToBounds = YES;
+//    _bigOdds.layer.borderColor = _smallOdds.layer.borderColor = _homeLetOdds.layer.borderColor = _guestLetOdds.layer.borderColor = [UIColor blackColor].CGColor;
+//    _bigOdds.layer.borderWidth = _smallOdds.layer.borderWidth = _homeLetOdds.layer.borderWidth = _guestLetOdds.layer.borderWidth = 2;
+//    _bigOdds.layer.cornerRadius = _smallOdds.layer.cornerRadius = _homeLetOdds.layer.cornerRadius = _guestLetOdds.layer.cornerRadius = 2.0;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -55,34 +62,45 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    
     [_guestLogoImageView yy_setImageWithURL:_match.guestLogoUrl options:YYWebImageOptionSetImageWithFadeAnimation];
     [_homeLogoImageView yy_setImageWithURL:_match.homeLogoUrl options:YYWebImageOptionSetImageWithFadeAnimation];
     _guestTeamLabel.text = _match.guestTeam;
     _homeTeamLabel.text = _match.homeTeam;
+    _matchTimeLabel.text = _match.time;
+    _leagueLabel.text = _match.leagueName;
     
-    float handicapValue = _match.matchOdds.asiaLet.bet365.handicapValue;
-    if (handicapValue >= 0) {
-        _guestLet.text = [NSString stringWithFormat:@"+%.1f", handicapValue];
-        _homeLet.text = [NSString stringWithFormat:@"-%.1f", handicapValue];
-    } else {
-        _guestLet.text = [NSString stringWithFormat:@"%.1f", handicapValue];
-        _homeLet.text = [NSString stringWithFormat:@"+%.1f", -handicapValue];
-    }
-    _guestLetOdds.text = [NSString stringWithFormat:@"%.2f", _match.matchOdds.asiaLet.bet365.leftOdds];
-    _homeLetOdds.text = [NSString stringWithFormat:@"%.2f", _match.matchOdds.asiaLet.bet365.rightOdds];
+    _guestScoreLabel.text = [NSString stringWithFormat:@"%.0f", _match.matchScore.guestScore];
+    _homeScoreLabel.text = [NSString stringWithFormat:@"%.0f", _match.matchScore.homeScore];
     
-    _bigSize.text = [NSString stringWithFormat:@"大%.1f", _match.matchOdds.asiaSize.bet365.handicapValue];
-    _smallSize.text = [NSString stringWithFormat:@"小%.1f", _match.matchOdds.asiaSize.bet365.handicapValue];
-
-    _bigOdds.text = [NSString stringWithFormat:@"%.2f", _match.matchOdds.asiaSize.bet365.leftOdds];
-    _smallOdds.text = [NSString stringWithFormat:@"%.2f", _match.matchOdds.asiaSize.bet365.rightOdds];
+    
+    
+//    float handicapValue = _match.matchOdds.asiaLet.bet365.handicapValue;
+//    if (handicapValue >= 0) {
+//        _guestLet.text = [NSString stringWithFormat:@"+%.1f", handicapValue];
+//        _homeLet.text = [NSString stringWithFormat:@"-%.1f", handicapValue];
+//    } else {
+//        _guestLet.text = [NSString stringWithFormat:@"%.1f", handicapValue];
+//        _homeLet.text = [NSString stringWithFormat:@"+%.1f", -handicapValue];
+//    }
+//    _guestLetOdds.text = [NSString stringWithFormat:@"%.2f", _match.matchOdds.asiaLet.bet365.leftOdds];
+//    _homeLetOdds.text = [NSString stringWithFormat:@"%.2f", _match.matchOdds.asiaLet.bet365.rightOdds];
+//
+//    _bigSize.text = [NSString stringWithFormat:@"大%.1f", _match.matchOdds.asiaSize.bet365.handicapValue];
+//    _smallSize.text = [NSString stringWithFormat:@"小%.1f", _match.matchOdds.asiaSize.bet365.handicapValue];
+//
+//    _bigOdds.text = [NSString stringWithFormat:@"%.2f", _match.matchOdds.asiaSize.bet365.leftOdds];
+//    _smallOdds.text = [NSString stringWithFormat:@"%.2f", _match.matchOdds.asiaSize.bet365.rightOdds];
     
     if (_match.matchStatus == -1) {
-        _statusView.backgroundColor = [UIColor lightGrayColor];
+        _statusLabel.text = @"完场";
+        _statusLabel.textColor = [UIColor lightGrayColor];
     } else if (_match.matchStatus == 0) {
-        _statusView.backgroundColor = [UIColor clearColor];
+        _statusLabel.text = @"未开";
+        _statusLabel.textColor = [UIColor lightGrayColor];
     } else {
-        _statusView.backgroundColor = [UIColor redColor];
+        _statusLabel.text = [NSString stringWithFormat:@"%d节 %@", _match.section, _match.matchScore.remainTime];
+        _statusLabel.textColor = [UIColor greenColor];
     }
     
 }
