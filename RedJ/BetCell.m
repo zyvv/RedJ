@@ -55,7 +55,8 @@
     [super layoutSubviews];
     
     if (self.hasUpdate) {
-        self.updateStausView.backgroundColor = [UIColor greenColor];
+//        self.updateStausView.backgroundColor = [UIColor greenColor];
+        self.updateStausView.backgroundColor = [UIColor clearColor];
     } else {
         self.updateStausView.backgroundColor = [UIColor clearColor];
     }
@@ -77,9 +78,18 @@
     }
     [self.oddsSegment setTitle:[NSString stringWithFormat:@"%.2f", _pankou.leftOdds] forSegmentAtIndex:0];
     [self.oddsSegment setTitle:[NSString stringWithFormat:@"%.2f", _pankou.rightOdds] forSegmentAtIndex:1];
-    if (!_pankou || _match.matchStatus == -1 || (_match.matchStatus != 0 && _match.matchStatus != -1) ) {
+    
+    if (!_pankou) {
         self.betEable = NO;
-    } else {
+    } else if (_match.matchStatus == -1) { // 已结束
+        self.betEable = NO;
+    } else if (_match.matchStatus != 0) { // 正在进行中
+        if (self.betType == 2) {
+            self.betEable = NO;
+        } else {
+            self.betType = YES;
+        }
+    } else { // 未开始
         self.betEable = YES;
     }
 }

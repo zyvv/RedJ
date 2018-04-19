@@ -80,17 +80,21 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
         return;
     }
     _refreshedCount = 0;
-    [self requestMatchScore:nil];
-    [self requestLetOdds:nil];
-    [self requestSizeOdds:nil];
-    [self requestEuroOdds:nil];
+    [self requestMatchScore:NO responseBlock:nil];
+    [self requestLetOdds:NO responseBlock:nil];
+    [self requestSizeOdds:NO responseBlock:nil];
+    [self requestEuroOdds:NO responseBlock:nil];
 }
 
-- (void)requestMatchScore:(RequestMatchBlock)requestMatchBlock {
+- (void)requestMatchScore:(BOOL)odding responseBlock:(RequestMatchBlock)requestMatchBlock {
     [RequestList requestMatchScore:_match.thirdId success:^(id responseObject) {
         MatchScoreModel *scoreModel = [MatchScoreModel yy_modelWithJSON:responseObject];
         if (scoreModel.result == 200) {
-            self.match = scoreModel.data;
+            if (odding) {
+                _match = scoreModel.data;
+            } else {
+                self.match = scoreModel.data;
+            }
         }
         ++self.refreshedCount;
         if (requestMatchBlock) {
@@ -104,10 +108,14 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
     }];
 }
 
-- (void)requestLetOdds:(RequestOddsBlock)requestOddsBlock {
+- (void)requestLetOdds:(BOOL)odding responseBlock:(RequestOddsBlock)requestOddsBlock {
     [RequestList requestMatchOdds:_match.thirdId oddsType:0 success:^(id responseObject) {
         CompanyOdds *companyOdds = [CompanyOdds yy_modelWithJSON:responseObject];
-        self.letOdds = companyOdds.bet365;
+        if (odding) {
+            _letOdds = companyOdds.bet365;
+        } else {
+            self.letOdds = companyOdds.bet365;
+        }
         ++self.refreshedCount;
         if (requestOddsBlock) {
             requestOddsBlock(YES, companyOdds.bet365, nil);
@@ -120,10 +128,14 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
     }];
 }
 
-- (void)requestSizeOdds:(RequestOddsBlock)requestOddsBlock {
+- (void)requestSizeOdds:(BOOL)odding responseBlock:(RequestOddsBlock)requestOddsBlock {
     [RequestList requestMatchOdds:_match.thirdId oddsType:1 success:^(id responseObject) {
         CompanyOdds *companyOdds = [CompanyOdds yy_modelWithJSON:responseObject];
-        self.sizeOdds = companyOdds.bet365;
+        if (odding) {
+            _sizeOdds = companyOdds.bet365;
+        } else {
+            self.sizeOdds = companyOdds.bet365;
+        }
         ++self.refreshedCount;
         if (requestOddsBlock) {
             requestOddsBlock(YES, companyOdds.bet365, nil);
@@ -137,10 +149,14 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
     
 }
 
-- (void)requestEuroOdds:(RequestOddsBlock)requestOddsBlock {
+- (void)requestEuroOdds:(BOOL)odding responseBlock:(RequestOddsBlock)requestOddsBlock {
     [RequestList requestMatchOdds:_match.thirdId oddsType:2 success:^(id responseObject) {
         CompanyOdds *companyOdds = [CompanyOdds yy_modelWithJSON:responseObject];
-        self.euroOdds = companyOdds.bet365;
+        if (odding) {
+            _euroOdds = companyOdds.bet365;
+        } else {
+            self.euroOdds = companyOdds.bet365;
+        }
         ++self.refreshedCount;
         if (requestOddsBlock) {
             requestOddsBlock(YES, companyOdds.bet365, nil);
@@ -161,34 +177,38 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
 - (void)setMatch:(Match *)match {
     if (_match != match) {
         _match = match;
+        if (self.tableView) {
+            [self.tableView reloadData];
+        }
     }
-    if (self.tableView) {
-        [self.tableView reloadData];
-    }
+
 }
 
 - (void)setLetOdds:(Pankou *)letOdds {
     if (_letOdds != letOdds) {
         _letOdds = letOdds;
+        [self.tableView reloadData];
     }
-//    [self.tableView reloadData];
-    [self.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] withRowAnimation:UITableViewRowAnimationNone];
+    
+//    [self.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)setSizeOdds:(Pankou *)sizeOdds {
     if (_sizeOdds != sizeOdds) {
         _sizeOdds = sizeOdds;
+        [self.tableView reloadData];
     }
-//    [self.tableView reloadData];
-    [self.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] withRowAnimation:UITableViewRowAnimationNone];
+    
+//    [self.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)setEuroOdds:(Pankou *)euroOdds {
     if (_euroOdds != euroOdds) {
         _euroOdds = euroOdds;
+        [self.tableView reloadData];
     }
-//    [self.tableView reloadData];
-    [self.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] withRowAnimation:UITableViewRowAnimationNone];
+    
+//    [self.tableView reloadRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)setRefreshedCount:(int)refreshedCount {
@@ -199,10 +219,18 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
 }
 
 - (void)setAccount:(Account *)account {
+    BOOL needReload = NO;
     if (_account != account) {
+        if (_account == nil) {
+            needReload = YES;
+        }
         _account = account;
     }
-    [self.tableView reloadData];
+    
+    if (needReload) {
+        [self.tableView reloadData];
+    }
+
 }
 
 #pragma mark - Table view data source
@@ -247,7 +275,7 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
         return;
     }
     
-    [self requestMatchScore:^(BOOL success, Match *match, NSError *error) {
+    [self requestMatchScore:YES responseBlock:^(BOOL success, Match *match, NSError *error) {
         if (!success) {
             [SVProgressHUD showWithStatus:@"更新比赛信息失败"];
             [SVProgressHUD dismissWithDelay:.5];
@@ -257,9 +285,12 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
             [SVProgressHUD dismissWithDelay:.5];
             return;
         } else if (_match.matchStatus != 0) {
-//            hud.label.text = @"比赛已开始";
-//            [hud hideAnimated:YES afterDelay:.25];
-//            return;
+            if (bet.betType  == 2) {
+                [SVProgressHUD showWithStatus:@"比赛已开始"];
+                [SVProgressHUD dismissWithDelay:.5];
+                return;
+            }
+
         } else {
             RequestOddsBlock oddsBlock = ^(BOOL success, Pankou *pankou, NSError *error) {
                 if (!success) {
@@ -268,7 +299,7 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
                     return;
                 }
                 if (pankou.leftOdds != bet.leftOddsValue || pankou.rightOdds != bet.rightOddsValue || pankou.handicapValue != bet.handicapValue) {
-                    [SVProgressHUD showWithStatus:@"盘口已更新，请重新下注"];
+                    [SVProgressHUD showWithStatus:@"盘口已更新，请刷新后重新下注"];
                     [SVProgressHUD dismissWithDelay:.5];
                     return;
                 } else {
@@ -288,6 +319,7 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
                             }
                             
                             self.account = account;
+                            
                             if ([UserSettle isRankingDuration]) {
                                 AVQuery *query = [AVQuery queryWithClassName:@"BetRanked"];
                                 [query whereKey:@"rankedDay" equalTo:[UserSettle formatToday]];
@@ -301,14 +333,16 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
                         } else {
                             [SVProgressHUD showWithStatus:@"下注失败"];
                         }
-                        [SVProgressHUD dismissWithDelay:.5];
+                        [SVProgressHUD dismissWithDelay:.5 completion:^{
+                            [self.tableView reloadData];
+                        }];
                     }];
                 }
             };
             
-            if (bet.betType == 0) { [self requestLetOdds:oddsBlock]; }
-            if (bet.betType == 1) { [self requestSizeOdds:oddsBlock]; }
-            if (bet.betType == 2) { [self requestEuroOdds:oddsBlock]; }
+            if (bet.betType == 0) { [self requestLetOdds:YES responseBlock:oddsBlock]; }
+            if (bet.betType == 1) { [self requestSizeOdds:YES responseBlock:oddsBlock]; }
+            if (bet.betType == 2) { [self requestEuroOdds:YES responseBlock:oddsBlock]; }
         }
     }];
 }
