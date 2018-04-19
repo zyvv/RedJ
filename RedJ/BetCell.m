@@ -84,11 +84,12 @@
     } else if (_match.matchStatus == -1) { // 已结束
         self.betEable = NO;
     } else if (_match.matchStatus != 0) { // 正在进行中
-        if (self.betType == 2) {
-            self.betEable = NO;
-        } else {
-            self.betType = YES;
-        }
+//        if (self.betType == 2) {
+//            self.betEable = NO;
+//        } else {
+//            self.betEable = YES;
+//        }
+        self.betEable = NO;
     } else { // 未开始
         self.betEable = YES;
     }

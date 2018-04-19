@@ -285,11 +285,11 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
             [SVProgressHUD dismissWithDelay:.5];
             return;
         } else if (_match.matchStatus != 0) {
-            if (bet.betType  == 2) {
+//            if (bet.betType == 2) {
                 [SVProgressHUD showWithStatus:@"比赛已开始"];
                 [SVProgressHUD dismissWithDelay:.5];
                 return;
-            }
+//            }
 
         } else {
             RequestOddsBlock oddsBlock = ^(BOOL success, Pankou *pankou, NSError *error) {
