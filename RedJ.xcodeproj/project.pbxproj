@@ -30,7 +30,6 @@
 		97DD96DD20823DC400839B28 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96DC20823DC400839B28 /* Account.m */; };
 		97DD96E020826A2E00839B28 /* RankingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96DF20826A2E00839B28 /* RankingViewController.m */; };
 		97DD96E420826A6300839B28 /* RankingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96E220826A6300839B28 /* RankingCell.m */; };
-		97DD96E520826A6300839B28 /* RankingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97DD96E320826A6300839B28 /* RankingCell.xib */; };
 		97DD96E82083855F00839B28 /* Ranking.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DD96E72083855F00839B28 /* Ranking.m */; };
 		C1613BD52084715B005D5696 /* RequestList.m in Sources */ = {isa = PBXBuildFile; fileRef = C1613BD42084715B005D5696 /* RequestList.m */; };
 		C1613BD8208475F6005D5696 /* UserSettle.m in Sources */ = {isa = PBXBuildFile; fileRef = C1613BD7208475F6005D5696 /* UserSettle.m */; };
@@ -100,7 +99,6 @@
 		97DD96DF20826A2E00839B28 /* RankingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RankingViewController.m; sourceTree = "<group>"; };
 		97DD96E120826A6300839B28 /* RankingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RankingCell.h; sourceTree = "<group>"; };
 		97DD96E220826A6300839B28 /* RankingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RankingCell.m; sourceTree = "<group>"; };
-		97DD96E320826A6300839B28 /* RankingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RankingCell.xib; sourceTree = "<group>"; };
 		97DD96E62083855F00839B28 /* Ranking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ranking.h; sourceTree = "<group>"; };
 		97DD96E72083855F00839B28 /* Ranking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Ranking.m; sourceTree = "<group>"; };
 		A9B145C5FDCF1CDEF87713B0 /* Pods-RedJ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedJ.release.xcconfig"; path = "Pods/Target Support Files/Pods-RedJ/Pods-RedJ.release.xcconfig"; sourceTree = "<group>"; };
@@ -236,7 +234,6 @@
 				97DD96DF20826A2E00839B28 /* RankingViewController.m */,
 				97DD96E120826A6300839B28 /* RankingCell.h */,
 				97DD96E220826A6300839B28 /* RankingCell.m */,
-				97DD96E320826A6300839B28 /* RankingCell.xib */,
 				97DD96E62083855F00839B28 /* Ranking.h */,
 				97DD96E72083855F00839B28 /* Ranking.m */,
 				C1613BD32084715B005D5696 /* RequestList.h */,
@@ -377,7 +374,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97DD96E520826A6300839B28 /* RankingCell.xib in Resources */,
 				97AC72132080D20600C98D4C /* LaunchScreen.storyboard in Resources */,
 				97AC72102080D20600C98D4C /* Assets.xcassets in Resources */,
 				C1613BE72084A1C4005D5696 /* BetHeaderView.xib in Resources */,

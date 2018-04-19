@@ -138,10 +138,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    RankingCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RankingCell"];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"RankingCell" owner:self options:nil] lastObject];
-    }
+    RankingCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RankingCell" forIndexPath:indexPath];
     cell.userRanking = self.userRankingArray[indexPath.row];
     cell.ranking = (int)indexPath.row + 1;
     return cell;
@@ -150,10 +147,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.userRankingArray.count;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
 }
 
 

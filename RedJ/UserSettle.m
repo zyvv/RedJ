@@ -54,8 +54,6 @@
     [query getFirstObjectInBackgroundWithBlock:^(AVObject * _Nullable object, NSError * _Nullable error) {
         if (!object) {
             [[self class] needPanDian];
-        } else {
-            [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked!!_%@_",[User currentUser].username]];
         }
     }];
 }
@@ -66,12 +64,6 @@
         
         AVQuery *query1 = [AVQuery queryWithClassName:@"Bet"];
         [query1 whereKey:@"orderUserName" equalTo:[User currentUser].username];
-//        AVQuery *query2 = [AVQuery queryWithClassName:@"Bet"];
-//        NSDate *now = [NSDate date];
-//        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-//        [dateFormat setDateFormat:@"yyyy-MM-dd"];
-//        NSString *nowStr = [dateFormat stringFromDate:now];
-//        [query2 whereKey:@"matchDate" equalTo:nowStr];
         
         AVQuery *startDateQuery = [AVQuery queryWithClassName:@"Bet"];
         [startDateQuery whereKey:@"createdAt" greaterThanOrEqualTo:[UserSettle settleDuration].firstObject];
@@ -81,13 +73,17 @@
         AVQuery *query = [AVQuery andQueryWithSubqueries:@[query1, startDateQuery,endDateQuery]];
         [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
             if (results) {
-                NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:0];
-                for (AVObject *obj in results) {
-                    NSMutableDictionary *dict = [obj dictionaryForObject];
-                    [tempArray addObject:dict];
-                }
-                NSArray *betsArray = [NSArray yy_modelArrayWithClass:[Bet class] json:tempArray];
-                [[self class] pandian:responseObject betsArray:betsArray];
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:0];
+                    for (AVObject *obj in results) {
+                        NSMutableDictionary *dict = [obj dictionaryForObject];
+                        [tempArray addObject:dict];
+                    }
+                    NSArray *betsArray = [NSArray yy_modelArrayWithClass:[Bet class] json:tempArray];
+                    [[self class] pandian:responseObject betsArray:betsArray];
+                });
+                
             }
         }];
         
@@ -105,7 +101,7 @@
     CGFloat totalEarning = 0;
     int hong = 0;
     int hei = 0;
-    int totalEarningWithoutBenJin = 0;
+    float totalEarningWithoutBenJin = 0;
     for (Bet *bet in betsArray) {
         if (bet.settle) {
             continue;
@@ -209,45 +205,47 @@
     }
     [User currentUserAccount:^(Account *ac, NSError *error) {
         if (ac) {
-            CGFloat totalAccount = ac.totalAccount + totalEarningWithoutBenJin;
-            CGFloat balance = ac.balance + totalEarning;
-            
-            AVObject *accObj = [AVObject objectWithClassName:@"Account" objectId:ac.objectId];
-            [accObj setObject:@(totalAccount) forKey:@"totalAccount"];
-            [accObj setObject:@(balance) forKey:@"balance"];
-            [settledBetsArray addObject:accObj];
-            
-            NSError *error = nil;
-            [AVObject saveAll:settledBetsArray error:&error];
-            
-            if (!error) {
-                AVObject *obj = [AVObject objectWithClassName:@"BetRanked"];
-                [obj setObject:[User currentUser].username forKey:@"userName"];
-                NSDate *now = [NSDate date];
-                NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-                [dateFormat setDateFormat:@"yyyy-MM-dd"];
-                NSString *nowStr = [dateFormat stringFromDate:now];
-                [obj setObject:nowStr forKey:@"rankedDay"];
-                [obj setObject:@(hong) forKey:@"hong"];
-                [obj setObject:@(hei) forKey:@"hei"];
-                [obj setObject:@(totalEarningWithoutBenJin) forKey:@"totalEarning"];
-                [obj setObject:@(totalAccount) forKey:@"totalAccount"];
-                [obj setObject:@(totalAccount - balance) forKey:@"todayPay"];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                CGFloat totalAccount = ac.totalAccount + totalEarningWithoutBenJin;
+                CGFloat balance = ac.balance + totalEarning;
                 
-                AVObject *userBetMapTom = [[AVObject alloc] initWithClassName:@"UserRanked"];// 用户投注
-                [userBetMapTom setObject:[AVUser currentUser] forKey:@"user"];
-                [userBetMapTom setObject:obj forKey:@"ranked"];
-                userBetMapTom.fetchWhenSave = YES;
-                [userBetMapTom saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                    if (succeeded) {
-                        [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked!!_%@_",[User currentUser].username]];
-                        
-                    }
+                AVObject *accObj = [AVObject objectWithClassName:@"Account" objectId:ac.objectId];
+                [accObj setObject:@(totalAccount) forKey:@"totalAccount"];
+                [accObj setObject:@(balance) forKey:@"balance"];
+                [settledBetsArray addObject:accObj];
+                
+                NSError *error = nil;
+                [AVObject saveAll:settledBetsArray error:&error];
+                
+                if (!error) {
+                    AVObject *obj = [AVObject objectWithClassName:@"BetRanked"];
+                    [obj setObject:[User currentUser].username forKey:@"userName"];
+                    NSDate *now = [NSDate date];
+                    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+                    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+                    NSString *nowStr = [dateFormat stringFromDate:now];
+                    [obj setObject:nowStr forKey:@"rankedDay"];
+                    [obj setObject:@(hong) forKey:@"hong"];
+                    [obj setObject:@(hei) forKey:@"hei"];
+                    [obj setObject:@(totalEarningWithoutBenJin) forKey:@"totalEarning"];
+                    [obj setObject:@(totalAccount) forKey:@"totalAccount"];
+                    [obj setObject:@(totalAccount - balance) forKey:@"todayPay"];
+                    
+                    AVObject *userBetMapTom = [[AVObject alloc] initWithClassName:@"UserRanked"];// 用户投注
+                    [userBetMapTom setObject:[AVUser currentUser] forKey:@"user"];
+                    [userBetMapTom setObject:obj forKey:@"ranked"];
+                    userBetMapTom.fetchWhenSave = YES;
+                    [userBetMapTom saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                        if (succeeded) {
+                            [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked!!_%@_",[User currentUser].username]];
+                            
+                        }
+                        [UserSettle shareUserSettle].settleing = NO;
+                    }];
+                } else {
                     [UserSettle shareUserSettle].settleing = NO;
-                }];
-            } else {
-                [UserSettle shareUserSettle].settleing = NO;
-            }
+                }
+            });
         } else {
             [UserSettle shareUserSettle].settleing = NO;
         }
