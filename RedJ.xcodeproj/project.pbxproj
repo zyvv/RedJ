@@ -39,6 +39,8 @@
 		C1613BE72084A1C4005D5696 /* BetHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1613BE62084A1C4005D5696 /* BetHeaderView.xib */; };
 		C1996D2B20859EED00DFB96A /* BetListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1996D2A20859EED00DFB96A /* BetListViewController.m */; };
 		C1996D2E2085CB1000DFB96A /* BetListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1996D2D2085CB1000DFB96A /* BetListCell.m */; };
+		C1E5DFA120897AF80056E34B /* UserBonus.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E5DFA020897AF80056E34B /* UserBonus.m */; };
+		C1E5DFA4208984690056E34B /* BonusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E5DFA3208984690056E34B /* BonusViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +119,10 @@
 		C1996D2A20859EED00DFB96A /* BetListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BetListViewController.m; sourceTree = "<group>"; };
 		C1996D2C2085CB1000DFB96A /* BetListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BetListCell.h; sourceTree = "<group>"; };
 		C1996D2D2085CB1000DFB96A /* BetListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BetListCell.m; sourceTree = "<group>"; };
+		C1E5DF9F20897AF80056E34B /* UserBonus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserBonus.h; sourceTree = "<group>"; };
+		C1E5DFA020897AF80056E34B /* UserBonus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserBonus.m; sourceTree = "<group>"; };
+		C1E5DFA2208984690056E34B /* BonusViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BonusViewController.h; sourceTree = "<group>"; };
+		C1E5DFA3208984690056E34B /* BonusViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BonusViewController.m; sourceTree = "<group>"; };
 		C72E137A4D3FAC076C098960 /* Pods-RedJ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RedJ.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RedJ/Pods-RedJ.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -243,6 +249,10 @@
 				C1613BE120849463005D5696 /* BetHeaderView.h */,
 				C1613BE220849463005D5696 /* BetHeaderView.m */,
 				C1613BE62084A1C4005D5696 /* BetHeaderView.xib */,
+				C1E5DF9F20897AF80056E34B /* UserBonus.h */,
+				C1E5DFA020897AF80056E34B /* UserBonus.m */,
+				C1E5DFA2208984690056E34B /* BonusViewController.h */,
+				C1E5DFA3208984690056E34B /* BonusViewController.m */,
 			);
 			path = RedJ;
 			sourceTree = "<group>";
@@ -456,6 +466,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1E5DFA4208984690056E34B /* BonusViewController.m in Sources */,
+				C1E5DFA120897AF80056E34B /* UserBonus.m in Sources */,
 				97AC723D2080DA6800C98D4C /* GameViewController.m in Sources */,
 				C1613BE320849463005D5696 /* BetHeaderView.m in Sources */,
 				97DD96E82083855F00839B28 /* Ranking.m in Sources */,

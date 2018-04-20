@@ -15,6 +15,8 @@
 #import "RequestList.h"
 #import "BetViewController.h"
 #import "UserSettle.h"
+#import "UserBonus.h"
+#import "BonusViewController.h"
 
 @interface GameViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, copy) NSArray *matchDataArray;
@@ -55,6 +57,17 @@
     [self refreshControlAction:nil];
     
     [UserSettle settleAndUploadTodayEarning];
+    [UserBonus haveUserBonus:^(UserBonus *bonus) {
+        if (bonus) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                BonusViewController *bonusVC = [storyboard instantiateViewControllerWithIdentifier:@"BonusViewController"];
+                bonusVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                bonusVC.bonus = bonus;
+                [self.navigationController presentViewController:bonusVC animated:YES completion:nil];
+            });
+        }
+    }];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
