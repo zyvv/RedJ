@@ -23,7 +23,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [AVOSCloud setApplicationId:@"w2jtKPHTNphHaupsMnTjAuHh-gzGzoHsz" clientKey:@"2U4geIChGWyKrknegJBuYzU8"];
-    [AVOSCloud setAllLogsEnabled:YES];
+    [AVOSCloud setAllLogsEnabled:NO];
     
     //启动基本SDK
     [[PgyManager sharedPgyManager] startManagerWithAppId:@"d1e93ed372aa6aad95a839658b2bccd9"];
@@ -38,20 +38,20 @@
         
     }];
     
-    UNMutableNotificationContent* content = [[UNMutableNotificationContent alloc] init];
-    content.title = [NSString localizedUserNotificationStringForKey:@"已经可以结算今日注单了" arguments:nil];
-    content.body = [NSString localizedUserNotificationStringForKey:@"快去看看谁今天要发最大的红包吧~" arguments:nil];
-    content.sound = [UNNotificationSound defaultSound];
-    
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    components.hour = 15;
-    components.minute = 5;
-    components.second = 0;
-    UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components repeats:YES];
-
-    UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:@"RankingNoti" content:content trigger:trigger];
-    
-    [center addNotificationRequest:request withCompletionHandler:nil];
+//    UNMutableNotificationContent* content = [[UNMutableNotificationContent alloc] init];
+//    content.title = [NSString localizedUserNotificationStringForKey:@"已经可以结算今日注单了" arguments:nil];
+//    content.body = [NSString localizedUserNotificationStringForKey:@"快去看看谁今天要发最大的红包吧~" arguments:nil];
+//    content.sound = [UNNotificationSound defaultSound];
+//    
+//    NSDateComponents *components = [[NSDateComponents alloc] init];
+//    components.hour = 15;
+//    components.minute = 5;
+//    components.second = 0;
+//    UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components repeats:YES];
+//
+//    UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:@"RankingNoti" content:content trigger:trigger];
+//    
+//    [center addNotificationRequest:request withCompletionHandler:nil];
     
     [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
     [SVProgressHUD setMinimumDismissTimeInterval:1.5];
@@ -103,7 +103,5 @@
     }
     completionHandler();
 }
-
-
 
 @end

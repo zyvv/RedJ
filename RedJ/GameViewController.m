@@ -19,7 +19,9 @@
 #import "BonusViewController.h"
 
 @interface GameViewController ()<UITableViewDelegate, UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UISegmentedControl *matchSegment;
 @property (nonatomic, copy) NSArray *matchDataArray;
+
 @end
 
 @implementation GameViewController
@@ -56,7 +58,6 @@
     [super viewWillAppear:animated];
     [self refreshControlAction:nil];
     
-    [UserSettle settleAndUploadTodayEarning];
     [UserBonus haveUserBonus:^(UserBonus *bonus) {
         if (bonus) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -114,18 +115,26 @@
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     return [UIView new];
 }
+- (IBAction)matchSegmentAction:(UISegmentedControl *)sender {
+    [self refreshControlAction:nil];
+}
 
 - (IBAction)refreshControlAction:(UIRefreshControl *)sender {
-    [RequestList requestMatchSuccess:^(id responseObject) {
-        self.matchDataArray = (NSArray *)responseObject;
+    
+    void(^errorBlock)(NSError *error) = ^(NSError *error){
         dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
             [sender endRefreshing];
         });
-    } failure:^(NSError *error) {
+    };
+    [SVProgressHUD show];
+    [RequestList requestMatch:self.matchSegment.selectedSegmentIndex success:^(id responseObject) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+            self.matchDataArray = (NSArray *)responseObject;
             [sender endRefreshing];
         });
-    }];
+    } failure:errorBlock];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -13,7 +13,6 @@
 #import "Match.h"
 
 @interface UserSettle ()
-@property (nonatomic, assign) BOOL settleing;
 @end
 
 @implementation UserSettle
@@ -27,74 +26,53 @@
     return userSettle;
 }
 
-+ (BOOL)isSettleing {
-    return [UserSettle shareUserSettle].settleing;
-}
-
 + (void)settleAndUploadTodayEarning {
     if (![AVUser currentUser]) {
         return;
     }
-    if (![[self class] isSettleTime]) {
-        return;
-    }
-    NSString *rankedFlag = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"Ranked!!_%@_",[User currentUser].username]];
-    if (rankedFlag && [rankedFlag isEqualToString:[[self class] formatToday]]) {
-        return;
-    }
-    AVQuery *query1 = [AVQuery queryWithClassName:@"BetRanked"];
-    [query1 whereKey:@"userName" equalTo:[User currentUser].username];
-    AVQuery *query2 = [AVQuery queryWithClassName:@"BetRanked"];
-    NSDate *now = [NSDate date];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"yyyy-MM-dd"];
-    NSString *nowStr = [dateFormat stringFromDate:now];
-    [query2 whereKey:@"rankedDay" equalTo:nowStr];
-    AVQuery *query = [AVQuery andQueryWithSubqueries:@[query1, query2]];
-    [query getFirstObjectInBackgroundWithBlock:^(AVObject * _Nullable object, NSError * _Nullable error) {
-        if (!object) {
-            [[self class] needPanDian];
-        }
-    }];
-}
-
-+ (void)needPanDian {
-    [UserSettle shareUserSettle].settleing = YES;
-    [RequestList requestRankingMatch:^(id responseObject) {
-        
-        AVQuery *query1 = [AVQuery queryWithClassName:@"Bet"];
-        [query1 whereKey:@"orderUserName" equalTo:[User currentUser].username];
-        
-        AVQuery *startDateQuery = [AVQuery queryWithClassName:@"Bet"];
-        [startDateQuery whereKey:@"createdAt" greaterThanOrEqualTo:[UserSettle settleDuration].firstObject];
-        
-        AVQuery *endDateQuery = [AVQuery queryWithClassName:@"Bet"];
-        [endDateQuery whereKey:@"createdAt" lessThan:[UserSettle settleDuration].lastObject];
-        AVQuery *query = [AVQuery andQueryWithSubqueries:@[query1, startDateQuery,endDateQuery]];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-            if (results) {
-                
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:0];
-                    for (AVObject *obj in results) {
-                        NSMutableDictionary *dict = [obj dictionaryForObject];
-                        [tempArray addObject:dict];
-                    }
-                    NSArray *betsArray = [NSArray yy_modelArrayWithClass:[Bet class] json:tempArray];
-                    [[self class] pandian:responseObject betsArray:betsArray];
-                });
-                
-            }
-        }];
-        
+    [RequestList requestFinishedMatchSuccess:^(id responseObject) {
+        [[self class] settleWithMatchArray:responseObject];
     } failure:^(NSError *error) {
         
     }];
 }
 
++ (void)settleWithMatchArray:(NSArray *)matchArray {
+    if (!matchArray || matchArray.count == 0) {
+        return;
+    }
+    AVQuery *query1 = [AVQuery queryWithClassName:@"Bet"];
+    [query1 whereKey:@"orderUserName" equalTo:[User currentUser].username];
+    
+    AVQuery *query2 = [AVQuery queryWithClassName:@"Bet"];
+    [query2 whereKey:@"settle" equalTo:@(NO)];
+    
+    AVQuery *startDateQuery = [AVQuery queryWithClassName:@"Bet"];
+    [startDateQuery whereKey:@"createdAt" greaterThanOrEqualTo:[UserSettle settleDuration].firstObject];
+    
+    AVQuery *endDateQuery = [AVQuery queryWithClassName:@"Bet"];
+    [endDateQuery whereKey:@"createdAt" lessThan:[UserSettle settleDuration].lastObject];
+    
+    AVQuery *query = [AVQuery andQueryWithSubqueries:@[query1, query2, startDateQuery,endDateQuery]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+        if (results) {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:0];
+                for (AVObject *obj in results) {
+                    NSMutableDictionary *dict = [obj dictionaryForObject];
+                    [tempArray addObject:dict];
+                }
+                NSArray *betsArray = [NSArray yy_modelArrayWithClass:[Bet class] json:tempArray];
+                [[self class] pandian:matchArray betsArray:betsArray];
+            });
+            
+        }
+    }];
+
+}
+
 + (void)pandian:(NSArray *)matchsArray betsArray:(NSArray *)betsArray {
-    if (!matchsArray || !betsArray) {
-        [UserSettle shareUserSettle].settleing = NO;
+    if (!matchsArray || !betsArray || matchsArray.count == 0 || betsArray.count == 0) {
         return;
     }
     NSMutableArray *settledBetsArray = [NSMutableArray arrayWithCapacity:0];
@@ -218,56 +196,66 @@
                 [AVObject saveAll:settledBetsArray error:&error];
                 
                 if (!error) {
-                    AVObject *obj = [AVObject objectWithClassName:@"BetRanked"];
-                    [obj setObject:[User currentUser].username forKey:@"userName"];
+                    
                     NSDate *now = [NSDate date];
                     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
                     [dateFormat setDateFormat:@"yyyy-MM-dd"];
                     NSString *nowStr = [dateFormat stringFromDate:now];
-                    [obj setObject:nowStr forKey:@"rankedDay"];
-                    [obj setObject:@(hong) forKey:@"hong"];
-                    [obj setObject:@(hei) forKey:@"hei"];
-                    [obj setObject:@(totalEarningWithoutBenJin) forKey:@"totalEarning"];
-                    [obj setObject:@(totalAccount) forKey:@"totalAccount"];
-                    [obj setObject:@(totalAccount - balance) forKey:@"todayPay"];
                     
-                    AVObject *userBetMapTom = [[AVObject alloc] initWithClassName:@"UserRanked"];// 用户投注
-                    [userBetMapTom setObject:[AVUser currentUser] forKey:@"user"];
-                    [userBetMapTom setObject:obj forKey:@"ranked"];
-                    userBetMapTom.fetchWhenSave = YES;
-                    [userBetMapTom saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                        if (succeeded) {
-                            [[NSUserDefaults standardUserDefaults] setObject:[[self class] formatToday] forKey:[NSString stringWithFormat:@"Ranked!!_%@_",[User currentUser].username]];
+                    AVQuery *query1 = [AVQuery queryWithClassName:@"BetRanked"];
+                    [query1 whereKey:@"userName" equalTo:[User currentUser].username];
+                    AVQuery *query2 = [AVQuery queryWithClassName:@"BetRanked"];
+                    [query2 whereKey:@"rankedDay" equalTo:nowStr];
+                    
+                    AVQuery *query = [AVQuery andQueryWithSubqueries:@[query1, query2]];
+                    [query getFirstObjectInBackgroundWithBlock:^(AVObject * _Nullable object, NSError * _Nullable error) {
+                        AVObject *obj = nil;
+                        if (object) {
+                            obj = [AVObject objectWithClassName:@"BetRanked" objectId:object.objectId];
+                            [obj incrementKey:@"hong" byAmount:@(hong)];
+                            [obj incrementKey:@"hei" byAmount:@(hei)];
+                        } else {
+                            obj = [AVObject objectWithClassName:@"BetRanked"];
+                            [obj setObject:[User currentUser].username forKey:@"userName"];
+                            [obj setObject:nowStr forKey:@"rankedDay"];
+                            
+                            [obj setObject:@(hong) forKey:@"hong"];
+                            [obj setObject:@(hei) forKey:@"hei"];
                             
                         }
-                        [UserSettle shareUserSettle].settleing = NO;
+                        [obj setObject:@(totalEarningWithoutBenJin) forKey:@"totalEarning"];
+                        [obj setObject:@(totalAccount) forKey:@"totalAccount"];
+                        [obj setObject:@(totalAccount - balance) forKey:@"todayPay"];
+                        
+                        AVObject *userBetMapTom = [[AVObject alloc] initWithClassName:@"UserRanked"];// 用户投注
+                        [userBetMapTom setObject:[AVUser currentUser] forKey:@"user"];
+                        [userBetMapTom setObject:obj forKey:@"ranked"];
+                        userBetMapTom.fetchWhenSave = YES;
+                        [userBetMapTom saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                        }];
                     }];
-                } else {
-                    [UserSettle shareUserSettle].settleing = NO;
                 }
             });
-        } else {
-            [UserSettle shareUserSettle].settleing = NO;
         }
     }];
 }
 
-+ (BOOL)isRankingDuration {
-    
-    NSDate *now = [NSDate date];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"HH:mm"];
-    
-    NSString *nowStr = [dateFormat stringFromDate:now];
-    now = [dateFormat dateFromString:nowStr];
-    
-    NSDate *rankingTime = [dateFormat dateFromString:@"15:00"];
-    
-    if ([now compare:rankingTime] == NSOrderedDescending) {
-        return YES;
-    }
-    return NO;
-}
+//+ (BOOL)isRankingDuration {
+//
+//    NSDate *now = [NSDate date];
+//    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+//    [dateFormat setDateFormat:@"HH:mm"];
+//
+//    NSString *nowStr = [dateFormat stringFromDate:now];
+//    now = [dateFormat dateFromString:nowStr];
+//
+//    NSDate *rankingTime = [dateFormat dateFromString:@"15:00"];
+//
+//    if ([now compare:rankingTime] == NSOrderedDescending) {
+//        return YES;
+//    }
+//    return NO;
+//}
 
 + (NSString *)formatToday {
     static NSString *formatToday = nil;
@@ -311,39 +299,39 @@
     return @[startDate, endDate];
 }
 
-+ (BOOL)isSettleTime {
-    NSDate *now = [NSDate date];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"HH:mm"];
-    
-    NSString *nowStr = [dateFormat stringFromDate:now];
-    now = [dateFormat dateFromString:nowStr];
-    
-    NSDate *rankingTime = [dateFormat dateFromString:@"15:00"];
-    NSDate *rankingStopTime = [dateFormat dateFromString:@"23:50"];
-    
-    if ([now compare:rankingTime] == NSOrderedDescending && [now compare:rankingStopTime] == NSOrderedAscending) {
-        return YES;
-    }
-    return NO;
-}
+//+ (BOOL)isSettleTime {
+//    NSDate *now = [NSDate date];
+//    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+//    [dateFormat setDateFormat:@"HH:mm"];
+//
+//    NSString *nowStr = [dateFormat stringFromDate:now];
+//    now = [dateFormat dateFromString:nowStr];
+//
+//    NSDate *rankingTime = [dateFormat dateFromString:@"15:00"];
+//    NSDate *rankingStopTime = [dateFormat dateFromString:@"23:50"];
+//
+//    if ([now compare:rankingTime] == NSOrderedDescending && [now compare:rankingStopTime] == NSOrderedAscending) {
+//        return YES;
+//    }
+//    return NO;
+//}
 
-+ (BOOL)beingSettled {
-    NSDate *now = [NSDate date];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"HH:mm"];
-    
-    NSString *nowStr = [dateFormat stringFromDate:now];
-    now = [dateFormat dateFromString:nowStr];
-    
-    NSDate *rankingTime = [dateFormat dateFromString:@"14:55"];
-    NSDate *rankingStopTime = [dateFormat dateFromString:@"15:10"];
-    
-    if ([now compare:rankingTime] == NSOrderedDescending && [now compare:rankingStopTime] == NSOrderedAscending) {
-        return YES;
-    }
-    return NO;
-}
+//+ (BOOL)beingSettled {
+//    NSDate *now = [NSDate date];
+//    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+//    [dateFormat setDateFormat:@"HH:mm"];
+//
+//    NSString *nowStr = [dateFormat stringFromDate:now];
+//    now = [dateFormat dateFromString:nowStr];
+//
+//    NSDate *rankingTime = [dateFormat dateFromString:@"14:55"];
+//    NSDate *rankingStopTime = [dateFormat dateFromString:@"15:10"];
+//
+//    if ([now compare:rankingTime] == NSOrderedDescending && [now compare:rankingStopTime] == NSOrderedAscending) {
+//        return YES;
+//    }
+//    return NO;
+//}
 
 
 @end

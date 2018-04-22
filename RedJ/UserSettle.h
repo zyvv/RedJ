@@ -10,9 +10,9 @@
 
 @interface UserSettle : NSObject
 
-+ (BOOL)isRankingDuration;
+//+ (BOOL)isRankingDuration;
 
-+ (BOOL)isSettleTime;
+//+ (BOOL)isSettleTime;
 
 + (NSString *)formatToday;
 
@@ -20,9 +20,9 @@
 
 + (void)settleAndUploadTodayEarning;
 
-+ (BOOL)beingSettled;
+//+ (BOOL)beingSettled;
 
-+ (BOOL)isSettleing;
+//+ (BOOL)isSettleing;
 
 
 @end

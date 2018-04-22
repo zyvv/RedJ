@@ -25,7 +25,7 @@
     // Initialization code
 }
 
-- (void)setUserRanking:(UserRanking *)userRanking {
+- (void)setUserRanking:(Ranking *)userRanking {
     if (_userRanking != userRanking) {
         _userRanking = userRanking;
     }
@@ -34,16 +34,10 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    if ([_userRanking.rankedDay isEqualToString:[UserSettle formatToday]]) {
-        _earningDayLabel.text = @"今日收益";
-    } else if ([_userRanking.rankedDay isEqualToString:[UserSettle formatYesterday]]) {
-        _earningDayLabel.text = @"昨日收益";
-    } else {
-        _earningDayLabel.text = @"收益";
-    }
+    _earningDayLabel.text = @"今日实时收益";
     _usernameLabel.text = _userRanking.userName;
     _rankingLabel.text = [NSString stringWithFormat:@"# %d", _ranking];
-    _yesterdayEarningLabel.text = [NSString stringWithFormat:@"%.2f", _userRanking.todayEarning];
+    _yesterdayEarningLabel.text = [NSString stringWithFormat:@"%.2f", _userRanking.totalEarning];
     _recordLabel.text = [NSString stringWithFormat:@"%d红%d黑", _userRanking.hong, _userRanking.hei];
     _todayPayLabel.text = [NSString stringWithFormat:@" (未结算:%.2f)", _userRanking.todayPay];
     _totalAmountLabel.text = [NSString stringWithFormat:@"%.2f", _userRanking.totalAccount - _userRanking.todayPay];
