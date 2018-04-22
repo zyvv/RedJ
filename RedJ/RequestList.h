@@ -10,6 +10,9 @@
 
 @interface RequestList : NSObject
 
++ (void)requestMatchSuccess:(PPHttpRequestSuccess)success
+                    failure:(PPHttpRequestFailed)failure;
+
 + (void)requestMatch:(NSInteger)matchType
              success:(PPHttpRequestSuccess)success
              failure:(PPHttpRequestFailed)failure;

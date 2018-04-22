@@ -19,9 +19,7 @@
 #import "BonusViewController.h"
 
 @interface GameViewController ()<UITableViewDelegate, UITableViewDataSource>
-@property (weak, nonatomic) IBOutlet UISegmentedControl *matchSegment;
 @property (nonatomic, copy) NSArray *matchDataArray;
-
 @end
 
 @implementation GameViewController
@@ -29,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"比赛";
-
+    
     if (![AVUser currentUser]) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
@@ -51,7 +49,7 @@
     label.contentMode = UIViewContentModeBottom;
     label.text = [NSString stringWithFormat:@"%@ %@(%@)", appName, appVersion, appBuild];
     self.tableView.tableFooterView = label;
-
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -115,26 +113,18 @@
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     return [UIView new];
 }
-- (IBAction)matchSegmentAction:(UISegmentedControl *)sender {
-    [self refreshControlAction:nil];
-}
 
 - (IBAction)refreshControlAction:(UIRefreshControl *)sender {
-    
-    void(^errorBlock)(NSError *error) = ^(NSError *error){
+    [RequestList requestMatchSuccess:^(id responseObject) {
+        self.matchDataArray = (NSArray *)responseObject;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [SVProgressHUD dismiss];
             [sender endRefreshing];
         });
-    };
-    [SVProgressHUD show];
-    [RequestList requestMatch:self.matchSegment.selectedSegmentIndex success:^(id responseObject) {
+    } failure:^(NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [SVProgressHUD dismiss];
-            self.matchDataArray = (NSArray *)responseObject;
             [sender endRefreshing];
         });
-    } failure:errorBlock];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -173,3 +163,4 @@
 }
 
 @end
+
