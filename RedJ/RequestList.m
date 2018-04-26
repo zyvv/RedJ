@@ -15,7 +15,7 @@
 
 + (void)requestMatchSuccess:(PPHttpRequestSuccess)success
                     failure:(PPHttpRequestFailed)failure {
-    [RequestList requestFinishedMatchSuccess:^(id responseObject) {
+    [RequestList requestGameFinishedMatchSuccess:^(id responseObject) {
         ResponseModel *finishedModel = [ResponseModel yy_modelWithJSON:responseObject];
         if (finishedModel.result == 200) {
             [RequestList requestLiveMatchSuccess:^(id responseObject) {
@@ -43,7 +43,7 @@
                                     }
                                 }
                             }
-                        
+                            
                             for (MatchData *matchData in finishedModel.matchData) {
                                 if (matchData.diffDays == 0) { // 已经结束的今天的比赛
                                     Game *game = [Game new];
@@ -60,7 +60,7 @@
                                     }
                                 }
                             }
-                        
+                            
                             
                             for (MatchData *matchData in liveModel.matchData) {
                                 if (matchData.diffDays == 0 || matchData.diffDays == -1) { // 正在进行的比赛
@@ -116,7 +116,7 @@
                             for (Game *game in responseArray) {
                                 [gameDates addObject:game.date];
                             }
-
+                            
                             NSArray *sortGameDates = [gameDates sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:nil ascending:YES]]];
                             for (NSString *gameDate in sortGameDates) {
                                 Game *game = [Game new];
@@ -146,41 +146,12 @@
             } failure:failure];
         }
     } failure:failure];
-
+    
 }
 
-+ (void)requestFinishedMatchSuccess:(PPHttpRequestSuccess)success
++ (void)requestGameFinishedMatchSuccess:(PPHttpRequestSuccess)success
                             failure:(PPHttpRequestFailed)failure {
     [PPNetworkHelper GET:kRequestPath(@"basketballMatch.findFinishedMatch.do") parameters:[self requestPrameters] success:success failure:failure];
-}
-
-+ (void)requestRankingMatch:(PPHttpRequestSuccess)success
-                   failure:(PPHttpRequestFailed)failure {
-    [RequestList requestFinishedMatchSuccess:^(id responseObject) {
-        ResponseModel *finishedModel = [ResponseModel yy_modelWithJSON:responseObject];
-        if (finishedModel.result == 200) {
-            NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
-            for (MatchData *matchData in finishedModel.matchData) {
-                if (matchData.diffDays == 0) { // 今天和昨天的比赛
-                    for (Match *match in matchData.match) {
-                        if ([match.leagueId isEqualToString:@"1"] || [match.leagueId isEqualToString:@"5"]) {
-                            [matchs addObject:match];
-                        }
-                    }
-                } else if (matchData.diffDays == -1) {
-                    for (Match *match in matchData.match) {
-                        if ([match.leagueId isEqualToString:@"1"] || [match.leagueId isEqualToString:@"5"]) {
-                            [matchs addObject:match];
-                        }
-                    }
-                }
-            }
-            success([matchs copy]);
-        } else {
-            NSError *error = [[NSError alloc] initWithDomain:@"com.zyvv.error" code:finishedModel.result userInfo:@{NSLocalizedDescriptionKey: @"返回数据错误"}];
-            failure(error);
-        }
-    } failure:failure];
 }
 
 + (void)requestLiveMatchSuccess:(PPHttpRequestSuccess)success
@@ -191,6 +162,87 @@
 + (void)requestScheduledMatchSuccess:(PPHttpRequestSuccess)success
                              failure:(PPHttpRequestFailed)failure {
     [PPNetworkHelper GET:kRequestPath(@"basketballMatch.findScheduledMatch.do") parameters:[self requestPrameters] success:success failure:failure];
+}
+
++ (void)requestMatch:(NSInteger)matchType
+             success:(PPHttpRequestSuccess)success
+             failure:(PPHttpRequestFailed)failure {
+    
+    NSString *path = nil;
+    if (matchType == 0) {
+        path = @"basketballMatch.findLiveMatch.do";
+    }
+    if (matchType == 1) {
+        path = @"basketballMatch.findFinishedMatch.do";
+    }
+    if (matchType == 2) {
+        path = @"basketballMatch.findScheduledMatch.do";
+    }
+    
+     NSArray *(^handleResponseObject)(id responseObject) = ^(id responseObject) {
+        ResponseModel *finishedModel = [ResponseModel yy_modelWithJSON:responseObject];
+        NSMutableArray *responseArray = [NSMutableArray arrayWithCapacity:0];
+        if (finishedModel.result == 200) {
+            for (MatchData *matchData in finishedModel.matchData) {
+                Game *game = [Game new];
+                game.date = matchData.date;
+                NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
+                for (Match *match in matchData.match) {
+                    if ([match.leagueId isEqualToString:@"1"] || [match.leagueId isEqualToString:@"5"]) {
+                        [matchs addObject:match];
+                    }
+                }
+                game.matchs = matchs;
+                if (matchs.count > 0) {
+                    [responseArray addObject:game];
+                }
+            }
+        }
+        return responseArray;
+    };
+    PPHttpRequestFailed failedBlock = ^(NSError *error) {
+        if ([[self class] cacheForKey:path]) {
+            success(handleResponseObject([[self class] cacheForKey:path]));
+        } else {
+            if (error) {
+                failure(error);
+            } else {
+                NSError *error = [[NSError alloc] initWithDomain:@"com.zyvv.error" code:-100 userInfo:@{NSLocalizedDescriptionKey: @"返回数据错误"}];
+                failure(error);
+            }
+        }
+    };
+    PPHttpRequestSuccess successBlock = ^(id responseObject) {
+//        [[self class] setCache:responseObject forKey:path];
+        success(handleResponseObject(responseObject));
+    };
+
+    if (success) {
+        success(handleResponseObject([[self class] cacheForKey:path]));
+    }
+    [PPNetworkHelper GET:kRequestPath(path) parameters:[self requestPrameters] success:successBlock failure:failedBlock];
+}
+
++ (void)requestFinishedMatchSuccess:(PPHttpRequestSuccess)success
+                            failure:(PPHttpRequestFailed)failure {
+    [PPNetworkHelper GET:kRequestPath(@"basketballMatch.findFinishedMatch.do") parameters:[self requestPrameters] success:^(id responseObject) {
+        ResponseModel *finishedModel = [ResponseModel yy_modelWithJSON:responseObject];
+        if (finishedModel.result == 200) {
+            NSMutableArray *matchs = [NSMutableArray arrayWithCapacity:0];
+            for (MatchData *matchData in finishedModel.matchData) {
+                for (Match *match in matchData.match) {
+                    if ([match.leagueId isEqualToString:@"1"] || [match.leagueId isEqualToString:@"5"]) {
+                        [matchs addObject:match];
+                    }
+                }
+            }
+            success([matchs copy]);
+        } else {
+            NSError *error = [[NSError alloc] initWithDomain:@"com.zyvv.error" code:finishedModel.result userInfo:@{NSLocalizedDescriptionKey: @"返回数据错误"}];
+            failure(error);
+        }
+
+    } failure:failure];
 }
 
 
@@ -273,5 +325,14 @@ http://m.13322.com/mlottery/core/IOSBasketballDetail.findScore.do?_=1523890935.9
              };
 }
 
++ (void)setCache:(id)object forKey:(NSString *)pathKey  {
+    YYCache *cache = [YYCache cacheWithName:@"RedJCache"];
+    [cache setObject:object forKey:pathKey];
+}
+
++ (id)cacheForKey:(NSString *)pathKey {
+    YYCache *cache = [YYCache cacheWithName:@"RedJCache"];
+    return [cache objectForKey:pathKey];
+}
 
 @end

@@ -14,6 +14,7 @@
 		1454166620860A680013D3C1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1454166520860A680013D3C1 /* AVFoundation.framework */; };
 		1454166820860A730013D3C1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1454166720860A730013D3C1 /* SystemConfiguration.framework */; };
 		3FF196FAFE56819383629ABD /* libPods-RedJ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C2DF36418C3AC23D9AF5939 /* libPods-RedJ.a */; };
+		97839A3F208AF14C00520B8E /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97839A3E208AF14C00520B8E /* SettingViewController.m */; };
 		97A66D7D20810579008DDC08 /* GameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A66D7B20810579008DDC08 /* GameCell.m */; };
 		97AC72082080D20600C98D4C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AC72072080D20600C98D4C /* AppDelegate.m */; };
 		97AC720E2080D20600C98D4C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97AC720C2080D20600C98D4C /* Main.storyboard */; };
@@ -68,6 +69,8 @@
 		1454166520860A680013D3C1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		1454166720860A730013D3C1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1C2DF36418C3AC23D9AF5939 /* libPods-RedJ.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RedJ.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		97839A3D208AF14C00520B8E /* SettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		97839A3E208AF14C00520B8E /* SettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		97A66D7A20810579008DDC08 /* GameCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameCell.h; sourceTree = "<group>"; };
 		97A66D7B20810579008DDC08 /* GameCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameCell.m; sourceTree = "<group>"; };
 		97AC72032080D20600C98D4C /* RedJ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedJ.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -253,6 +256,8 @@
 				C1E5DFA020897AF80056E34B /* UserBonus.m */,
 				C1E5DFA2208984690056E34B /* BonusViewController.h */,
 				C1E5DFA3208984690056E34B /* BonusViewController.m */,
+				97839A3D208AF14C00520B8E /* SettingViewController.h */,
+				97839A3E208AF14C00520B8E /* SettingViewController.m */,
 			);
 			path = RedJ;
 			sourceTree = "<group>";
@@ -475,6 +480,7 @@
 				97DD96DA208220B900839B28 /* User.m in Sources */,
 				97DD96DD20823DC400839B28 /* Account.m in Sources */,
 				97AC723A2080D9A400C98D4C /* LoginViewController.m in Sources */,
+				97839A3F208AF14C00520B8E /* SettingViewController.m in Sources */,
 				C1613BD8208475F6005D5696 /* UserSettle.m in Sources */,
 				97DD96CF2081B61600839B28 /* Match.m in Sources */,
 				C1613BDB208487FE005D5696 /* BetViewController.m in Sources */,

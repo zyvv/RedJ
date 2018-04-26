@@ -13,8 +13,12 @@
 + (void)requestMatchSuccess:(PPHttpRequestSuccess)success
                     failure:(PPHttpRequestFailed)failure;
 
-+ (void)requestRankingMatch:(PPHttpRequestSuccess)success
-                   failure:(PPHttpRequestFailed)failure;
++ (void)requestMatch:(NSInteger)matchType
+             success:(PPHttpRequestSuccess)success
+             failure:(PPHttpRequestFailed)failure;
+
++ (void)requestFinishedMatchSuccess:(PPHttpRequestSuccess)success
+                            failure:(PPHttpRequestFailed)failure;
 
 /**
  查询实时比分

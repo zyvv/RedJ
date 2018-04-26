@@ -10,6 +10,9 @@
 #import "UserBonus.h"
 
 @interface BonusViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *emojiTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *desLabel;
 
 @end
 
@@ -18,6 +21,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _emojiTitleLabel.text = _bonus.emojiTitle;
+    _titleLabel.text = _bonus.title;
+    _desLabel.text = _bonus.bonusDes;
 }
 
 - (void)didReceiveMemoryWarning {

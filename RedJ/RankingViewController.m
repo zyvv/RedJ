@@ -13,11 +13,16 @@
 #import "Order.h"
 #import "RequestList.h"
 #import "UserSettle.h"
+#import "BetListCell.h"
 
 
 @interface RankingViewController ()<UITableViewDelegate, UITableViewDataSource>
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshItem;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
 @property (nonatomic, copy) NSArray *userRankingArray;
+@property (nonatomic, copy) NSArray *userBetListArray;
+
+@property (nonatomic, strong) UILabel *headerLabel;
+
 @end
 
 @implementation RankingViewController
@@ -30,19 +35,19 @@
     UIView *footerView = [UIView new];
     footerView.frame = CGRectMake(0, 0, 320, 100);
     self.tableView.tableFooterView = footerView;
-    UILabel *label = [UILabel new];
-    label.frame = CGRectMake(0, 0, 300, 50);
-    label.textColor = [UIColor darkGrayColor];
-    label.font = [UIFont systemFontOfSize:12];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.text = @"统计数据在每个比赛日的下午3:05开始更新。";
-    self.tableView.tableHeaderView = label;
+    self.headerLabel = [UILabel new];
+    self.headerLabel.frame = CGRectMake(0, 0, 300, 50);
+    self.headerLabel.textColor = [UIColor darkGrayColor];
+    self.headerLabel.font = [UIFont systemFontOfSize:12];
+    self.headerLabel.textAlignment = NSTextAlignmentCenter;
+    self.tableView.tableHeaderView = self.headerLabel;
     [self refreshControlAction:nil];
 
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [UserSettle settleAndUploadTodayEarning];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -51,16 +56,11 @@
 }
 
 
-- (void)fecthRankData:(void (^)(void))completion {
-    if ([UserSettle isSettleing]) {
-        return;
-    }
+- (void)fecthRankData {
+
     AVQuery *query = [AVQuery queryWithClassName:@"BetRanked"];
-    if ([UserSettle isRankingDuration]) {
-        [query whereKey:@"rankedDay" equalTo:[UserSettle formatToday]];
-    } else {
-        [query whereKey:@"rankedDay" equalTo:[UserSettle formatYesterday]];
-    }
+    [query whereKey:@"rankedDay" equalTo:[UserSettle formatToday]];
+    [query addDescendingOrder:@"totalEarning"];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -69,63 +69,64 @@
                     NSMutableDictionary *dict = [obj dictionaryForObject];
                     [tempArray addObject:dict];
                 }
-                NSArray *rankArray = [NSArray yy_modelArrayWithClass:[Ranking class] json:tempArray];
-                
-                NSMutableSet *usernameSet = [NSMutableSet set];
-                for (Ranking *ranking in rankArray) {
-                    if (ranking.userName) {
-                        [usernameSet addObject:ranking.userName];
-                    }
-                }
-                NSMutableArray *userRankArray = [[NSMutableArray alloc] initWithCapacity:0];
-                for (NSString *userName in usernameSet) {
-                    UserRanking *userRanking = [UserRanking new];
-                    userRanking.userName = userName;
-                    for (Ranking *ranking in rankArray) {
-                        if ([userName isEqualToString:ranking.userName]) {
-                            userRanking.hong += ranking.hong;
-                            userRanking.hei += ranking.hei;
-                            userRanking.todayEarning = ranking.totalEarning;
-                            userRanking.totalAccount = ranking.totalAccount;
-                            userRanking.todayPay = ranking.todayPay;
-                            userRanking.rankedDay = ranking.rankedDay;
-                        }
-                    }
-                    [userRankArray addObject:userRanking];
-                }
-                
-                NSArray *sortUserRankArray = [userRankArray sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-                    UserRanking *rank1 = obj1;
-                    UserRanking *rank2 = obj2;
-                    if (rank1.todayEarning < rank2.todayEarning) {
-                        return NSOrderedDescending;
-                    } else if (rank1.todayEarning > rank2.todayEarning) {
-                        return NSOrderedAscending;
-                    } else {
-                        return NSOrderedSame;
-                    }
-                }];
-                
-                self.userRankingArray = sortUserRankArray;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (completion) { completion(); }
-                });
+                self.userRankingArray = [NSArray yy_modelArrayWithClass:[Ranking class] json:tempArray];
             });
-        } else {
-            if (completion) { completion(); }
         }
+        [self.tableView.refreshControl endRefreshing];
+    }];
+}
+
+- (void)fetchUserBetList {
+    AVQuery *query = [AVQuery queryWithClassName:@"Bet"];
+    [query whereKey:@"orderUserName" equalTo:[User currentUser].username];
+    [query orderByDescending:@"createdAt"];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (objects) {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:0];
+                for (AVObject *obj in objects) {
+                    NSMutableDictionary *dict = [obj dictionaryForObject];
+                    [tempArray addObject:dict];
+                }
+                NSArray *betsArray = [NSArray yy_modelArrayWithClass:[Bet class] json:tempArray];
+                if (betsArray) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.userBetListArray = betsArray;
+                    });
+                }
+            });
+        }
+        [self.tableView.refreshControl endRefreshing];
     }];
 }
 
 - (IBAction)refreshControlAction:(UIRefreshControl *)sender {
-    [self fecthRankData:^{
-        [sender endRefreshing];
-    }];
+    [self segmentControlAction:self.segmentControl];
+}
+- (IBAction)segmentControlAction:(UISegmentedControl *)sender {
+    if (sender.selectedSegmentIndex == 0) {
+        self.headerLabel.text = @"下注记录";
+        [self fetchUserBetList];
+    } else {
+        self.headerLabel.text = @"实时排名";
+        [self fecthRankData];
+    }
 }
 
 - (void)setUserRankingArray:(NSArray *)userRankingArray {
     if (_userRankingArray != userRankingArray) {
         _userRankingArray = userRankingArray;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+        [self.tableView.refreshControl endRefreshing];
+    });
+}
+
+- (void)setUserBetListArray:(NSArray *)userBetListArray {
+    if (_userBetListArray != userBetListArray) {
+        _userBetListArray = userBetListArray;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
@@ -138,6 +139,11 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (_segmentControl.selectedSegmentIndex == 0) {
+        BetListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BetListCell" forIndexPath:indexPath];
+        cell.bet = self.userBetListArray[indexPath.row];
+        return cell;
+    }
     RankingCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RankingCell" forIndexPath:indexPath];
     cell.userRanking = self.userRankingArray[indexPath.row];
     cell.ranking = (int)indexPath.row + 1;
@@ -146,6 +152,9 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (self.segmentControl.selectedSegmentIndex == 0) {
+        return self.userBetListArray.count;
+    }
     return self.userRankingArray.count;
 }
 

@@ -36,6 +36,7 @@
     __weak IBOutlet UILabel *_guestScoreLabel;
     __weak IBOutlet UILabel *_homeScoreLabel;
     
+    __weak IBOutlet UILabel *_pankouLabel;
 }
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -73,7 +74,7 @@
     _guestScoreLabel.text = [NSString stringWithFormat:@"%.0f", _match.matchScore.guestScore];
     _homeScoreLabel.text = [NSString stringWithFormat:@"%.0f", _match.matchScore.homeScore];
     
-    
+    _pankouLabel.text = [NSString stringWithFormat:@"主让%.1f  大小%.1f", _match.matchOdds.asiaLet.bet365.handicapValue, _match.matchOdds.asiaSize.bet365.handicapValue];
     
 //    float handicapValue = _match.matchOdds.asiaLet.bet365.handicapValue;
 //    if (handicapValue >= 0) {
@@ -99,7 +100,7 @@
         _statusLabel.text = @"未开";
         _statusLabel.textColor = [UIColor lightGrayColor];
     } else {
-        _statusLabel.text = [NSString stringWithFormat:@"%d节 %@", _match.section, _match.matchScore.remainTime];
+        _statusLabel.text = [NSString stringWithFormat:@"%d节 %@", _match.matchStatus, _match.matchScore.remainTime];
         _statusLabel.textColor = [UIColor greenColor];
     }
     

@@ -304,12 +304,6 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
                     return;
                 } else {
                     
-                    if ([UserSettle beingSettled]) {
-                        [SVProgressHUD showWithStatus:@"系统正在结算，请在15:10之后下注"];
-                        [SVProgressHUD dismissWithDelay:.5];
-                        return;
-                    }
-                    
                     [bet bet:self.account betBlock:^(BOOL success, BOOL appendBet, Account *account, NSError *error) {
                         if (success) {
                             if (appendBet) {
@@ -320,16 +314,15 @@ typedef void(^RequestMatchBlock)(BOOL success, Match *match, NSError *error);
                             
                             self.account = account;
                             
-                            if ([UserSettle isRankingDuration]) {
-                                AVQuery *query = [AVQuery queryWithClassName:@"BetRanked"];
-                                [query whereKey:@"rankedDay" equalTo:[UserSettle formatToday]];
-                                [query getFirstObjectInBackgroundWithBlock:^(AVObject * _Nullable object, NSError * _Nullable error) {
-                                    if (object) {
-                                        [object setObject:@(account.totalAccount - account.balance) forKey:@"todayPay"];
-                                        [object saveInBackground];
-                                    }
-                                }];
-                            }
+                            AVQuery *query = [AVQuery queryWithClassName:@"BetRanked"];
+                            [query whereKey:@"rankedDay" equalTo:[UserSettle formatToday]];
+                            [query getFirstObjectInBackgroundWithBlock:^(AVObject * _Nullable object, NSError * _Nullable error) {
+                                if (object) {
+                                    [object setObject:@(account.totalAccount - account.balance) forKey:@"todayPay"];
+                                    [object saveInBackground];
+                                }
+                            }];
+                            
                         } else {
                             [SVProgressHUD showWithStatus:@"下注失败"];
                         }

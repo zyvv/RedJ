@@ -25,7 +25,7 @@ static YYCache *_dataCache;
 }
 
 + (id)httpCacheForURL:(NSString *)URL parameters:(NSDictionary *)parameters {
-    NSString *cacheKey = [self cacheKeyWithURL:URL parameters:parameters];
+    NSString *cacheKey = [self cacheKeyWithURL:URL parameters:nil];
     return [_dataCache objectForKey:cacheKey];
 }
 

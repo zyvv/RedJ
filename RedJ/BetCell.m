@@ -146,7 +146,7 @@
         bet.orderUserName = [User currentUser].username;
         bet.matchId = _match.thirdId;
         bet.betOdds = [[_oddsSegment titleForSegmentAtIndex:_oddsSegment.selectedSegmentIndex] floatValue];
-        bet.betAmount = _amountSegment.selectedSegmentIndex * 10;
+        bet.betAmount = [[_amountSegment titleForSegmentAtIndex:_amountSegment.selectedSegmentIndex] floatValue];
         bet.leftOdds = _oddsSegment.selectedSegmentIndex == 0 ? YES : NO;
         bet.betType = _betType;
         

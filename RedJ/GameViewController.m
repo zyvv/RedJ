@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"比赛";
-
+    
     if (![AVUser currentUser]) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
@@ -49,14 +49,13 @@
     label.contentMode = UIViewContentModeBottom;
     label.text = [NSString stringWithFormat:@"%@ %@(%@)", appName, appVersion, appBuild];
     self.tableView.tableFooterView = label;
-
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self refreshControlAction:nil];
     
-    [UserSettle settleAndUploadTodayEarning];
     [UserBonus haveUserBonus:^(UserBonus *bonus) {
         if (bonus) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -164,3 +163,4 @@
 }
 
 @end
+

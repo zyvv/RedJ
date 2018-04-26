@@ -17,6 +17,10 @@
 @property (nonatomic, assign) BOOL received;
 @property (nonatomic, assign) BOOL overdue;
 @property (nonatomic, copy) NSString *bonusName;
+@property (nonatomic, copy) NSString *emojiTitle;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *bonusDes;
+
 
 + (void)haveUserBonus:(void(^)(UserBonus *bonus))bonusBlock;
 
