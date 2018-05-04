@@ -16,6 +16,13 @@ class User(Model):
     image = StringField(ddl='varchar(500)')
     created_at = FloatField(default=time.time)
 
+    def __init__(self, email, passwd, name, image):
+        self.email = email
+        self.passwd = passwd
+        self.name = name
+        self.image = image
+
+
 class Blog(Model):
     __table__ = 'blogs'
 

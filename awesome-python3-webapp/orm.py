@@ -2,6 +2,9 @@ import asyncio, logging
 
 import aiomysql
 
+def log(sql, args=()):
+    logging.info('SQL: %s' % sql)
+
 @asyncio.coroutine
 def create_pool(loop, **kw):
 	logging.info("create dateabase connection pool...")
@@ -12,7 +15,7 @@ def create_pool(loop, **kw):
 		user = kw['user'],
 		password = kw['password'],
 		db = kw['db'],
-		charset = kw.get('charset', 'utf-8'),
+		charset = kw.get('charset', 'utf8'),
 		autocommit = kw.get('autocommit', True),
 		maxsize = kw.get('maxsize', 10),
 		minsize = kw.get('minsize', 1),
@@ -91,7 +94,6 @@ class TextField(Field):
 
 
 class ModelMetaclass(type):
-	"""docstring for ModelMetaclass"""
 	def __new__(cls, name, bases, attrs):
 		if name == 'Model':
 			return type.__new__(cls, name, bases, attrs)
@@ -110,12 +112,12 @@ class ModelMetaclass(type):
 				mappings[k] = v
 				if v.primary_key:
 					if primaryKey:
-						raise RuntimeError('Duplicate primary key for field: %s' % k)
+						raise StandardError('Duplicate primary key for field: %s' % k)
 					primaryKey = k
 				else:
 					fields.append(k)
 		if not primaryKey:
-			raise RuntimeError('Primary key not found.')
+			raise StandardError('Primary key not found.')
 		for k in mappings.keys():
 			attrs.pop(k)
 		escaped_fields = list(map(lambda f: '`%s`' % f, fields))
@@ -126,7 +128,7 @@ class ModelMetaclass(type):
 
 		#构造默认的select， insert， update和delete语句：
 		attrs['__select__'] = 'select `%s`, %s from `%s`' % (primaryKey, ', '.join(escaped_fields), tableName)
-		attrs['__insert__'] = 'insert into `%s` (%s， `%s`) values (%s)' % (tableName, ', '.join(escaped_fields), primaryKey, create_args_string(len(escaped_fields) + 1))
+		attrs['__insert__'] = 'insert into `%s` (%s, `%s`) values (%s)' % (tableName, ', '.join(escaped_fields), primaryKey, create_args_string(len(escaped_fields) + 1))
 		attrs['__update__'] = 'update `%s` set %s where `%s`=?' % (tableName, '. '.join(map(lambda f: '`%s`=?' % (mappings.get(f).name or f), fields)), primaryKey)
 		attrs['__delete__'] = 'delete from `%s` where `%s`?' % (tableName, primaryKey)
 		return type.__new__(cls, name, bases, attrs)
@@ -137,7 +139,7 @@ class Model(dict, metaclass=ModelMetaclass):
 	def __init__(self, **kw):
 		super(Model, self).__init__(**kw)
 
-	def __getaattr(self, key):
+	def __getattr__(self, key):
 		try:
 			return self[key]
 		except KeyError:
@@ -152,7 +154,7 @@ class Model(dict, metaclass=ModelMetaclass):
 	def getValueOrDefault(self, key):
 		value = getattr(self, key, None)
 		if value is None:
-			field = self.__mapping__[key]
+			field = self.__mappings__[key]
 			if field.default is not None:
 				value = field.default() if callable(field.default) else field.default
 				logging.debug('using default value for %s: %s' % (key, str(value)))
@@ -205,7 +207,7 @@ class Model(dict, metaclass=ModelMetaclass):
 	@classmethod
 	@asyncio.coroutine
 	def find(cls, pk):
-		' find object by primary key.'
+		' find object by primary key. '
 		rs = yield from select('%s where `%s`=?' % (cls.__select__, cls.__primary_key__), [pk], 1)
 		if len(rs) == 0:
 			return None
